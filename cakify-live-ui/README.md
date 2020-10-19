@@ -1,4 +1,4 @@
-# cakify-live-ui
+# cakify-admin
 
 ## Project setup
 ```
