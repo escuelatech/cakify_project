@@ -97,4 +97,5 @@ export default {components: { Header, Sidebar  }};
 </script>
 
 <style lang="scss" scoped>
+
 </style>

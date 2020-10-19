@@ -1,9 +1,9 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 
-import CakifyLoginPage from "@/components/View/services/cakify_login/CakifyLoginPage.vue"
-import CakifyRegistrationPage from "@/components/View/services/cakify_registration/CakifyRegistrationPage.vue"
-import AddCakePage from "@/components/View/services/add_item/AddCakePage.vue";
+// import CakifyLoginPage from "@/components/View/services/cakify_login/CakifyLoginPage.vue"
+// import CakifyRegistrationPage from "@/components/View/services/cakify_registration/CakifyRegistrationPage.vue"
+// import AddCakePage from "@/components/View/services/add_item/AddCakePage.vue";
 import LandingPage from "@/components/View/services/LandingPage/LandingPage.vue";
 
 // const DashboardPage = () => import(/* webpackChunkName: "dashboard" */ '@/components/View/services/dashboard_service/DashboardPage.vue')
@@ -13,28 +13,13 @@ const router = new VueRouter({
   mode: 'history',
   routes: [ 
     {
-      path: '/landing',
+      path: '/cakify',
       name: 'LandingPage',
       component: LandingPage
     },
-    {
-      path: '/cakify',
-      name: 'CakifyLoginPage',
-      component: CakifyLoginPage
-    },
-    {
-      path: '/cakifyregistration',
-      name: 'CakifyRegistrationPage',
-      component: CakifyRegistrationPage
-    },
-    {
-      path: '/addcake',
-      name: 'AddCakePage',
-      component: AddCakePage
-    },
     { 
       path: '*', 
-      redirect: '/landing' 
+      redirect: '/cakify' 
     }
   ],
   scrollBehavior (to, from, savedPosition) {

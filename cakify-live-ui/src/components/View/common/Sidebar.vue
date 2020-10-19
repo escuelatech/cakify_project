@@ -17,11 +17,11 @@
             </header>
             <ul>
                 <li>
-                    <router-link @click="handleRouterLinkClick" :to="{ name: 'CakifyRegistrationPage' }">REGISTER</router-link>
+                    <router-link @click="handleRouterLinkClick" :to="{ name: 'viewcart' }">View Cart</router-link>
                 </li> 
 
                 <li>
-                    <router-link @click="handleRouterLinkClick" :to="{ name: 'AddCakePage' }">ADD CAKE</router-link>
+                    <router-link @click="handleRouterLinkClick" :to="{ name: 'addcart' }">My account</router-link>
                 </li>
 
             </ul>
