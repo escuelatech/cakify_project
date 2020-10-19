@@ -4,6 +4,7 @@ import VueRouter from 'vue-router';
 import CakifyLoginPage from "@/components/View/services/cakify_login/CakifyLoginPage.vue"
 import CakifyRegistrationPage from "@/components/View/services/cakify_registration/CakifyRegistrationPage.vue"
 import AddCakePage from "@/components/View/services/add_item/AddCakePage.vue";
+import LandingPage from "@/components/View/services/LandingPage/LandingPage.vue";
 
 // const DashboardPage = () => import(/* webpackChunkName: "dashboard" */ '@/components/View/services/dashboard_service/DashboardPage.vue')
 
@@ -11,6 +12,11 @@ Vue.use(VueRouter);
 const router = new VueRouter({
   mode: 'history',
   routes: [ 
+    {
+      path: '/landing',
+      name: 'LandingPage',
+      component: LandingPage
+    },
     {
       path: '/cakify',
       name: 'CakifyLoginPage',
@@ -28,7 +34,7 @@ const router = new VueRouter({
     },
     { 
       path: '*', 
-      redirect: '/cakify' 
+      redirect: '/landing' 
     }
   ],
   scrollBehavior (to, from, savedPosition) {
