@@ -40,7 +40,7 @@
                                         v-model="description" 
                                         prepend-icon="fas fa-pen"
                                         :rules="descriptionRules"
-                                        :counter="250"
+                                        :counter="500"
                                         required
                                     ></v-textarea>
                                 </v-col>
@@ -52,7 +52,6 @@
                                         placeholder=" "
                                         v-model="cakeType"
                                         prepend-icon="fas fa-mouse-pointer"
-                                        :rules="cakeTypeRules"
                                         required
                                     ></v-select>
                                 </v-col>
@@ -62,26 +61,28 @@
                                         type="file" 
                                         ref="uploadImage" 
                                         @change="onImageUpload()" 
-                                        class="form-control"
+                                        :rules="cakeImageRules"
                                         required
                                     >         
                                 </v-col>
                                 
                                 <v-col>
                                     <v-radio-group 
-                                        v-model="radioGroup"  
+                                        v-model="egglessOption"  
                                         label="Do you provide an eggless option for this cake?"
                                         required 
                                     >
                                         <v-divider></v-divider>
                                         <v-radio
                                             :label="option"
-                                            v-model="egglessOption"
+                                            name="egglessOption"
                                             v-for= "option in options"
                                             :key="option"
+                                            :value="option"
                                             prepend-icon="fas fa-check"
                                             required
                                         ></v-radio>
+                                    
                                     </v-radio-group>
                                 </v-col>
 
@@ -119,7 +120,6 @@ import fileUploadService from "@/apiservices/fileUploadService.js";
             snackbar: false,
             successMessage: 'Your cake has been uploaded successfully!',
 
-            radioGroup: false,
             options: [
                 'Yes',
                 'No'
@@ -140,7 +140,7 @@ import fileUploadService from "@/apiservices/fileUploadService.js";
             description: '',
             descriptionRules: [
                 value => !!value || 'Enter description for the cake',
-                value => (value && value.length <= 100) || 'Description should have atleast few characters'
+                // value => (value && value.length <= 500) || 'Description should have atleast few characters'
             ],
 
             cakeType: null,
@@ -175,24 +175,28 @@ import fileUploadService from "@/apiservices/fileUploadService.js";
                     "cakePrice": this.price,
                     "description": this.description,
                     "cakeImage": this.file,
-                    "select": this.select,
-                    "egglessOption": this.radioGroup,
+                    "egglessOption": this.egglessOption,
                     "cakeType": this.cakeType
                 }).then(response => {
                     this.cakeData = response.data.data;
+                    console.log('Cake Data: ', this.cakeData)
                     fileUploadService.upload(this.formData,this.cakeData);
                     this.snackbar = true;
+                    
                 }).catch(error => {
                     console.log('There was an error : ' + JSON.stringify(error))
                 });
+                this.cakeImage = '';
                  
                 if(this.$refs.addCakeForm.validate())
-                console.log(this.cakeName, this.price, this.description, this.formData, this.select, this.radioGroup)
-                this.$refs.addCakeForm.reset()
+                     console.log(this.cakeName, this.price, this.description, this.formData, this.cakeType, this.egglessOption)
+                    // this.$refs.uploadImage.files[0] = '';
+                    this.$refs.addCakeForm.reset();
+                
             }
             ,
             reset() {
-                this.$refs.addCakeForm.reset()
+                this.$refs.addCakeForm.reset();
             }
             }
 

@@ -6,12 +6,22 @@ export default {
   uploadImage,
   bakeryregister,
   login,
+  getAllCakes,
+  getImage,
   getCake,
-  getImage
-  
+  updateCake
 };
-function getCake () {
-  return apiClient.get("/api/cakes/add");
+function getAllCakes () {
+  return apiClient.get("/api/cakes/fetchall");
+}
+
+function getCake (id) {
+  return apiClient.get("/api/cakes/find/"+id);
+}
+
+function updateCake(params) {
+  console.log('from cakifyAdminservice ',JSON.stringify(params))
+  return apiClient.post('/api/cakes/update', params);
 }
 
 function bakeryregister (params) {
