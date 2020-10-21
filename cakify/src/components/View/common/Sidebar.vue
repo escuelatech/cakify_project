@@ -17,6 +17,9 @@
             </header>
             <ul>
                 <li>
+                    <router-link @click="handleRouterLinkClick" :to="{ name: 'LandingPage' }">Dashboard</router-link>
+                </li> 
+                <li>
                     <router-link @click="handleRouterLinkClick" :to="{ name: 'CakifyRegistrationPage' }">REGISTER</router-link>
                 </li> 
 
