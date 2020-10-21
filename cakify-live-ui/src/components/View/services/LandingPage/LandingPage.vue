@@ -18,7 +18,7 @@
 									</header> -->
 									<div class="posts">
 										<article>
-											<a href="#" class="image"><img src="@/assets/images/image.jpg" alt="" /></a>
+											<a href="#" class="image"><img src="http://escuelatech.com/cake_images/Birthday/6f6767a8-15ad-49dc-9f3a-40fe026b739a_pexels-jess-bailey-designs-853004.jpg" alt="" height="275" width="200" /></a>
 											<h3>Interdum aenean</h3>
 											<p>Aenean ornare velit lacus, ac varius enim lorem ullamcorper dolore. Proin aliquam facilisis ante interdum. Sed nulla amet lorem feugiat tempus aliquam.</p>
 											<ul class="actions">
@@ -26,7 +26,7 @@
 											</ul>
 										</article>
 										<article>
-											<a href="#" class="image"><img src="@/assets/images/image.jpg" alt="" /></a>
+											<a href="#" class="image"><img src="http://escuelatech.com/cake_images/Birthday/efb1d02d-d76c-46ed-b98e-bc94428dcb28_pexels-daria-shevtsova-1070852.jpg" alt=""  height="275" width="200" /></a>
 											<h3>Nulla amet dolore</h3>
 											<p>Aenean ornare velit lacus, ac varius enim lorem ullamcorper dolore. Proin aliquam facilisis ante interdum. Sed nulla amet lorem feugiat tempus aliquam.</p>
 											<ul class="actions">
