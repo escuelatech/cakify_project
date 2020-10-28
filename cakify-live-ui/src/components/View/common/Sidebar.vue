@@ -25,7 +25,17 @@
                 </li>
 
             </ul>
+
+                          
         </nav>
+
+        <div v-show="isAuthenticated">
+        <header class="major">
+                <h2>Best selling cakes</h2>
+            </header>
+         <Favourites/>
+       </div>
+
 
         <footer id="footer">
             <p class="copyright">
@@ -47,9 +57,11 @@ import {
     debounce
 } from 'lodash-es';
 import logoutMixin from "@/mixins/logout.js";
+import Favourites from "@/components/View/services/sidemenu/Favourites.vue"
 
 export default {
     name: 'Sidebar',
+    components:{Favourites},
     data() {
         return {
             isSidebarInactive: false,
@@ -120,6 +132,9 @@ export default {
 
             }, 500);
         },
+        mounted(){
+
+        }
 
     }
 }
