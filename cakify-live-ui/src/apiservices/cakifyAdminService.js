@@ -7,9 +7,15 @@ export default {
   bakeryregister,
   login,
   getCake,
-  getImage
+  getImage,
+  getAllCakes
   
 };
+
+function getAllCakes () {
+  return apiClient.get("/api/cakes/fetchall");
+}
+
 function getCake () {
   return apiClient.get("/api/cakes/add");
 }
