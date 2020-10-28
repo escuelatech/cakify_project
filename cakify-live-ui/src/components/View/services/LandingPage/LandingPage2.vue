@@ -12,9 +12,9 @@
           <!-- <section> -->
           <div class="text-justify">
           <!-- Section -->
-				<!-- <span class="image fit">
-                    <img src="@/assets/images/rascake.jpg" alt="">
-                </span> -->
+				<span class="image fit">
+                    <img src="https://www.sogoodmagazine.com/wp-content/uploads/2020/04/sacher-ovando.jpg" alt="">
+                </span>
                 <p>
                     A cake makes a great gift, especially for a birthday. It is an honor to receive a birthday cake from someone you love. 
                     A cake delivery is a heartfelt gesture, and ordering a cake online is easy. 
