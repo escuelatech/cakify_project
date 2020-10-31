@@ -16,8 +16,8 @@ function getAllCakes () {
   return apiClient.get("/api/cakes/fetchall");
 }
 
-function getCake () {
-  return apiClient.get("/api/cakes/add");
+function getCake (id) {
+  return apiClient.get("/api/cakes/find/"+id);
 }
 
 function bakeryregister (params) {

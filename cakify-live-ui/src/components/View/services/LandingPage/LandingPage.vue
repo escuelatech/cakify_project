@@ -35,7 +35,7 @@
                     <div class="row gtr-50 gtr-uniform">
                         <div class="col-4" v-for="cake in cakes" :key="cake.cakeId">
                             <span class="image fit">
-                                <img :src="cake.cakeImage" alt="" >
+                                <img :src="cake.cakeImage" alt="" @click="$router.push({name: 'CakeDetails', params: {cakeId: cake.cakeId}})">
                             </span>
                         </div>
                     </div>
@@ -91,5 +91,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
+.image {
+	cursor: pointer;
+}
 </style>
