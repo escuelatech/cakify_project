@@ -16,11 +16,10 @@
             <button class="button primary small" @click="$router.push({ name: 'CakifyLoginPage' })">
                 Login
             </button>
+           
         </li>
         <li>
-            <a href="#" class="icon brands fa-twitter">
-                <span class="label">Twitter</span>
-            </a>
+           <SocialLogin/>
         </li>
         <li>
             <a href="#" class="icon brands fa-facebook-f">
@@ -28,18 +27,8 @@
             </a>
         </li>
         <li>
-            <a href="#" class="icon brands fa-snapchat-ghost">
-                <span class="label">Snapchat</span>
-            </a>
-        </li>
-        <li>
             <a href="#" class="icon brands fa-instagram">
                 <span class="label">Instagram</span>
-            </a>
-        </li>
-        <li>
-            <a href="#" class="icon brands fa-medium-m">
-                <span class="label">Medium</span>
             </a>
         </li>
     </ul>
@@ -49,8 +38,12 @@
 
 <script>
 import logoutMixin from "@/mixins/logout.js";
+import SocialLogin from "@/components/View/services/cakify_login/GoogleLogin.vue";
 
 export default {
-    mixins: [logoutMixin]
+    mixins: [logoutMixin],
+     components: {
+        SocialLogin
+    }
 }
 </script>
