@@ -139,7 +139,8 @@ import cakifyAdminService from "@/apiservices/cakifyAdminService.js";
                     'Yes', 
                     'No'
                 ],
-                valid: ''
+                valid: '',
+                paymentUrl: ''
             }
         },
         created() {
