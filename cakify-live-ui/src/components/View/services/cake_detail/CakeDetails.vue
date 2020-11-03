@@ -139,7 +139,8 @@ import cakifyAdminService from "@/apiservices/cakifyAdminService.js";
                     'Yes', 
                     'No'
                 ],
-                valid: ''
+                valid: '',
+                paymentUrl: ''
             }
         },
         created() {
@@ -165,11 +166,6 @@ import cakifyAdminService from "@/apiservices/cakifyAdminService.js";
             buyNow() {
                 cakifyAdminService.buyNow({
                     cakeId: this.cake.cakeId,
-                    // cakeName: this.cake.cakeName,
-                    // cakePrice: this.cake.cakePrice,
-                    // description: this.cake.description,
-                    // cakeType: this.cake.cakeType,
-                    // bakeryEmail: this.cake.bakeryEmail,
                     buyerEmail: this.buyerEmail,
                     kilograms: this.kilograms,
                     eggless: this.eggless,

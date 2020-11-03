@@ -31,7 +31,7 @@
         },
         methods: {
             proceedToCheckout(){
-                window.open(this.paymentUrl)
+                window.location.href=this.paymentUrl;
             }
         }
         
