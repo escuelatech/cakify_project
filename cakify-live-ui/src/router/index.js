@@ -6,6 +6,7 @@ import VueRouter from 'vue-router';
 // import AddCakePage from "@/components/View/services/add_item/AddCakePage.vue";
 import LandingPage from "@/components/View/services/LandingPage/LandingPage.vue";
 import CakeDetailsPage from "@/components/View/services/cake_detail/CakeDetailsPage.vue";
+import PaymentPage from "@/components/View/services/payment/PaymentPage.vue";
 // const DashboardPage = () => import(/* webpackChunkName: "dashboard" */ '@/components/View/services/dashboard_service/DashboardPage.vue')
 
 Vue.use(VueRouter);
@@ -21,6 +22,11 @@ const router = new VueRouter({
       path: '/cakedetails',
       name: 'CakeDetails',
       component: CakeDetailsPage
+    },
+    {
+      path: '/payment',
+      name: 'Payment',
+      component: PaymentPage
     },
     { 
       path: '*', 

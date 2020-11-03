@@ -8,7 +8,8 @@ export default {
   login,
   getCake,
   getImage,
-  getAllCakes
+  getAllCakes,
+  buyNow
   
 };
 
@@ -38,6 +39,11 @@ function uploadImage(params){
 
 function getImage () {
   return apiMutipartClient.get("/api/upload2");
+}
+
+function buyNow(params) {
+  console.log('buy now: ', JSON.stringify(params));
+  return apiClient.post("/api/payment/initiate", params);
 }
 
 
