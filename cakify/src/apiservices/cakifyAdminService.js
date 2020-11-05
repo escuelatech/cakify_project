@@ -9,7 +9,8 @@ export default {
   getAllCakes,
   getImage,
   getCake,
-  updateCake
+  updateCake,
+  logout
 };
 function getAllCakes () {
   return apiClient.get("/api/cakes/fetchall");
@@ -58,7 +59,7 @@ async function login (email, password) {
   return response;
 }
 
-// function logout () {
-//   localStorage.removeItem('token');
-//   localStorage.removeItem('email');
-// }
+function logout () {
+  localStorage.removeItem('token');
+  localStorage.removeItem('email');
+}
