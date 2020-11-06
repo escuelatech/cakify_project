@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="box">
         <div class="row gtr-uniform">
             <div class="col-6 col-12-xsmall">
                 <h6><b>Cake Name: </b>{{cake.cakeName}}</h6>
@@ -21,6 +21,7 @@
                         type="email"
                         v-model="buyerEmail"
                         placeholder="Email"
+                        autocomplete="on"
                         required
                     >
                     <span class="errorNotification" v-if="msg.buyerEmail">{{msg.buyerEmail}}</span>
@@ -35,7 +36,7 @@
                      <span class="errorNotification" v-if="msg.kilograms">{{msg.kilograms}}</span>
                 </div>
                 <div class="col-6 col-12-xsmall">
-                    <select id="eggless" name="eggless" v-model="eggless">
+                    <select id="eggless" name="eggless" v-model="eggless" required>
                         <option disabled value="">Do you want an eggless cake?</option>
                         <option value="yes">Yes</option>
                         <option value="no">No</option>
@@ -61,12 +62,10 @@
                      <span class="errorNotification" v-if="msg.dateOfDelivery">{{msg.dateOfDelivery}}</span>
                 </div>
                  <div class="col-6 col-12-xsmall">
-                    <input 
-                        type="text"
-                        v-model="deliveryTime"
-                        placeholder="Time of Delivery"
-                        required
-                    >
+                     <select name="time" id="time" v-model="deliveryTime" required>
+                         <option value="" disabled>Select a delivery time</option>
+                         <option v-for="dTime in time" :key="dTime" :value="dtime">{{dTime}}</option>
+                     </select>
                      <span class="errorNotification" v-if="msg.deliveryTime">{{msg.deliveryTime}}</span>
                 </div>
                 <div class="col-12">
@@ -116,7 +115,10 @@ import cakifyAdminService from "@/apiservices/cakifyAdminService.js";
                 messageOnCake: '',
                 messageOnDelivery: '',
                 valid: '',
-                paymentUrl: ''
+                paymentUrl: '',
+                cakeDetails: '',
+                orderDetails: '',
+                time: ['10:00am', '10:30am', '11am', '11:30am', '12:00pm', '12:30pm', '1:00pm', '1:30pm', '2:00pm', '2:30pm', '3:00pm', '3:30pm','4:00pm', '4:30pm', '5:00pm']
             }
         },
         watch: {
@@ -187,9 +189,11 @@ import cakifyAdminService from "@/apiservices/cakifyAdminService.js";
                 })
                 .then(response => {
                     console.log('Buy now cake response: ', response.data);
+                    this.cakeDetails = response.data.apiResponse.cake;
+                    this.orderDetails = response.data.apiResponse.cakeOrder;
                     this.paymentUrl = response.data.apiResponse.paymentOrder.paymentOptions.paymentUrl
                     console.log('payment url ', this.paymentUrl)
-                    this.$router.push({name: 'Payment', params: {paymentUrl: this.paymentUrl}})
+                    this.$router.push({name: 'Payment', params: {paymentUrl: this.paymentUrl, cakeDetails: this.cakeDetails, orderDetails: this.orderDetails}})
                 })
                 .catch(error => {
                     console.log('Error in buy now: ', error.response);
@@ -219,21 +223,21 @@ import cakifyAdminService from "@/apiservices/cakifyAdminService.js";
                  }
             },
              validateAddress(value){
-                if (value == "") {
+                if (value !== "") {
                      this.msg['address'] = "";
                  } else {
                      this.msg['address'] = 'Enter an address';
                  }
             },
              validateDateOfDelivery(value){
-                if (value == "") {
+                if (value !== "") {
                      this.msg['dateOfDelivery'] = "";
                  } else {
                      this.msg['dateOfDelivery'] = 'Enter a valid date';
                  }
             },
              validateDeliveryTime(value){
-                if (value == ""){
+                if (value !== ""){
                      this.msg['deliveryTime'] = "";
                  } else {
                      this.msg['deliveryTime'] = 'Enter a valid time';

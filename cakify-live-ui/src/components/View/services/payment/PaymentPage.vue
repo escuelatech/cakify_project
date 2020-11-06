@@ -9,7 +9,9 @@
                 <Header />
                 <!-- Header -->
                 <!-- Form -->
-                <Payment />
+                <section>
+                    <Payment />
+                </section>
 
                 <!-- Form -->
             </div>
