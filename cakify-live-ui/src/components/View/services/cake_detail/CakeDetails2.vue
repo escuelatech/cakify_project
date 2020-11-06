@@ -1,0 +1,250 @@
+<template>
+    <div>
+        <div class="row gtr-uniform">
+            <div class="col-6 col-12-xsmall">
+                <h6><b>Cake Name: </b>{{cake.cakeName}}</h6>
+                <h6><b>Cake Price: </b>{{cake.cakePrice}}</h6>
+                <h6><b>Description: </b>{{cake.description}}</h6>
+                <h6><b>Type of cake: </b>{{cake.cakeType}}</h6>
+            </div>
+            <div class="col-6 col-12-xsmall">
+                <img :src="cake.cakeImage" alt="" width="200" height="250">
+            </div>
+            
+        </div>
+        <br>
+        <br>
+        <form @submit.prevent="buyNow">
+            <div class="row gtr-uniform">
+                <div class="col-6 col-12-xsmall">
+                    <input 
+                        type="email"
+                        v-model="buyerEmail"
+                        placeholder="Email"
+                        required
+                    >
+                    <span class="errorNotification" v-if="msg.buyerEmail">{{msg.buyerEmail}}</span>
+                </div>
+                <div class="col-6 col-12-xsmall">
+                    <input 
+                        type="number"
+                        v-model="kilograms"
+                        placeholder="How many kgs?"
+                        required
+                    >
+                     <span class="errorNotification" v-if="msg.kilograms">{{msg.kilograms}}</span>
+                </div>
+                <div class="col-6 col-12-xsmall">
+                    <select id="eggless" name="eggless" v-model="eggless">
+                        <option disabled value="">Do you want an eggless cake?</option>
+                        <option value="yes">Yes</option>
+                        <option value="no">No</option>
+                    </select>
+                     <span class="errorNotification" v-if="msg.eggless">{{msg.eggless}}</span>
+                </div>
+                <div class="col-6 col-12-xsmall">
+                    <input 
+                        type="text"
+                        v-model="address"
+                        placeholder="Delivery Address"
+                        required
+                    >
+                     <span class="errorNotification" v-if="msg.address">{{msg.address}}</span>
+                </div>
+                 <div class="col-6 col-12-xsmall">
+                    <input 
+                        type="text"
+                        v-model="dateOfDelivery"
+                        placeholder="Date of Delivery"
+                        required
+                    >
+                     <span class="errorNotification" v-if="msg.dateOfDelivery">{{msg.dateOfDelivery}}</span>
+                </div>
+                 <div class="col-6 col-12-xsmall">
+                    <input 
+                        type="text"
+                        v-model="deliveryTime"
+                        placeholder="Time of Delivery"
+                        required
+                    >
+                     <span class="errorNotification" v-if="msg.deliveryTime">{{msg.deliveryTime}}</span>
+                </div>
+                <div class="col-12">
+                    <textarea 
+                        v-model="messageOnCake"
+                        placeholder="Message to be written on cake"
+                    ></textarea>
+                    
+                </div>
+                <div class="col-12">
+                    <textarea 
+                        v-model="messageOnDelivery"
+                        placeholder="Message when delivering the cake"
+                    ></textarea>
+                     
+                </div>
+                
+                <div class="col-12">
+                    <ul class="actions">
+                        <li>
+                            <input type="submit" value="Add To Cart" class="primary">
+                        </li>
+                         <li>
+                            <input type="submit" value="Buy Now">
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </form>
+    </div>
+</template>
+
+<script>
+import cakifyAdminService from "@/apiservices/cakifyAdminService.js";
+    export default {
+        data(){
+            return {
+                msg: [],
+                cakeId: '',
+                cake: '',
+                buyerEmail: '',
+                kilograms: null,
+                eggless: '',
+                address: '',
+                dateOfDelivery: '',
+                deliveryTime: '',
+                messageOnCake: '',
+                messageOnDelivery: '',
+                valid: '',
+                paymentUrl: ''
+            }
+        },
+        watch: {
+            buyerEmail(value) {
+                this.buyerEmail = value;
+                this.validateBuyerEmail(value);
+            },
+            eggless(value) {
+                this.eggless = value;
+                this.validateEggless(value);
+            },
+            kilograms(value) {
+                this.kilograms = value;
+                this.validateKilograms(value);
+            },
+            address(value) {
+                this.address = value;
+                this.validateAddress(value);
+            },
+            dateOfDelivery(value) {
+                this.dateOfDelivery = value;
+                this.validateDateOfDelivery(value);
+            },
+            deliveryTime(value) {
+                this.deliveryTime = value;
+                this.validateDeliveryTime(value);
+            },
+            // messageOnCake(value) {
+            //     this.messageOnCake = value;
+            //     this.validateMessageOnCake(value);
+            // },
+            // messageOnDelivery(value) {
+            //     this.messageOnDelivery = value;
+            //     this.validateMessageOnDelivery(value);
+            // },
+        },
+        created() {
+            this.cakeId = this.$route.params.cakeId;
+        },
+        mounted() {
+            this.getSelectedCake();
+        },
+        methods: {
+           getSelectedCake() {
+                cakifyAdminService.getCake(this.cakeId)
+                    .then(response => {
+                        this.cake = response.data.apiResponse;
+                        console.log('Selected Cake: ', this.cake);
+                    })
+                    .catch(error => {
+                        console.log('Error', JSON.stringify(error))
+                    })
+            }, 
+            addToCart(){
+                console.log('add to cart method');
+            },
+            buyNow() {
+                cakifyAdminService.buyNow({
+                    cakeId: this.cake.cakeId,
+                    buyerEmail: this.buyerEmail,
+                    kilograms: this.kilograms,
+                    eggless: this.eggless,
+                    address: this.address,
+                    dateOfDelivery: this.dateOfDelivery,
+                    deliveryTime: this.deliveryTime,
+                    messageOnCake: this.messageOnCake,
+                    messageOnDelivery: this.messageOnDelivery
+                })
+                .then(response => {
+                    console.log('Buy now cake response: ', response.data);
+                    this.paymentUrl = response.data.apiResponse.paymentOrder.paymentOptions.paymentUrl
+                    console.log('payment url ', this.paymentUrl)
+                    this.$router.push({name: 'Payment', params: {paymentUrl: this.paymentUrl}})
+                })
+                .catch(error => {
+                    console.log('Error in buy now: ', error.response);
+                })
+
+            }, 
+            validateBuyerEmail(value){
+                 // eslint-disable-next-line no-useless-escape
+                 if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(value)) {
+                     this.msg['buyerEmail'] = "";
+                 } else {
+                     this.msg['buyerEmail'] = 'Enter a valid email';
+                 }
+            },
+             validateEggless(value){
+                if (value !== "") {
+                     this.msg['eggless'] = "";
+                 } else {
+                     this.msg['eggless'] = 'Select a valid option';
+                 }
+            },
+             validateKilograms(value){
+                 if (value !== null) {
+                     this.msg['kilograms'] = "";
+                 } else {
+                     this.msg['kilograms'] = 'Enter required kgs';
+                 }
+            },
+             validateAddress(value){
+                if (value == "") {
+                     this.msg['address'] = "";
+                 } else {
+                     this.msg['address'] = 'Enter an address';
+                 }
+            },
+             validateDateOfDelivery(value){
+                if (value == "") {
+                     this.msg['dateOfDelivery'] = "";
+                 } else {
+                     this.msg['dateOfDelivery'] = 'Enter a valid date';
+                 }
+            },
+             validateDeliveryTime(value){
+                if (value == ""){
+                     this.msg['deliveryTime'] = "";
+                 } else {
+                     this.msg['deliveryTime'] = 'Enter a valid time';
+                 }
+            }
+        }
+    }
+</script>
+
+<style lang="scss" scoped>
+.errorNotification {
+  color: red;
+}
+</style>
