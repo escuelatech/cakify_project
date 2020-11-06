@@ -26,7 +26,8 @@ const router = new VueRouter({
     {
       path: '/addcake',
       name: 'AddCakePage',
-      component: AddCakePage
+      component: AddCakePage,
+      meta: { requiresAuth: true }
     },
     {
       path: '/landingpage',

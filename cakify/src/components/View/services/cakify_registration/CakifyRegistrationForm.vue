@@ -1,212 +1,95 @@
 <template>
   <div>
-    <v-app id="inspire" class="app-background">
-      <v-row justify="space-around">
-        <v-card width="500" class="card" center>
-          <v-card-title>Bakery Sign-Up</v-card-title>
-          <section id="banner">
-            <div class="content text-justify">
-              <v-card-text>
-                <v-form ref="form" v-model="valid" @submit.prevent="submit">
-                  <v-container>
-                    <v-col>
-                      <v-text-field
-                        v-model="bakeryname"
-                        prepend-icon="mdi-store"
-                        :rules="nameRules"
-                        :counter="20"
-                        label="Bakery Name"
-                        required
-                        autocomplete="off"
-                      ></v-text-field>
-                    </v-col>
-
-                    <v-col>
-                      <v-text-field
-                        v-model="ownername"
-                        prepend-icon="mdi-account-circle"
-                        :rules="nameRules"
-                        :counter="20"
-                        label="Owner"
-                        required
-                        autocomplete="off"
-                      ></v-text-field>
-                    </v-col>
-
-                    <v-col>
-                      <v-text-field
-                        v-model="password"
-                        prepend-icon="mdi-lock"
-                        :append-icon="show2 ? 'mdi-eye' : 'mdi-eye-off'"
-                        :rules="passwordRules"
-                        :type="show2 ? 'text' : 'password'"
-                        label="Password"
-                        value=""
-                        @click:append="show2 = !show2"
-                        required="required"
-                        autocomplete="off"
-                      ></v-text-field>
-                    </v-col>
-
-                    <v-col>
-                      <v-text-field
-                        v-model="location"
-                        prepend-icon="mdi-map-marker"
-                        :rules="nameRules"
-                        :counter="20"
-                        label="Location"
-                        required
-                        autocomplete="off"
-                      ></v-text-field>
-                    </v-col>
-
-                    <v-col>
-                      <v-text-field
-                        v-model="phone"
-                        type="tel"
-                        :counter="12"
-                        prepend-icon="mdi-phone"
-                        :rules="phoneRules"
-                        label="Phone"
-                        required
-                        autocomplete="off"
-                      ></v-text-field>
-                    </v-col>
-
-                    <v-col>
-                      <v-text-field
-                        v-model="email"
-                        prepend-icon="mdi-email"
-                        :rules="emailRules"
-                        label="E-mail"
-                        required
-                        autocomplete="off"
-                      ></v-text-field>
-                    </v-col>
-
-                    <v-col>
-                      <v-textarea
-                        v-model="description"
-                        label=" Description"
-                        value=""
-                        prepend-icon="mdi-pen"
-                        :rules="descriptionRules"
-                        autocomplete="off"
-                      ></v-textarea>
-                    </v-col>
-
-                    <v-card-actions>
-                      <v-btn
-                        :disabled="!valid"
-                        tile
-                        outlined
-                        color="primary"
-                        class="mr-2"
-                        @click="submit"
-                      >
-                        Submit
-                      </v-btn>
-
-                      <v-btn
-                        tile
-                        outlined
-                        color=" success"
-                        class="mr-2"
-                        @click="reset"
-                      >
-                        Reset
-                      </v-btn>
-
-                      <v-btn
-                        tile
-                        outlined
-                        color=" warning"
-                        class="mr-2"
-                        @click="$router.push({ name: 'CakifyLoginPage' })"
-                      >
-                        Cancel
-                      </v-btn>
-                    </v-card-actions>
-                    <v-snackbar
-                      v-model="snackbar"
-                      :multi-line="multiLine"
-                      top
-                      center
-                    >
-                      {{ register }}
-                      <template v-slot:action="{ attrs }"
-                        ><v-btn
-                          color="red"
-                          text
-                          v-bind="attrs"
-                          @click="snackbar = false"
-                          >Close
-                        </v-btn></template
-                      >
-                    </v-snackbar>
-                  </v-container>
-                </v-form>
-              </v-card-text>
-            </div>
-          </section>
-        </v-card>
-      </v-row>
-    </v-app>
+   <form @submit.prevent="submitRegistration" >
+          <h3>Sign Up Your Bakery with Us</h3>
+        <div class="row gtr-uniform">
+         <div class="col-6 col-12-xsmall">
+         <input type="text" name="bakeryName" value placeholder="Bakery Name" v-model="bakeryname" autocomplete="off" required />
+         <span class="errNotific" v-if="validation.bakeryname">{{validation.bakeryname}}</span>
+         </div>
+          <div class="col-6 col-12-xsmall">
+         <input type="text" name="ownerName" value placeholder="Owner's Name" v-model="ownername" autocomplete="off" required />
+         <span class="errNotific" v-if="validation.ownername">{{validation.ownername}}</span>
+         </div>
+         <div class="col-6 col-12-xsmall">
+         <input type="password" name="password" value placeholder="Password" v-model="password" autocomplete="off" required />
+         <span class="errNotific" v-if="validation.password">{{validation.password}}</span>
+         </div>
+         <div class="col-6 col-12-xsmall">
+          <input type="text" name="phoneNumber" value placeholder="Phone " v-model="phone" autocomplete="off" required />
+          <span class="errNotific" v-if="validation.phone">{{validation.phone}}</span>
+         </div>
+         <div class="col-6 col-12-xsmall">
+          <input type="email" name="email" value placeholder="Email " v-model="email" autocomplete="off" required />
+          <span class="errNotific" v-if="validation.email">{{validation.email}}</span>
+         </div>
+         <div class="col-6 col-12-xsmall">
+          <input type="text" name="city" value placeholder="City/Town " v-model="city" autocomplete="off" required />
+          <span class="errNotific" v-if="validation.city">{{validation.city}}</span>
+         </div>
+          <div class="col-6 col-12-xsmall">
+              <label for="location">Select your location:</label>
+                  <select v-model="location">
+                    <option>Mavoor</option>
+                     <option>Mananchira</option>
+                      <option>Beach</option>
+                      <option>Thali</option>
+                  </select>
+         </div>
+         
+         <div class="col-6 col-12-xsmall">
+         <label for="location">Upload your bakery image:</label>
+         <div class="col-6 col-12-xsmall">
+          <input type="file" ref="uploadImage" @change="onImageUpload()" required>   
+             </div>
+          </div> 
+          <div class="col-6 col-12-xsmall">
+          <textarea name="description" placeholder="Write a short description about your Bakery" rows="6" v-model="description" required></textarea>
+          <span class="errNotific" v-if="validation.description">{{validation.description}}</span>
+          </div>                      
+            <div class="col-12">
+             <ul class="actions">
+            <li>
+              <input type="submit" value="Register" class="primary" />
+            </li>
+            <li>
+              <input type="reset" value="Reset" />
+            </li>
+          </ul>
+        </div>
+       
+        </div>
+       
+    </form>
   </div>
 </template>
 
 <script>
-import cakifyAdminService from "@/apiservices/cakifyAdminService.js";
-export default {
-  data() {
+import cakifyAdminService from "@/apiservices/cakifyAdminService.js"
+// import fileUploadService from "@/apiservices/fileUploadService.js"
+  export default {
+  data(){
     return {
-      valid: false,
-      snackbar: false,
-      bakeryname: "",
-      ownername: "",
-      password: "",
-      location: "",
-      phone: "",
-      email: "",
-      description: "",
-      show2: false,
-      multiLine: true,
-      register: "",
-
-      nameRules: [
-        (v) => !!v || "Bakery Name is required",
-        (v) =>
-          (v && v.length <= 20) ||
-          "Bakery Name must be less than 10 characters",
-      ],
-      passwordRules: [
-        (v) => !!v || "Password is required",
-        (v) =>
-          /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,12}$/.test(v) ||
-          "Password must be valid (need 6 to 12 characters, one digit, one uppercase)",
-      ],
-
-      emailRules: [
-        (v) => !!v || "E-mail is required",
-        (v) => /.+@.+/.test(v) || "E-mail must be valid",
-      ],
-      phoneRules: [
-        (v) => !!v || "Phone Number is required",
-
-        (v) => /^[0-9].{10,12}$/.test(v) || "Phone Number must be valid",
-      ],
-      descriptionRules: [
-        (v) => !!v || "Description is required",
-        (v) =>
-          (v && v.length <= 50) ||
-          "Description must be less than 50 characters",
-      ],
-    };
+    bakeryname:"",
+    ownername:"",
+    password:"",
+    phone:"",
+    email:"",
+    city:"",
+    location:"",
+    description:"",
+    validation:[]
+     }
   },
-  methods: {
-    submit() {
-      // ***code for connect with escuela database***//
-      cakifyAdminService
+ 
+  methods:{
+    // onImageUpload() {
+    //             let file = this.$refs.uploadImage.files[0];
+    //             this.formData = new FormData();
+    //             this.formData.append("file", file);
+    //         },
+    submitRegistration(){
+   cakifyAdminService
         .bakeryregister({
           bakeryname: this.bakeryname,
           ownername: this.ownername,
@@ -215,34 +98,112 @@ export default {
           phone: this.phone,
           email: this.email,
           description: this.description,
+          city:this.city
         }).then((response) => {
           this.snackbar = true;
           response.data;
-          this.register = response.data.data;
-        });
-      this.$refs.form.reset();
+          console.log(response.data)
+          this.registeredData = response.data.data;
+          // fileUploadService.uploadBakeryImage(this.formData,this.registeredData);
+
+        }).catch(error => {
+                    console.log('There was an error : ' + JSON.stringify(error))
+                });
+                this.registeredData="";
+            },
+
+        check_email(value) {
+      
+        // eslint-disable-next-line no-useless-escape
+        if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(value)) {
+          this.validation["email"] = "";
+        } else {
+          this.validation["email"] = "Enter a valid email";
+        }
+      
     },
-    reset() {
-      this.$refs.form.reset();
+    check_bakeryname(value) {
+      if (value == "") {
+        this.validation["bakeryname"] = "Enter your bakery name";
+      } else {
+        this.validation["bakeryname"] = "";
+      }
     },
-    resetValidation() {
-      this.$refs.form.resetValidation();
+     check_ownername(value) {
+      if (value == "") {
+        this.validation["ownername"] = "Enter bakery owner's name";
+      } else {
+        this.validation["ownername"] = "";
+      }
+    },
+    check_password(value) {
+      if (/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,12}$/.test(value)) {
+        this.validation["password"] = "";
+      } else {
+        this.validation["password"] =
+          "Password must be valid (need 6 to 12 characters, one digit, one uppercase).";
+      }
+    },
+     check_city(value) {
+      if (value == "") {
+        this.validation["city"] = "Enter the city or Town where bakery resides";
+      } else {
+        this.validation["city"] = "";
+      }
+    },
+     check_phone(value) {
+      if (value.length >= "10" && value.length <= "15") {
+        this.validation["phone"] = " ";
+      } else {
+        this.validation["phone"] = "Enter your valid Mobile Number";
+      }
+    },
+     check_description(value) {
+       if (value == "") {
+        this.validation["description"] = "please fill the description ";
+      } else {
+        this.validation["description"] = "";
+      }
+    }
+   
+     
+  },
+  
+  watch:{
+    email(value) {
+      this.email = value;
+      this.check_email(value);
+    },
+    bakeryname(value) {
+      this.bakeryname = value;
+      this.check_bakeryname(value);
+    },
+    ownername(value) {
+      this.ownername = value;
+      this.check_ownername(value);
+    },
+    password(value) {
+      this.password = value;
+      this.check_password(value);
+    },
+     city(value) {
+      this.city = value;
+      this.check_city(value);
+    },
+      phone(value) {
+      this.phone = value;
+      this.check_phone(value);
+    },
+    description(value) {
+      this.description = value;
+      this.check_description(value);
     },
   },
-};
+  
+    
+  }
 </script>
 
 <style lang="scss" scoped>
-.app-background {
-  background: rgba(0, 0, 0, 0);
-  background-image: url("https://food.fnr.sndimg.com/content/dam/images/food/fullset/2019/9/6/FNM_100119-Black-Chocolate-Cake_s4x3.jpg.rend.hgtvcom.476.357.suffix/1567792790823.jpeg");
-  background-size: cover;
-}
-.card {
-  background-color: white !important;
-  opacity: 0.85;
-  border-color: transparent !important;
-  margin-top: 50px;
-  margin-bottom: 50px;
-}
+
 </style>

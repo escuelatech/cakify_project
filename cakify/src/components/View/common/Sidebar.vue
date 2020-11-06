@@ -23,7 +23,7 @@
                     <router-link @click="handleRouterLinkClick" :to="{ name: 'CakifyRegistrationPage' }">REGISTER</router-link>
                 </li> 
 
-                <li>
+                <li v-show="isAuthenticated">
                     <router-link @click="handleRouterLinkClick" :to="{ name: 'AddCakePage' }">ADD CAKE</router-link>
                 </li>
 
