@@ -2,7 +2,7 @@
 <header id="header">
     <a href="index.html" class="logo">
         <!--<a href="#" class="logo"><img src="@/assets/images/pranama_log_2.jpeg" alt="" height="50" /> -->
-        <h3>CAKIFY</h3>
+        <h3>BAKER'S PORTAL</h3>
     </a>
     <strong v-show="isAuthenticated">{{loggedinUserName}}</strong>
 
@@ -17,7 +17,7 @@
                 Login
             </button>
         </li>
-        <li>
+        <!--<li>
             <a href="#" class="icon brands fa-twitter">
                 <span class="label">Twitter</span>
             </a>
@@ -41,7 +41,7 @@
             <a href="#" class="icon brands fa-medium-m">
                 <span class="label">Medium</span>
             </a>
-        </li>
+        </li>-->
     </ul>
 
 </header>
