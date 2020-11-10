@@ -1,5 +1,5 @@
 <template>
-<div id="sidebar" @click="handleSidebarClick" :class="{ inactive: isSidebarInactive, 'no-transition': hideTransition }">
+<div id="sidebar" @click="handleSidebarClick" :class="{ inactive: isSidebarInactive, 'no-transition': hideTransition }" v-show="isAuthenticated">
     <a href="#sidebar" @click="handleToggle" class="toggle">Toggle</a>
     <div @click="isSidebarInactive = true" class="mobile-backdrop"></div>
     <div class="inner">
@@ -11,7 +11,7 @@
         </section>
 
         <!-- Menu -->
-        <nav id="menu">
+        <nav id="menu" >
             <header class="major">
                 <h2>Menu</h2>
             </header>
@@ -19,7 +19,7 @@
                 <li>
                     <router-link @click="handleRouterLinkClick" :to="{ name: 'LandingPage' }">Dashboard</router-link>
                 </li> 
-                <li>
+                <li v-show="!isAuthenticated">
                     <router-link @click="handleRouterLinkClick" :to="{ name: 'CakifyRegistrationPage' }">REGISTER</router-link>
                 </li> 
 

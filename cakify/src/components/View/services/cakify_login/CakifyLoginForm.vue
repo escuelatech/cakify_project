@@ -114,7 +114,7 @@ import { mapActions } from "vuex";
           password: this.password
         });
         this.sendingSuccessful = true;
-        this.$router.push({ name: "AddCakePage" }).catch(err => console.log(err));
+        this.$router.push({ name: "LandingPage" }).catch(err => console.log(err));
       } catch (error) {
         this.sendingSuccessful = false;
         this.error = true;

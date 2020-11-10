@@ -29,11 +29,7 @@
                 </div>
             </section>
 					
-            <div class="row">
-                <div class="col-4 col-12-small">
-                    <input type="button"  value="Our Offered Services" class="primary"  @click="$router.push({name: 'OurOfferedServices'})" />
-                </div>
-            </div>
+         
             <div>
                 
             </div>
