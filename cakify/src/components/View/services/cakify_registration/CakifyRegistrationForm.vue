@@ -1,6 +1,14 @@
 <template>
   <div>
-   <form @submit.prevent="submitRegistration" >
+ <!--<div class ="row" v-show="userRegistrationSuccessful">
+   <div class= "col">
+     <div class= "alert show alertmsg" role="alert" >
+     <Timercount ref="child"/>
+   </div>
+   </div>
+  </div>-->
+
+   <form @submit.prevent="submitRegistration" v-show="!bakeryRegSuccessMsg">
           <h3>Sign Up Your Bakery with Us</h3>
         <div class="row gtr-uniform">
          <div class="col-6 col-12-xsmall">
@@ -23,7 +31,7 @@
           <input type="email" name="email" value placeholder="Email " v-model="email" autocomplete="off" required />
           <span class="errNotific" v-if="validation.email">{{validation.email}}</span>
          </div>
-         <div class="col-6 col-12-xsmall">
+        <div class="col-6 col-12-xsmall">
           <input type="text" name="city" value placeholder="City/Town " v-model="city" autocomplete="off" required />
           <span class="errNotific" v-if="validation.city">{{validation.city}}</span>
          </div>
@@ -37,7 +45,7 @@
                   </select>
          </div>
          
-         <div class="col-6 col-12-xsmall">
+       <div class="col-6 col-12-xsmall">
          <label for="location">Upload your bakery image:</label>
          <div class="col-6 col-12-xsmall">
           <input type="file" ref="uploadImage" @change="onImageUpload()" required>   
@@ -61,12 +69,19 @@
         </div>
        
     </form>
+     <div v-show="bakeryRegSuccessMsg">
+      <Message />
+    </div>
+     <div class="box" v-show="isError">
+      <h3>{{errorMessage}}</h3>
+    </div>
   </div>
 </template>
 
 <script>
 import cakifyAdminService from "@/apiservices/cakifyAdminService.js"
-// import fileUploadService from "@/apiservices/fileUploadService.js"
+import Message from '@/components/View/common/Message.vue';
+import fileUploadService from "@/apiservices/fileUploadService.js"
   export default {
   data(){
     return {
@@ -78,16 +93,19 @@ import cakifyAdminService from "@/apiservices/cakifyAdminService.js"
     city:"",
     location:"",
     description:"",
-    validation:[]
+    validation:[],
+    bakeryRegSuccessMsg:false,
+    isError:false,
+    errorMessage:""
      }
   },
- 
+ components:{Message},
   methods:{
-    // onImageUpload() {
-    //             let file = this.$refs.uploadImage.files[0];
-    //             this.formData = new FormData();
-    //             this.formData.append("file", file);
-    //         },
+    onImageUpload() {
+                let file = this.$refs.uploadImage.files[0];
+                this.formData = new FormData();
+                this.formData.append("file", file);
+            },
     submitRegistration(){
    cakifyAdminService
         .bakeryregister({
@@ -104,12 +122,23 @@ import cakifyAdminService from "@/apiservices/cakifyAdminService.js"
           response.data;
           console.log(response.data)
           this.registeredData = response.data.data;
-          // fileUploadService.uploadBakeryImage(this.formData,this.registeredData);
+          console.log( this.registeredData );
+          console.log(JSON.stringify(this.email));
+         
+           fileUploadService.uploadBakeryImage(this.formData,this.email);
+           
+          // this.bakeryRegSuccessMsg = true;
+          // this.isError = false;
+          //  this.$store.dispatch('addBakeryRegMessage');
 
         }).catch(error => {
-                    console.log('There was an error : ' + JSON.stringify(error))
+                     this.isError=true;
+                     this.bakeryRegSuccessMsg = false;
+                    // console.log('There was an error : ' + JSON.stringify(error))
+                    return(this.errorMessage= JSON.stringify(
+            error.response.data.errorMessage))
                 });
-                this.registeredData="";
+               
             },
 
         check_email(value) {

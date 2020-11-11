@@ -6,7 +6,7 @@ export default {
 }
 
 function upload(formData,uuid) {
-    console.log("Upload started ..... "+uuid);
+    console.log("Upload started ..... ");
     console.log('file', formData);
     axios({
       url: 'https://escuelatech.com/api/cakes/upload',
@@ -16,6 +16,7 @@ function upload(formData,uuid) {
         Accept: 'application/json',
         'Content-Type': 'multipart/form-data',
         'uuid':uuid
+        
       },
     }).then(response =>{
       console.log(JSON.stringify(response.data));
@@ -23,20 +24,27 @@ function upload(formData,uuid) {
 
 }
 
-function uploadBakeryImage(formData,uuid) {
-  console.log("Upload started ..... "+uuid);
+function uploadBakeryImage(formData,email) {
+ 
+  console.log(email , "printing email");
+  console.log("Upload started ..... ");
   console.log('file', formData);
   axios({
-    url: 'https://escuelatech.com/api/cakes/upload',
+    url: 'https://escuelatech.com/api/bakery/logoupload',
     method: 'POST',
     data: formData,
     headers: {
       Accept: 'application/json',
       'Content-Type': 'multipart/form-data',
-      'uuid':uuid
+      // 'uuid':uuid
+      'bakeryEmail':email,
+     
     },
+   
+    
   }).then(response =>{
     console.log(JSON.stringify(response.data));
+    // this.$store.dispatch('addBakeryRegMessage');
   });
 
 }
