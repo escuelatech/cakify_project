@@ -7,9 +7,6 @@ export default {
 
 function upload(formData,uuid) {
     console.log("Upload started ..... "+uuid);
-    formData.append('action', 'ADD');
-    formData.append('param', 0);
-    formData.append('secondParam', 0);
     console.log('file', formData);
     axios({
       url: 'https://escuelatech.com/api/cakes/upload',
@@ -28,9 +25,6 @@ function upload(formData,uuid) {
 
 function uploadBakeryImage(formData,uuid) {
   console.log("Upload started ..... "+uuid);
-  formData.append('action', 'ADD');
-  formData.append('param', 0);
-  formData.append('secondParam', 0);
   console.log('file', formData);
   axios({
     url: 'https://escuelatech.com/api/cakes/upload',

@@ -28,8 +28,8 @@
           <span class="errNotific" v-if="validation.city">{{validation.city}}</span>
          </div>
           <div class="col-6 col-12-xsmall">
-              <label for="location">Select your location:</label>
-                  <select v-model="location">
+              <label for="location" >Select your location:</label>
+                  <select v-model="location" class="boxBorder">
                     <option>Mavoor</option>
                      <option>Mananchira</option>
                       <option>Beach</option>
@@ -44,7 +44,7 @@
              </div>
           </div> 
           <div class="col-6 col-12-xsmall">
-          <textarea name="description" placeholder="Write a short description about your Bakery" rows="6" v-model="description" required></textarea>
+          <textarea class="boxBorder" name="description" placeholder="Write a short description about your Bakery" rows="6" v-model="description" required></textarea>
           <span class="errNotific" v-if="validation.description">{{validation.description}}</span>
           </div>                      
             <div class="col-12">
