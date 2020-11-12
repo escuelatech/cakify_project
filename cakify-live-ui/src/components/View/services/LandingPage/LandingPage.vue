@@ -31,6 +31,7 @@
                     <p>
                         Lorem ipsum dolor sit amet consectetur adipisicing elit. Commodi, distinctio neque repudiandae amet eum harum mollitia natus impedit rem voluptatum non exercitationem quidem reiciendis quae tempore tempora nihil dolor corporis dolorum, repellat recusandae velit. Eveniet adipisci nisi minus est porro veritatis fugiat tempore fugit nulla natus amet doloremque eligendi voluptates suscipit consequuntur assumenda reprehenderit, aspernatur ullam. Vero facilis odio debitis incidunt assumenda distinctio laboriosam neque animi quidem nulla repellendus magni, quae laudantium consequatur, accusamus harum doloribus corporis quas ducimus asperiores cum, sapiente exercitationem. Et a debitis, facilis, hic porro deserunt explicabo cum odit quasi ea asperiores illum vel, sed pariatur!
                     </p>
+                    <button @click="showcakes()">click</button>
                     <div class="box alt">
                         <div class="row gtr-50 gtr-uniform">
                             <div class="col-4" v-for="cake in displayFirstNineCakes" :key="cake.cakeId">
@@ -41,6 +42,7 @@
                         </div>
                     </div>
                      <v-btn tile outlined color="success" class="mr-2">Continue</v-btn>
+
                 </div>
                     <!-- </section> -->
             <!-- Form -->
@@ -83,7 +85,8 @@ export default {
                 .catch(error => {
                     console.log('Error when displaying cakes in a grid: ', error.response);
                 })
-        }
+        },
+       
     },
     computed: {
         displayFirstNineCakes() {

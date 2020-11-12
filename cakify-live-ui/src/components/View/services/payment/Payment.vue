@@ -19,7 +19,7 @@
                         <tr>
                             <td>{{cakeDetails.cakeName}}</td>
                             <td>{{orderDetails.kilograms}} x {{cakeDetails.cakePrice}}</td>
-                            <td>{{cakeTotalPrice}}</td>
+                            <td><i class="fas fa-rupee-sign"></i><b>{{cakeTotalPrice.toFixed(2)}}</b></td>
                         </tr>
                         <tr>
                             <td>How many kgs</td>
@@ -29,7 +29,7 @@
                         <tr  v-if="orderDetails.eggless == 'yes'">
                             <td>Eggless Option selected</td>
                             <td>{{orderDetails.kilograms}} x 100.00</td>
-                            <td>{{orderDetails.kilograms * 100.00}}</td>
+                            <td><i class="fas fa-rupee-sign"></i><b>{{(orderDetails.kilograms * 100).toFixed(2)}}</b></td>
                         </tr>
                         <tr>
                             <td>Date of delivery</td>
@@ -67,7 +67,7 @@
                     <tfoot>
                         <tr>
                             <td colspan="2">Total Amount</td>
-                            <td>{{totalAmount}}</td>
+                            <td><i class="fas fa-rupee-sign"></i><b>{{totalAmount.toFixed(2)}}</b></td>
                         </tr>
                     </tfoot>
                 </table>

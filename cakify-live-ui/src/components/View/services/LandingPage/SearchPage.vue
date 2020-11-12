@@ -29,22 +29,38 @@
                         lets them know you're thinking about them and wish you could be there. The heartfelt gesture is something that will be remembered forever.
                     </p>
                     <!-- </section> -->
+                    <button @click="showBakeries()">Show Bakery</button>
+                    <!-- <button @click="showCakes()">Show Cakes</button> -->
                     <form>
                         <div>
-                           <select v-model="selectedBakeryLocation">
+                           <!-- <select v-model="selectedBakeryLocation">
                                 <option disabled value="">Select your location</option>
                                 <option v-for="location in bakeryList" :key="location" :value="location">
                                     {{ location.location }}
                                 </option>
-                            </select>
-                            <p>{{selectedBakeryLocation}}</p>
+                            </select> 
+                            <p>{{selectedBakeryLocation}}</p>-->
                             <div class="box alt">
-                                <div class="row gtr-50 gtr-uniform" v-if="selectedBakeryLocation">
-                                    <div class="col-4" >
+                                <!-- v-if="selectedBakeryLocation" -->
+                                <div class="row gtr-50 gtr-uniform" >
+                                    <div class="col-4" v-for="bakery in bakeryList" :key="bakery.bakeryId">
+                                         <span class="image fit">
+                                            <img 
+                                                :src="bakery.bakeryLogo" 
+                                                alt="bakery.bakeryname" 
+                                                @click="$router.push({name: 'CakeListByBakery', params: {bakeryEmail: bakery.email}})"
+                                            >
+                                            <p>{{bakery.bakeryname}}</p>
+                                        </span>
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="box alt">
+                                <div class="row gtr-50 gtr-uniform">
+                                    <div class="col-4" v-for="cake in cakeList" :key="cake.cakeId">
                                         <span class="image fit">
-                                            <img :src="selectedBakeryLocation.image" alt="">
-                                            <p>{{selectedBakeryLocation.name}}</p>
-                                            <p>{{selectedBakeryLocation.location}}</p>
+                                            <img :src="cake.cakeImage" alt="" @click="$router.push({name: 'CakeDetails', params: {cakeId: cake.cakeId}})">
                                         </span>
                                     </div>
                                 </div>
@@ -68,8 +84,8 @@
 <script>
 import Header from "@/components/View/common/Header";
 import Sidebar from "@/components/View/common/Sidebar";
-// import cakifyAdminService from "@/apiservices/cakifyAdminService.js";
-import axios from 'axios'
+import cakifyAdminService from "@/apiservices/cakifyAdminService.js";
+// import axios from 'axios'
 
 export default {
     components: { 
@@ -78,29 +94,39 @@ export default {
     },
     data(){
         return {
-            selectedBakeryLocation: '',
-            // locations: ['Calicut', 'Kannur', 'Malappuram', 'Palakkad', 'Kochi'],
-            // bakery: [
-            //     {bakeryId: 1, bakeryName: 'Paige bakery', location: 'Kochi', image: 'https://images.unsplash.com/photo-1578985545062-69928b1d9587?ixlib=rb-1.2.1&w=1000&q=80'},
-            //     {bakeryId: 2, bakeryName: 'Cakes cupcakes and more', location: 'Palakkad', image: 'https://images.unsplash.com/photo-1578985545062-69928b1d9587?ixlib=rb-1.2.1&w=1000&q=80'},
-
-            //     ],
-            bakeryList: []
+            // selectedBakeryLocation: '',
+            bakeryEmail: '',
+            bakeryList: [],
+            cakeList: []
         }
     },
     mounted(){
-        this.displayBakeries();
+        // this.displayBakeries();
     },
     methods: {
-        displayBakeries(){
-            axios.get('http://localhost:3000/bakeries')
-            .then(response => {
-                this.bakeryList = response.data
-                console.log('bakery list', this.bakeryList)
-            })
-            .catch(error => {
-                console.log('error', error)
-            })
+        // displayBakeries(){
+        //     axios.get('http://localhost:3000/bakeries')
+        //     .then(response => {
+        //         this.bakeryList = response.data
+        //         console.log('bakery list', this.bakeryList)
+        //     })
+        //     .catch(error => {
+        //         console.log('error', error)
+        //     })
+        // },
+        //  showCakes(){
+        //     cakifyAdminService.getCakeListFromSelectedBakery(this.bakeryEmail)
+        //         .then(response => {
+        //             this.cakeList = response.data.data;
+        //             console.log('cake list:' ,this.cakeList)
+        //         })
+        // },
+        showBakeries(){
+            cakifyAdminService.getBakeriesByLocation('Mavoor')
+                .then(response => {
+                    this.bakeryList = response.data.data;
+                    console.log('Bakery list: ', this.bakeryList)
+                })
         }
 
         // displayBakeries() {
@@ -115,5 +141,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
+.image {
+	cursor: pointer;
+}
 </style>

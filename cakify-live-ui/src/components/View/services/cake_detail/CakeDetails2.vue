@@ -62,7 +62,7 @@
                      <span class="errorNotification" v-if="msg.dateOfDelivery">{{msg.dateOfDelivery}}</span>
                 </div>
                  <div class="col-6 col-12-xsmall">
-                     <select name="time" id="time" v-model="deliveryTime" required>
+                     <select name="deliveryTime" id="deliveryTime" v-model="deliveryTime" required>
                          <option value="" disabled>Select a delivery time</option>
                          <option v-for="dTime in time" :key="dTime" :value="dtime">{{dTime}}</option>
                      </select>
