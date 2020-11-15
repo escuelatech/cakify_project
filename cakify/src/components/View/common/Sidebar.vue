@@ -16,7 +16,7 @@
                 <h2>Menu</h2>
             </header>
             <ul>
-                <li>
+                <li v-show="isAuthenticated">
                     <router-link @click="handleRouterLinkClick" :to="{ name: 'LandingPage' }">Dashboard</router-link>
                 </li> 
                 <li v-show="!isAuthenticated">

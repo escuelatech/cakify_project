@@ -11,7 +11,7 @@ const mutations = {
   LOGIN_REQUEST (state, token) {
     state.status = { loggingIn: true};
     state.token = token;
-  },
+     },
   LOGIN_SUCCESS (state, token) {
     state.status = { loggedIn: true,userEmail: loggedInUserEmail };
     state.token = token;
@@ -23,6 +23,7 @@ const mutations = {
   LOGOUT (state) {
     state.status = {};
     state.token = null;
+   
   }
 }
 
