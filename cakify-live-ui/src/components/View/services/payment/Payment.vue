@@ -1,11 +1,12 @@
 <template>
     <div>
         <h3>Payment</h3>
+       
         <div class="box">
             <p>Here is your order details. You will be redirected to our payment portal. Please be ready with your bank details to complete your transaction.</p>
-            <p>Want to change something in your order? You can do that <a href="" @click="$router.go(-1)">here</a>.</p>
+            <p>Want to change something in your order? You can do that <a href="">here</a>.</p>
             <p>Thank You for using Cakify!</p>
-
+            <template v-if="!processing">
             <div class="table-wrapper">
                 <table class="alt">
                     <thead>
@@ -72,22 +73,36 @@
                     </tfoot>
                 </table>
             </div>
-            <img src="@/assets/images/images-payment.png" alt=""  @click="proceedToCheckout" class="payment image fit">
-        </div>
-        
-         
+            </template>
+            <div v-else class="col-6 col-12-xsmall loading">
+                <!-- <Spinner :centered="true" size="80" /> -->
+                <img src="@/assets/images/500_F_220806337_SoV972QDGS9kdIydMElimDrcVwL1CNrU.jpg" class="loadingImage" />
+            </div>
+            <img 
+                src="@/assets/images/images-payment.png" 
+                alt=""  
+                @click="proceedToCheckout" 
+                class="payment image" 
+            >
+        </div>     
     </div>
 </template>
 
 <script>
+// import Spinner from "@/components/UI/Spinner";
+
     export default {
+        components: {
+            // Spinner
+        },
         data(){
             return {
                 paymentUrl: '',
                 cakeDetails: '',
                 orderDetails: '',
                 totalAmount: null,
-                cakeTotalPrice: null
+                cakeTotalPrice: null,
+                processing: false,
             }
         },
         created(){
@@ -101,6 +116,7 @@
         },
         methods: {
             proceedToCheckout(){
+                this.processing = true;
                 window.location.href=this.paymentUrl;
             },
             calculateTotalCakePrice(){
@@ -112,7 +128,7 @@
                 } else {
                     this.totalAmount = (this.cakeDetails.cakePrice * this.orderDetails.kilograms);
                 }  
-            }
+            },
         }
         
     }
@@ -121,6 +137,24 @@
 <style lang="scss" scoped>
 .payment {
     cursor: pointer;
+}
+.loading {
+  min-height: 170px;
+  position: relative;
+
+  .spinner {
+    left: 20%;
+  }
+  .loadingImage {
+      animation-name: image;
+      animation-duration: 0.2s;
+      animation-iteration-count: 5;
+  }
+
+  @keyframes image{
+      from {opacity: 20%}
+      to {opacity: 100%}
+  }
 }
 
 </style>

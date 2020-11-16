@@ -1,147 +1,143 @@
 <template>
 <div>
-    <!-- Wrapper -->
-    <div id="wrapper">
-      <!-- Main -->
-        <div id="main">
-            <div class="inner">
-            <!-- Header -->
-            <Header />
-            <!-- Header -->
-            <!-- Form -->
-            <!-- <section> -->
-                <div class="text-justify">
-                <!-- Section -->
-                    <span class="image fit">
-                        <img src="@/assets/images/image.jpg" alt="">
-                    </span>
-                    <p>
-                        A cake makes a great gift, especially for a birthday. It is an honor to receive a birthday cake from someone you love. 
-                        A cake delivery is a heartfelt gesture, and ordering a cake online is easy. 
-                        Send a cake now to make your loved ones day extra special.
-                    </p>
-                    <p>
-                        With our online cake delivery, you can order a cake and have it delivered to them whether you're near or far.
-                    </p>
-                    <p>
-                        We have many loyal customers who have been ordering from us year after year, and for this we are very grateful. We appreciate that they trust us to help make their
-                        loved ones feel special with a cake delivery. Special occasions are important, and when you can't be with your loved ones it can be difficult. Sending them a cake 
-                        lets them know you're thinking about them and wish you could be there. The heartfelt gesture is something that will be remembered forever.
-                    </p>
-                    <!-- </section> -->
-                    <button @click="showBakeries()">Show Bakery</button>
-                    <!-- <button @click="showCakes()">Show Cakes</button> -->
-                    <form>
-                        <div>
-                           <!-- <select v-model="selectedBakeryLocation">
-                                <option disabled value="">Select your location</option>
-                                <option v-for="location in bakeryList" :key="location" :value="location">
-                                    {{ location.location }}
-                                </option>
-                            </select> 
-                            <p>{{selectedBakeryLocation}}</p>-->
-                            <div class="box alt">
-                                <!-- v-if="selectedBakeryLocation" -->
-                                <div class="row gtr-50 gtr-uniform" >
-                                    <div class="col-4" v-for="bakery in bakeryList" :key="bakery.bakeryId">
-                                         <span class="image fit">
-                                            <img 
-                                                :src="bakery.bakeryLogo" 
-                                                alt="bakery.bakeryname" 
-                                                @click="$router.push({name: 'CakeListByBakery', params: {bakeryEmail: bakery.email}})"
-                                            >
-                                            <p>{{bakery.bakeryname}}</p>
-                                        </span>
-                                        
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="box alt">
-                                <div class="row gtr-50 gtr-uniform">
-                                    <div class="col-4" v-for="cake in cakeList" :key="cake.cakeId">
-                                        <span class="image fit">
-                                            <img :src="cake.cakeImage" alt="" @click="$router.push({name: 'CakeDetails', params: {cakeId: cake.cakeId}})">
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                        </div>
-                    </form>
-                </div>
-            <!-- Form -->
-            </div>
+    <section id="banner">
+        <div class="content text-justify">
+            <p>
+                A cake makes a great gift, especially for a birthday. It is an honor to receive a birthday cake from someone you love. 
+                A cake delivery is a heartfelt gesture, and ordering a cake online is easy. 
+                Send a cake now to make your loved ones day extra special.
+            </p>
+            <p>
+                With our online cake delivery, you can order a cake and have it delivered to them whether you're near or far.
+            </p>
+            <p>
+                We have many loyal customers who have been ordering from us year after year, and for this we are very grateful. We appreciate that they trust us to help make their
+                loved ones feel special with a cake delivery. Special occasions are important, and when you can't be with your loved ones it can be difficult. Sending them a cake 
+                lets them know you're thinking about them and wish you could be there. The heartfelt gesture is something that will be remembered forever.
+            </p>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque tenetur accusantium labore id dolor atque laborum modi ipsa corrupti illum, ad sed non nam. Ut nemo saepe esse. Maxime veniam pariatur excepturi minus asperiores neque a? Nesciunt, impedit labore atque quia consequuntur dicta necessitatibus autem reiciendis iure id totam modi.</p>
         </div>
-      <!-- Main ends -->
-
-      <!-- Sidebar -->
-      <Sidebar />
-      <!-- Sidebar -->
-    </div>
+            <span class="image object">
+                    <Slider />
+            </span>
+    </section>
+    <section>
+        <div>
+            <form>
+                <div class="row gtr-uniform">
+                    <div class="col-6 col-12-xsmall">
+                        <select 
+                            v-model="selectedBakeryLocation" 
+                            class="col-12 col-12-xsmall" 
+                            @change="onChange(selectedBakeryLocation)"
+                        >
+                            <option value="null" disabled >Select location</option>
+                            <option v-for="location in locations" :key="location.locationId" :value="location">
+                                {{ location.locationName }}
+                            </option>
+                        </select> 
+                    </div>
+                    <div class="col-6 col-12-xsmall">
+                        <select 
+                            v-if="selectedBakeryLocation"
+                            v-model="selectedTown" 
+                            class="col-12 col-12-xsmall"
+                            @change="getTownName(selectedTown)"
+                            
+                        >
+                            <option value="null" disabled >Select town</option>
+                            <option 
+                                v-for="town in towns" 
+                                :key="town.townId" 
+                                :value="town" 
+                            >
+                                {{ town.townName }}
+                            </option>
+                        </select> 
+                    </div>
+                </div>
+            </form>
+        </div>
+    </section>
+    <!-- <div v-show="displayBakery">
+        <BakeryPage :town="townName" />
+    </div> -->
+      
 </div>
 </template>
 
 <script>
-import Header from "@/components/View/common/Header";
-import Sidebar from "@/components/View/common/Sidebar";
+// import BakeryPage from "@/components/View/services/LandingPage/BakeryPage.vue"
 import cakifyAdminService from "@/apiservices/cakifyAdminService.js";
-// import axios from 'axios'
+import Slider from "@/components/View/services/slider/Slider.vue";
 
 export default {
     components: { 
-        Header, 
-        Sidebar  
+        Slider,
+        // BakeryPage
     },
     data(){
         return {
-            // selectedBakeryLocation: '',
+            selectedBakeryLocation: null,
+            selectedTown: null,
+            selectedLocation: null,
+            townName:null,
             bakeryEmail: '',
             bakeryList: [],
-            cakeList: []
+            cakeList: [],
+            locations: [],
+            towns: [],
         }
     },
     mounted(){
-        // this.displayBakeries();
+        this.displayLocations();
     },
     methods: {
-        // displayBakeries(){
-        //     axios.get('http://localhost:3000/bakeries')
-        //     .then(response => {
-        //         this.bakeryList = response.data
-        //         console.log('bakery list', this.bakeryList)
-        //     })
-        //     .catch(error => {
-        //         console.log('error', error)
-        //     })
-        // },
-        //  showCakes(){
-        //     cakifyAdminService.getCakeListFromSelectedBakery(this.bakeryEmail)
-        //         .then(response => {
-        //             this.cakeList = response.data.data;
-        //             console.log('cake list:' ,this.cakeList)
-        //         })
-        // },
-        showBakeries(){
-            cakifyAdminService.getBakeriesByLocation('Mavoor')
+        displayLocations(){
+            cakifyAdminService.getLocations()
                 .then(response => {
-                    this.bakeryList = response.data.data;
-                    console.log('Bakery list: ', this.bakeryList)
+                    this.locations = response.data.data;
+                    console.log('Locations: ', this.locations)
+                   
                 })
-        }
+                .catch(error => {
+                    console.log('Error in location api: ', error.response)
+                })
+        },
+        displayTowns(){
+            cakifyAdminService.getBakeryTowns(this.selectedLocation)
+               .then(response => {
+                    this.towns = response.data.data;
+                    console.log('towns: ', this.towns)
+                })
+                .catch(error => {
+                    console.log('Error in towns api: ', error.response)
+                })  
+        },
+        onChange(value){
+            console.log('onchange event', value.locationId);
+            this.selectedLocation = value.locationId;   
+            this.displayTowns();
+        },
+        getTownName(value){
+            console.log('town name in search page: ', value.townName);
+            this.townName = value.townName;
+            this.$router.push({name: 'BakeryPage', params: {name: this.townName}});
 
-        // displayBakeries() {
-        //     cakifyAdminService.getBakeries(this.selectedBakeryLocation)
-        //         .then(response => {
-        //             this.bakeryList = response.data;
-        //             console.log(this.bakeryList)
-        //         })
-        // }
-    }
+        }
+    },
+    
 };
 </script>
 
 <style lang="scss" scoped>
 .image {
 	cursor: pointer;
+    max-width: 100%;
+    height: 100%;
+    width: auto;
+}
+select {
+    height: 50px;
 }
 </style>

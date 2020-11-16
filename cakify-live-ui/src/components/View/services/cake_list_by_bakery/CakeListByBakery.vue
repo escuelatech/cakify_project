@@ -1,6 +1,6 @@
 <template>
     <div>
-        <h1>Cake</h1>
+        <!-- <h1>Cake</h1>
          <div class="box alt">
             <div class="row gtr-50 gtr-uniform">
                 <div class="col-4" v-for="cake in cakeList" :key="cake.cakeId">
@@ -9,7 +9,21 @@
                     </span>
                 </div>
             </div>
-        </div>
+        </div> -->
+        <section>
+                    <div class="posts">
+                        <article v-for="cake in cakeList" :key="cake.cakeId">
+                            <a href="#" class="image">
+                                <img height="300" width="150"
+                                    :src="cake.cakeImage" alt="" />
+                            </a>
+                            <h3>{{cake.cakeName}}</h3>
+                            <p>Price:   <i class="fas fa-rupee-sign"></i>{{cake.cakePrice}}</p>
+                            <p>{{cake.description}}</p>
+                            <button class="primary" @click="$router.push({name: 'CakeDetails', params: {cakeId: cake.cakeId}})">View</button> 
+                        </article>
+                    </div>
+                </section>
     </div>
 </template>
 
@@ -48,4 +62,5 @@ import cakifyAdminService from "@/apiservices/cakifyAdminService.js";
 .image {
 	cursor: pointer;
 }
+
 </style>

@@ -57,13 +57,16 @@
                                 required
                             >
                             </v-text-field>
-                            <v-text-field
-                                label="Delivery Date"
-                                v-model="dateOfDelivery"
+                            <select 
+                                v-model="date" 
                                 :rules="deliveryDateRules"
-                                required
+                                @change="getDates(date)"
                             >
-                            </v-text-field>
+                                <option value="null" disabled >Select Date</option>
+                                <option v-for="date in dates" :key="date" :value="date.date">
+                                    {{ town.expandedDate }}
+                                </option>
+                            </select>
                             <v-text-field
                                 label="Delivery Time"
                                 v-model="deliveryTime"
@@ -140,7 +143,9 @@ import cakifyAdminService from "@/apiservices/cakifyAdminService.js";
                     'No'
                 ],
                 valid: '',
-                paymentUrl: ''
+                paymentUrl: '',
+                dates: '',
+                date: ''
             }
         },
         created() {
@@ -163,6 +168,19 @@ import cakifyAdminService from "@/apiservices/cakifyAdminService.js";
             addToCart(){
                 console.log('add to cart method');
             },
+            allowedDates(){
+                cakifyAdminService.getDates()
+                .then(response => {
+                    this.dates = response.data.data;
+                    console.log('Date: ', this.dates)
+                })
+            },
+
+            getDates(value){
+                this.dateOfDelivery = value.date;
+                console.log(this.dateOfDelivery);
+            },
+
             buyNow() {
                 cakifyAdminService.buyNow({
                     cakeId: this.cake.cakeId,

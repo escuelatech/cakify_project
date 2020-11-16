@@ -7,9 +7,9 @@
                 <h6><b>Description: </b>{{cake.description}}</h6>
                 <h6><b>Type of cake: </b>{{cake.cakeType}}</h6>
             </div>
-            <div class="col-6 col-12-xsmall">
+            <!-- <div class="col-6 col-12-xsmall">
                 <img :src="cake.cakeImage" alt="" width="200" height="250">
-            </div>
+            </div> -->
             
         </div>
         <br>
@@ -52,19 +52,23 @@
                     >
                      <span class="errorNotification" v-if="msg.address">{{msg.address}}</span>
                 </div>
-                 <div class="col-6 col-12-xsmall">
-                    <input 
-                        type="text"
-                        v-model="dateOfDelivery"
-                        placeholder="Date of Delivery"
+                <div class="col-6 col-12-xsmall">
+                   <select 
+                        v-model="date" 
+                        @change="getDates(date)"
                         required
                     >
-                     <span class="errorNotification" v-if="msg.dateOfDelivery">{{msg.dateOfDelivery}}</span>
-                </div>
+                        <option value="null" disabled>Select Date</option>
+                        <option v-for="date in dates" :key="date.date" :value="date.date">
+                            {{ date.expandedDate }}
+                        </option>
+                    </select>
+                    <span class="errorNotification" v-if="msg.dateOfDelivery">{{msg.dateOfDelivery}}</span>
+                 </div>
                  <div class="col-6 col-12-xsmall">
                      <select name="deliveryTime" id="deliveryTime" v-model="deliveryTime" required>
-                         <option value="" disabled>Select a delivery time</option>
-                         <option v-for="dTime in time" :key="dTime" :value="dtime">{{dTime}}</option>
+                         <option value="null" disabled>Select a delivery time</option>
+                         <option v-for="time in times" :key="time" :value="time">{{time}}</option>
                      </select>
                      <span class="errorNotification" v-if="msg.deliveryTime">{{msg.deliveryTime}}</span>
                 </div>
@@ -110,15 +114,18 @@ import cakifyAdminService from "@/apiservices/cakifyAdminService.js";
                 kilograms: null,
                 eggless: '',
                 address: '',
-                dateOfDelivery: '',
-                deliveryTime: '',
+                dateOfDelivery: null,
+                deliveryTime: null,
                 messageOnCake: '',
                 messageOnDelivery: '',
                 valid: '',
                 paymentUrl: '',
                 cakeDetails: '',
                 orderDetails: '',
-                time: ['10:00am', '10:30am', '11am', '11:30am', '12:00pm', '12:30pm', '1:00pm', '1:30pm', '2:00pm', '2:30pm', '3:00pm', '3:30pm','4:00pm', '4:30pm', '5:00pm']
+                times: ['10:00am', '10:30am', '11am', '11:30am', '12:00pm', '12:30pm', '1:00pm', '1:30pm', '2:00pm', '2:30pm', '3:00pm', '3:30pm','4:00pm', '4:30pm', '5:00pm'],
+                dates: [],
+                date: null,
+                cakeInfo: []
             }
         },
         watch: {
@@ -146,20 +153,13 @@ import cakifyAdminService from "@/apiservices/cakifyAdminService.js";
                 this.deliveryTime = value;
                 this.validateDeliveryTime(value);
             },
-            // messageOnCake(value) {
-            //     this.messageOnCake = value;
-            //     this.validateMessageOnCake(value);
-            // },
-            // messageOnDelivery(value) {
-            //     this.messageOnDelivery = value;
-            //     this.validateMessageOnDelivery(value);
-            // },
         },
         created() {
             this.cakeId = this.$route.params.cakeId;
         },
         mounted() {
             this.getSelectedCake();
+            this.allowedDates();
         },
         methods: {
            getSelectedCake() {
@@ -172,6 +172,20 @@ import cakifyAdminService from "@/apiservices/cakifyAdminService.js";
                         console.log('Error', JSON.stringify(error))
                     })
             }, 
+             allowedDates(){
+                cakifyAdminService.getDates()
+                    .then(response => {
+                        this.dates = response.data;
+                        console.log('Date: ', this.dates)
+                    })
+                    .catch(error => {
+                        console.log('Error in date api: ', error.response)
+                    }) 
+            },
+            getDates(value){
+                this.dateOfDelivery = value.date;
+                console.log(this.dateOfDelivery);
+            },
             addToCart(){
                 console.log('add to cart method');
             },
@@ -193,6 +207,8 @@ import cakifyAdminService from "@/apiservices/cakifyAdminService.js";
                     this.orderDetails = response.data.apiResponse.cakeOrder;
                     this.paymentUrl = response.data.apiResponse.paymentOrder.paymentOptions.paymentUrl
                     console.log('payment url ', this.paymentUrl)
+                    // localStorage.setItem('orderDetails', JSON.stringify(this.orderDetails));
+                    // localStorage.setItem('cakeDetails', JSON.stringify(this.cakeDetails));
                     this.$router.push({name: 'Payment', params: {paymentUrl: this.paymentUrl, cakeDetails: this.cakeDetails, orderDetails: this.orderDetails}})
                 })
                 .catch(error => {
@@ -250,5 +266,11 @@ import cakifyAdminService from "@/apiservices/cakifyAdminService.js";
 <style lang="scss" scoped>
 .errorNotification {
   color: red;
+}
+select {
+    color: #7f888f;
+}
+select option {
+    color: black;
 }
 </style>
