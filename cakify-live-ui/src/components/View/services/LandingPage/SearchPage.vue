@@ -12,13 +12,10 @@
             </p>
             <p>
                 We have many loyal customers who have been ordering from us year after year, and for this we are very grateful. We appreciate that they trust us to help make their
-                loved ones feel special with a cake delivery. 
-            </p>
-            <!-- <p>
-                Special occasions are important, and when you can't be with your loved ones it can be difficult. Sending them a cake 
+                loved ones feel special with a cake delivery. Special occasions are important, and when you can't be with your loved ones it can be difficult. Sending them a cake 
                 lets them know you're thinking about them and wish you could be there. The heartfelt gesture is something that will be remembered forever.
-            </p> -->
-            
+            </p>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque tenetur accusantium labore id dolor atque laborum modi ipsa corrupti illum, ad sed non nam. Ut nemo saepe esse. Maxime veniam pariatur excepturi minus asperiores neque a? Nesciunt, impedit labore atque quia consequuntur dicta necessitatibus autem reiciendis iure id totam modi.</p>
         </div>
             <span class="image object">
                     <Slider />

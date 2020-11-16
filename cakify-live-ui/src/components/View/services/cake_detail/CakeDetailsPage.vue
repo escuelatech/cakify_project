@@ -9,7 +9,7 @@
           <Header />
           <!-- Header -->
           <!-- Form -->
-          <CakeDetails />
+          <CakeDetails2 />
           <!-- Form -->
         </div>
       </div>
@@ -30,7 +30,7 @@
       components: { 
           Header, 
           Sidebar, 
-          CakeDetails
+          CakeDetails2
         }
     };
 </script> 
