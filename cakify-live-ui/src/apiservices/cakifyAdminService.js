@@ -76,7 +76,6 @@ function getDates(){
   return apiClient.get('/api/utils/futuredates');
 }
 
-
 async function login (email, password) {
   console.log(email);
   console.log(password);
