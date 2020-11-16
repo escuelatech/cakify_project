@@ -54,10 +54,11 @@
                 </div>
                 <div class="col-6 col-12-xsmall">
                    <select 
-                        v-model="date" 
-                        @change="getDates(date)"
+                        v-model="dateOfDelivery" 
+                        name="dateOfDelivery"
                         required
                     >
+                    <!-- @change="getDates(date)" -->
                         <option value="null" disabled>Select Date</option>
                         <option v-for="date in dates" :key="date.date" :value="date.date">
                             {{ date.expandedDate }}
@@ -182,10 +183,10 @@ import cakifyAdminService from "@/apiservices/cakifyAdminService.js";
                         console.log('Error in date api: ', error.response)
                     }) 
             },
-            getDates(value){
-                this.dateOfDelivery = value.date;
-                console.log(this.dateOfDelivery);
-            },
+            // getDates(value){
+            //     this.dateOfDelivery = value.date;
+            //     console.log(this.dateOfDelivery);
+            // },
             addToCart(){
                 console.log('add to cart method');
             },
@@ -196,7 +197,7 @@ import cakifyAdminService from "@/apiservices/cakifyAdminService.js";
                     kilograms: this.kilograms,
                     eggless: this.eggless,
                     address: this.address,
-                    dateOfDelivery: this.dateOfDelivery,
+                    dateOfDelivery: this.dateOfDelivery.date,
                     deliveryTime: this.deliveryTime,
                     messageOnCake: this.messageOnCake,
                     messageOnDelivery: this.messageOnDelivery
