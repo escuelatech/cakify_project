@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
+<<<<<<< HEAD
 
 <<<<<<< HEAD
 import MainLandingPage from "@/components/View/services/LandingPage/MainLandingPage.vue";
@@ -18,6 +19,14 @@ import PaymentPage from "@/components/View/services/payment/PaymentPage.vue";
 import CakeListByBakeryPage from "@/components/View/services/cake_list_by_bakery/CakeListByBakeryPage.vue";
 // const DashboardPage = () => import(/* webpackChunkName: "dashboard" */ '@/components/View/services/dashboard_service/DashboardPage.vue')
 >>>>>>> 41e30fb... Added api for displaying bakery and cake
+=======
+import MainLandingPage from "@/components/View/services/LandingPage/MainLandingPage.vue";
+import CakeDetailsPage from "@/components/View/services/cake_detail/CakeDetailsPage.vue";
+import PaymentPage from "@/components/View/services/payment/PaymentPage.vue";
+import CakeListByBakeryPage from "@/components/View/services/cake_list_by_bakery/CakeListByBakeryPage.vue";
+import BakeryPage from "@/components/View/services/LandingPage/BakeryPage.vue"
+
+>>>>>>> 2ee5206... added location and town dropdowns and cake image during payment processing
 
 Vue.use(VueRouter);
 const router = new VueRouter({
@@ -26,18 +35,23 @@ const router = new VueRouter({
     {
       path: '/cakify',
 <<<<<<< HEAD
+<<<<<<< HEAD
       name: 'LandingPage',
       component: MainLandingPage
 =======
       name: 'SearchPage',
       component: SearchPage
 >>>>>>> 41e30fb... Added api for displaying bakery and cake
+=======
+      name: 'MainLandingPage',
+      component: MainLandingPage
     },
-    // {
-    //   path: '/cakify',
-    //   name: 'LandingPage',
-    //   component: LandingPage
-    // },
+    {
+      path: '/bakerypage',
+      name: 'BakeryPage',
+      component: BakeryPage
+>>>>>>> 2ee5206... added location and town dropdowns and cake image during payment processing
+    },
     {
       path: '/cakedetails',
       name: 'CakeDetails',

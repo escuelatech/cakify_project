@@ -11,14 +11,10 @@ export default {
   getAllCakes,
   buyNow,
   getBakeriesByLocation,
-<<<<<<< HEAD
   getCakeListFromSelectedBakery,
   getLocations,
   getBakeryTowns,
   getDates
-=======
-  getCakeListFromSelectedBakery
->>>>>>> 41e30fb... Added api for displaying bakery and cake
 };
 
 function getAllCakes () {
@@ -68,7 +64,6 @@ function getCakeListFromSelectedBakery(email){
   return apiClient.get('/api/cakes/find/by/bakery?bakeryemail='+email)
 }
 
-<<<<<<< HEAD
 function getLocations(){
   return apiClient.get('/api/utils/locations');
 }
@@ -80,8 +75,7 @@ function getBakeryTowns(id){
 function getDates(){
   return apiClient.get('/api/utils/futuredates');
 }
-=======
->>>>>>> 41e30fb... Added api for displaying bakery and cake
+
 
 async function login (email, password) {
   console.log(email);

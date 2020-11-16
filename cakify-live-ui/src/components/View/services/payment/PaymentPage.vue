@@ -17,18 +17,22 @@
             </div>
         </div>
         <!-- Main ends -->
-
+         <!-- Sidebar -->
+            <Sidebar />
+        <!-- Sidebar -->
     </div>
 </div>
 </template>
 
 <script>
 import Header from "@/components/View/common/Header";
+import Sidebar from "@/components/View/common/Sidebar";
 import Payment from "@/components/View/services/payment/Payment.vue";
 
 export default {
     components: {
         Header,
+        Sidebar,
         Payment
     }
 };
