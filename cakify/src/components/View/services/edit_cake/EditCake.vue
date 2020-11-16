@@ -138,7 +138,8 @@ export default {
                     imageId: this.cake.imageId
                 })
                 .then(response => {
-                    console.log('Edited Cake: ', response.data);
+                  ( response.data);
+                    //  console.log('Edited Cake: ', response.data);
                 })
                 .catch(error => {
                     console.log('Error in edit cake: ', error.response)

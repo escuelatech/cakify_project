@@ -32,7 +32,8 @@ const router = new VueRouter({
     {
       path: '/landingpage',
       name: 'LandingPage',
-      component: LandingPage
+      component: LandingPage,
+      meta: { requiresAuth: true }
     },
     {
       path: '/editcake',

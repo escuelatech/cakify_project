@@ -2,8 +2,24 @@
 <div>
 <v-snackbar  v-model="snackbar"  top  color="rgba(15, 116, 235)" text>
             {{successMessage}}
-            </v-snackbar>
-<form @submit.prevent="submit" ref="addCakeForm">
+             </v-snackbar>
+
+             <div class="box boxMargin"   v-show="moreCakeAddMsg">
+             <h2>Do you want to add more cakes?</h2>
+              <div class="col-12">
+              <ul class="actions">
+                <li>
+                  <input type="button" value="Yes" class=" button small" @click="$router.go()
+                    "/>
+                </li>
+                <li>
+                  <input type="button" value="No" class=" button small" @click="$router.push({name: 'LandingPage'})
+                    "/>
+                </li>
+              </ul>
+            </div>
+             </div>
+<form @submit.prevent="submit" ref="addCakeForm" v-show="! moreCakeAddMsg" >
       <h3>Add cakes</h3>
       <div class="row gtr-uniform">
         <div class="col-6 col-12-xsmall">
@@ -71,6 +87,7 @@ import fileUploadService from "@/apiservices/fileUploadService.js";
             cakeType: null,
             formData: null,
              validation:[],
+             moreCakeAddMsg:false,
             options: [{"id": 1, "option": "Yes"},
             {"id": 2, "option": "No"}],  
             option:"",    
@@ -86,9 +103,11 @@ import fileUploadService from "@/apiservices/fileUploadService.js";
        
         
        methods:{
+               //  adding 2decimal place to the entered integer
                    focusOut: function() {
                   this.price = Number(this.price).toFixed(2).replace(/(\d)(?=(\d{5})+(?:\.\d+)?$)/g, )
                  },
+                //  selectiong image for upload
                 onImageUpload() {
                 let file = this.$refs.uploadImage.files[0];
                 this.formData = new FormData();
@@ -105,10 +124,12 @@ import fileUploadService from "@/apiservices/fileUploadService.js";
                     "cakeType": this.cakeType
                 }).then(response => {
                     this.cakeData = response.data.data;
-                    console.log('Cake Data: ', this.cakeData)
+                    // image uplod
                     fileUploadService.upload(this.formData,this.cakeData);
                     this.cakeType-"";
                     this.snackbar = true;
+                     this.moreCakeAddMsg=true;
+                    
                     
                 }).catch(error => {
                     console.log('There was an error : ' + JSON.stringify(error))
@@ -120,13 +141,13 @@ import fileUploadService from "@/apiservices/fileUploadService.js";
                 this.$refs.addCakeForm.reset();
               
             },
-   
+  //  function call for validation
 
              check_cakeName(value) {
               if (value == "") {
                this.validation["cakeName"] = "Enter a cakeName";
               } else {
-              this.validation["cakeName"] = "Not allowed [a-z]";
+              this.validation["cakeName"] = "";
             }
             
              },
@@ -149,6 +170,7 @@ import fileUploadService from "@/apiservices/fileUploadService.js";
               }
           },
          watch: {
+          //  validation
             price(value) {
             this.price = value;
             this.check_price(value);
@@ -171,5 +193,7 @@ import fileUploadService from "@/apiservices/fileUploadService.js";
 </script>
 
 <style lang="scss" scoped>
-
+.boxMargin {
+   margin: 3em 0;
+}
 </style>

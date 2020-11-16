@@ -1,6 +1,14 @@
 <template>
   <div>
-   <form @submit.prevent="submitRegistration" >
+ <div class ="row" v-show="bakeryRegSuccessMsg">
+   <div class= "col">
+     <div class= "alert show alertmsg alert-primary" role="alert" backgroundColor: blue>
+     <Timercount ref="child"/>
+   </div>
+   </div>
+  </div>
+
+   <form @submit.prevent="submitRegistration();accesTimercount()" v-show="!bakeryRegSuccessMsg">
           <h3>Sign Up Your Bakery with Us</h3>
         <div class="row gtr-uniform">
          <div class="col-6 col-12-xsmall">
@@ -23,28 +31,36 @@
           <input type="email" name="email" value placeholder="Email " v-model="email" autocomplete="off" required />
           <span class="errNotific" v-if="validation.email">{{validation.email}}</span>
          </div>
-         <div class="col-6 col-12-xsmall">
-          <input type="text" name="city" value placeholder="City/Town " v-model="city" autocomplete="off" required />
-          <span class="errNotific" v-if="validation.city">{{validation.city}}</span>
-         </div>
-          <div class="col-6 col-12-xsmall">
-              <label for="location" >Select your location:</label>
-                  <select v-model="location" class="boxBorder">
-                    <option>Mavoor</option>
-                     <option>Mananchira</option>
-                      <option>Beach</option>
-                      <option>Thali</option>
-                  </select>
-         </div>
-         
-         <div class="col-6 col-12-xsmall">
-         <label for="location">Upload your bakery image:</label>
+     
+        <div class="col-6 col-12-xsmall">
+              <label for="cities">Select your location:</label>
+              <select  v-model="city" @change="onChange(city)">             
+                <option v-for="locationInTown in locations" :key="locationInTown.locationId" :value="locationInTown" >
+                {{ locationInTown.locationName }} 
+                </option>
+              </select> 
+        </div>
+        <div class="col-6 col-12-xsmall">
+              <label for="places">Select your City</label>
+              <select v-model="location"  @change="getTownName(location)"   >                   
+                <option v-for="town in towns" :key="town.townId" :value="town">
+                                        {{ town.townName }}                
+                  </option>                   
+                </select>                 
+          </div>      
+      
+       <div class="col-6 col-12-xsmall">
+         <label for="location">Upload your bakery logo:</label>
          <div class="col-6 col-12-xsmall">
           <input type="file" ref="uploadImage" @change="onImageUpload()" required>   
              </div>
           </div> 
           <div class="col-6 col-12-xsmall">
-          <textarea class="boxBorder" name="description" placeholder="Write a short description about your Bakery" rows="6" v-model="description" required></textarea>
+          <textarea class="boxBorder" name="bakeryAddress" placeholder="Bakery Address" rows="3" v-model="address" required></textarea>
+          <span class="errNotific" v-if="validation.address">{{validation.address}}</span>
+          </div>
+          <div class="col-6 col-12-xsmall">
+          <textarea class="boxBorder" name="description" placeholder="Write a short description about your Bakery" rows="3" v-model="description" required></textarea>
           <span class="errNotific" v-if="validation.description">{{validation.description}}</span>
           </div>                      
             <div class="col-12">
@@ -61,12 +77,20 @@
         </div>
        
     </form>
+     <div v-show="bakeryRegSuccessMsg">
+      <Message />
+    </div>
+     <div class="box" v-show="isError">
+      <h3>{{errorMessage}}</h3>
+    </div>
   </div>
 </template>
 
 <script>
 import cakifyAdminService from "@/apiservices/cakifyAdminService.js"
-// import fileUploadService from "@/apiservices/fileUploadService.js"
+import Message from '@/components/View/common/Message.vue';
+import fileUploadService from "@/apiservices/fileUploadService.js"
+import Timercount from "@/components/View/common/Timercount.vue";
   export default {
   data(){
     return {
@@ -78,40 +102,100 @@ import cakifyAdminService from "@/apiservices/cakifyAdminService.js"
     city:"",
     location:"",
     description:"",
-    validation:[]
-     }
+    address:"",
+    validation:[],
+    bakeryRegSuccessMsg:false,
+    isError:false,
+    errorMessage:"",
+    locations:"",
+    towns:"",
+    townName:"",
+    locationInTown:"",
+    selectedLocation:"",
+    locationName:""
+        }
   },
- 
+ components:{Message,Timercount},
+ mounted(){
+// loading first selectbox
+   this.getCityFrom();
+  
+ },
   methods:{
-    // onImageUpload() {
-    //             let file = this.$refs.uploadImage.files[0];
-    //             this.formData = new FormData();
-    //             this.formData.append("file", file);
-    //         },
+// select box getting locations and towns
+ getCityFrom(){
+            cakifyAdminService.getCity()
+                .then(response => {
+                    this.locations = response.data.data;
+                   
+                })
+                .catch(error => {
+                    console.log('Error in location api: ', error.response)
+                })
+        },
+        displayTowns(){
+            cakifyAdminService.getLocation(this.selectedLocation)
+               .then(response => {
+                    this.towns = response.data.data;
+                   })
+                .catch(error => {
+                    console.log('Error in towns api: ', error.response)
+                })  
+        },
+        onChange(value){
+            this.selectedLocation = value.locationId; 
+            this.locationName =value.locationName; 
+            this.displayTowns();
+        },
+        getTownName(value){
+            this.townName = value.townName;
+        },
+// calling timer component
+      accesTimercount(){
+        this.$refs.child.countDownTimer()
+       },
+
+    onImageUpload() {
+                let file = this.$refs.uploadImage.files[0];
+                this.formData = new FormData();
+                this.formData.append("file", file);
+            },
+    // API call for Submitting bakery registration
     submitRegistration(){
    cakifyAdminService
         .bakeryregister({
           bakeryname: this.bakeryname,
           ownername: this.ownername,
           password: this.password,
-          location: this.location,
+          location: this.townName,
           phone: this.phone,
           email: this.email,
           description: this.description,
-          city:this.city
+          city:this.locationName
         }).then((response) => {
           this.snackbar = true;
           response.data;
           console.log(response.data)
           this.registeredData = response.data.data;
-          // fileUploadService.uploadBakeryImage(this.formData,this.registeredData);
+          //  file uplodfuction 
+           fileUploadService.uploadBakeryImage(this.formData,this.email);
+          //  
+          this.bakeryRegSuccessMsg = true;
+          
+          this.$store.dispatch('addBakeryRegMessage');
+          this.isError = false;
+          this.timer =  setTimeout(() => this.$router.push({ name: "CakifyLoginPage"}),10000);
 
         }).catch(error => {
-                    console.log('There was an error : ' + JSON.stringify(error))
+              this.isError=true;
+              this.bakeryRegSuccessMsg = false;
+              console.log('There was an error : ' + JSON.stringify(error))
+              return(this.errorMessage= JSON.stringify(
+              error.response.data.errorMessage))
                 });
-                this.registeredData="";
+               
             },
-
+      // form validation call
         check_email(value) {
       
         // eslint-disable-next-line no-useless-escape
@@ -170,7 +254,8 @@ import cakifyAdminService from "@/apiservices/cakifyAdminService.js"
   },
   
   watch:{
-    email(value) {
+    // form validation
+      email(value) {
       this.email = value;
       this.check_email(value);
     },

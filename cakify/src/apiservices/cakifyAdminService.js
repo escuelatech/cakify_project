@@ -9,9 +9,20 @@ export default {
   getAllCakes,
   getImage,
   getCake,
+  getCity,
+  getLocation,
   updateCake,
   logout
 };
+function getLocation (townId) {
+  // console.log(JSON.stringify(townId));
+
+  return apiClient.get("/api/utils/towns/"+townId);
+} 
+
+function getCity () {
+  return apiClient.get("/api/utils/locations");
+}
 function getAllCakes () {
   return apiClient.get("/api/cakes/fetchall");
 }
@@ -37,7 +48,7 @@ function addCake (params) {
 }
 
 function uploadImage(params){
-  console.log(JSON.stringify(params));
+  // console.log(JSON.stringify(params));
   return apiMutipartClient.post("/api/upload2", params);
 }
 
@@ -47,10 +58,10 @@ function getImage () {
 
 
 async function login (email, password) {
-  console.log(email);
-  console.log(password);
-  const response = await apiClient.post("/api/user/login", { email: email, passWord: password })
-  if (response.data.token !== null) {
+  // console.log(email);
+  // console.log(password);
+  const response = await apiClient.post("/api/bakery/login", { email: email, passWord: password })
+   if (response.data.token !== null) {
     localStorage.setItem('token', JSON.stringify(response.data.token));
     localStorage.setItem('email', JSON.stringify(email));
   } else {
@@ -62,4 +73,4 @@ async function login (email, password) {
 function logout () {
   localStorage.removeItem('token');
   localStorage.removeItem('email');
-}
+ }
