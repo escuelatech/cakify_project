@@ -1,32 +1,12 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
-<<<<<<< HEAD
 
-<<<<<<< HEAD
 import MainLandingPage from "@/components/View/services/LandingPage/MainLandingPage.vue";
 import CakeDetailsPage from "@/components/View/services/cake_detail/CakeDetailsPage.vue";
 import PaymentPage from "@/components/View/services/payment/PaymentPage.vue";
 import CakeListByBakeryPage from "@/components/View/services/cake_list/CakeListbyBakeryPage.vue";
 import BakeryPage from "@/components/View/services/LandingPage/BakeryPage.vue";
-=======
-// import CakifyLoginPage from "@/components/View/services/cakify_login/CakifyLoginPage.vue"
-// import CakifyRegistrationPage from "@/components/View/services/cakify_registration/CakifyRegistrationPage.vue"
-// import AddCakePage from "@/components/View/services/add_item/AddCakePage.vue";
-// import LandingPage from "@/components/View/services/LandingPage/LandingPage.vue";
-import SearchPage from "@/components/View/services/LandingPage/SearchPage.vue";
-import CakeDetailsPage from "@/components/View/services/cake_detail/CakeDetailsPage.vue";
-import PaymentPage from "@/components/View/services/payment/PaymentPage.vue";
-import CakeListByBakeryPage from "@/components/View/services/cake_list_by_bakery/CakeListByBakeryPage.vue";
-// const DashboardPage = () => import(/* webpackChunkName: "dashboard" */ '@/components/View/services/dashboard_service/DashboardPage.vue')
->>>>>>> 41e30fb... Added api for displaying bakery and cake
-=======
-import MainLandingPage from "@/components/View/services/LandingPage/MainLandingPage.vue";
-import CakeDetailsPage from "@/components/View/services/cake_detail/CakeDetailsPage.vue";
-import PaymentPage from "@/components/View/services/payment/PaymentPage.vue";
-import CakeListByBakeryPage from "@/components/View/services/cake_list_by_bakery/CakeListByBakeryPage.vue";
-import BakeryPage from "@/components/View/services/LandingPage/BakeryPage.vue"
-
->>>>>>> 2ee5206... added location and town dropdowns and cake image during payment processing
+// import SearchPage from "@/components/View/services/LandingPage/SearchPage.vue";
 
 Vue.use(VueRouter);
 const router = new VueRouter({
@@ -34,15 +14,6 @@ const router = new VueRouter({
   routes: [ 
     {
       path: '/cakify',
-<<<<<<< HEAD
-<<<<<<< HEAD
-      name: 'LandingPage',
-      component: MainLandingPage
-=======
-      name: 'SearchPage',
-      component: SearchPage
->>>>>>> 41e30fb... Added api for displaying bakery and cake
-=======
       name: 'MainLandingPage',
       component: MainLandingPage
     },
@@ -50,7 +21,6 @@ const router = new VueRouter({
       path: '/bakerypage',
       name: 'BakeryPage',
       component: BakeryPage
->>>>>>> 2ee5206... added location and town dropdowns and cake image during payment processing
     },
     {
       path: '/cakedetails',
@@ -67,14 +37,11 @@ const router = new VueRouter({
       name: 'CakeListByBakery',
       component: CakeListByBakeryPage
     },
-<<<<<<< HEAD
     {
       path: '/bakery',
       name: 'BakeryPage',
       component: BakeryPage
     },
-=======
->>>>>>> 41e30fb... Added api for displaying bakery and cake
     { 
       path: '*', 
       redirect: '/cakify' 

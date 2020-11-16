@@ -24,7 +24,7 @@
 <script>
   import Header from "@/components/View/common/Header";
   import Sidebar from "@/components/View/common/Sidebar";
-  import CakeDetails from "@/components/View/services/cake_detail/CakeDetails2.vue";
+  import CakeDetails2 from "@/components/View/services/cake_detail/CakeDetails2.vue";
 
   export default {
       components: { 
