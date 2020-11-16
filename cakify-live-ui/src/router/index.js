@@ -1,13 +1,11 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 
-// import CakifyLoginPage from "@/components/View/services/cakify_login/CakifyLoginPage.vue"
-// import CakifyRegistrationPage from "@/components/View/services/cakify_registration/CakifyRegistrationPage.vue"
-// import AddCakePage from "@/components/View/services/add_item/AddCakePage.vue";
-import LandingPage from "@/components/View/services/LandingPage/LandingPage.vue";
+import MainLandingPage from "@/components/View/services/LandingPage/MainLandingPage.vue";
 import CakeDetailsPage from "@/components/View/services/cake_detail/CakeDetailsPage.vue";
 import PaymentPage from "@/components/View/services/payment/PaymentPage.vue";
-// const DashboardPage = () => import(/* webpackChunkName: "dashboard" */ '@/components/View/services/dashboard_service/DashboardPage.vue')
+import CakeListByBakeryPage from "@/components/View/services/cake_list/CakeListbyBakeryPage.vue";
+import BakeryPage from "@/components/View/services/LandingPage/BakeryPage.vue";
 
 Vue.use(VueRouter);
 const router = new VueRouter({
@@ -16,7 +14,7 @@ const router = new VueRouter({
     {
       path: '/cakify',
       name: 'LandingPage',
-      component: LandingPage
+      component: MainLandingPage
     },
     {
       path: '/cakedetails',
@@ -27,6 +25,16 @@ const router = new VueRouter({
       path: '/payment',
       name: 'Payment',
       component: PaymentPage
+    },
+    {
+      path: '/cakelistbybakery',
+      name: 'CakeListByBakery',
+      component: CakeListByBakeryPage
+    },
+    {
+      path: '/bakery',
+      name: 'BakeryPage',
+      component: BakeryPage
     },
     { 
       path: '*', 

@@ -9,8 +9,12 @@ export default {
   getCake,
   getImage,
   getAllCakes,
-  buyNow
-  
+  buyNow,
+  getBakeriesByLocation,
+  getCakeListFromSelectedBakery,
+  getLocations,
+  getBakeryTowns,
+  getDates
 };
 
 function getAllCakes () {
@@ -46,6 +50,31 @@ function buyNow(params) {
   return apiClient.post("/api/payment/initiate", params);
 }
 
+//not using this api now
+// function getBakeries(email) {
+//   return apiClient.get('/api/bakery/find?bakeryemail='+email);
+// }
+
+function getBakeriesByLocation(location){
+  return apiClient.get('/api/bakery/find/by/location?location='+location)
+}
+
+function getCakeListFromSelectedBakery(email){
+  console.log('from admin service', email)
+  return apiClient.get('/api/cakes/find/by/bakery?bakeryemail='+email)
+}
+
+function getLocations(){
+  return apiClient.get('/api/utils/locations');
+}
+
+function getBakeryTowns(id){
+  return apiClient.get('/api/utils/towns/'+id);
+}
+
+function getDates(){
+  return apiClient.get('/api/utils/futuredates');
+}
 
 async function login (email, password) {
   console.log(email);

@@ -9,7 +9,7 @@
           <Header />
           <!-- Header -->
           <!-- Form -->
-          <CakeDetails />
+          <CakeListByBakery />
           <!-- Form -->
         </div>
       </div>
@@ -24,13 +24,13 @@
 <script>
   import Header from "@/components/View/common/Header";
   import Sidebar from "@/components/View/common/Sidebar";
-  import CakeDetails from "@/components/View/services/cake_detail/CakeDetails2.vue";
+  import CakeListByBakery from "@/components/View/services/cake_list/CakeListByBakery.vue";
 
   export default {
       components: { 
           Header, 
           Sidebar, 
-          CakeDetails
+          CakeListByBakery
         }
     };
 </script> 
