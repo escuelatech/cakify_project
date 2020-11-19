@@ -6,7 +6,8 @@ import CakeDetailsPage from "@/components/View/services/cake_detail/CakeDetailsP
 import PaymentPage from "@/components/View/services/payment/PaymentPage.vue";
 import CakeListByBakeryPage from "@/components/View/services/cake_list/CakeListbyBakeryPage.vue";
 import BakeryPage from "@/components/View/services/LandingPage/BakeryPage.vue";
-// import SearchPage from "@/components/View/services/LandingPage/SearchPage.vue";
+import SearchPage from "@/components/View/services/LandingPage/SearchPage.vue";
+
 
 Vue.use(VueRouter);
 const router = new VueRouter({
@@ -21,6 +22,11 @@ const router = new VueRouter({
       path: '/bakerypage',
       name: 'BakeryPage',
       component: BakeryPage
+    },
+    {
+      path: '/searchpage',
+      name: 'SearchPage',
+      component: SearchPage
     },
     {
       path: '/cakedetails',

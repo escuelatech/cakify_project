@@ -14,7 +14,8 @@ export default {
   getCakeListFromSelectedBakery,
   getLocations,
   getBakeryTowns,
-  getDates
+  getDates,
+  getAllBakeries
 };
 
 function getAllCakes () {
@@ -74,6 +75,10 @@ function getBakeryTowns(id){
 
 function getDates(){
   return apiClient.get('/api/utils/futuredates');
+}
+
+function getAllBakeries(){
+  return apiClient.get('/api/bakery/getall');
 }
 
 async function login (email, password) {
