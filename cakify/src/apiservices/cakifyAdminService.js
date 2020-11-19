@@ -12,8 +12,14 @@ export default {
   getCity,
   getLocation,
   updateCake,
-  logout
+  logout,
+  getCakeListForLoggedInBakery
 };
+
+function getCakeListForLoggedInBakery(email){
+ return apiClient.get('/api/cakes/find/by/bakery?bakeryemail='+email)
+}
+
 function getLocation (townId) {
   // console.log(JSON.stringify(townId));
 
@@ -58,15 +64,23 @@ function getImage () {
 
 
 async function login (email, password) {
-  // console.log(email);
+  console.log(email);
+  // this.loggedInBakery=email;
+  // console.log('loggedInBakery',this.loggedInBakery)
+ 
+  
   // console.log(password);
   const response = await apiClient.post("/api/bakery/login", { email: email, passWord: password })
-   if (response.data.token !== null) {
+    if (response.data.token !== null) {
     localStorage.setItem('token', JSON.stringify(response.data.token));
     localStorage.setItem('email', JSON.stringify(email));
+    // this.email=localStorage.getItem('email', JSON.stringify(email));
+    // console.log(this.email)
+    
   } else {
     return Promise.reject("Wrong credentials");
   }
+  console.log(response,"response")
   return response;
 }
 
@@ -74,3 +88,4 @@ function logout () {
   localStorage.removeItem('token');
   localStorage.removeItem('email');
  }
+ 

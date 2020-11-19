@@ -34,15 +34,15 @@
      
         <div class="col-6 col-12-xsmall">
               <label for="cities">Select your location:</label>
-              <select  v-model="city" @change="onChange(city)">             
+              <select  v-model="city" @change="onChange(city)" class="boxBorder">             
                 <option v-for="locationInTown in locations" :key="locationInTown.locationId" :value="locationInTown" >
                 {{ locationInTown.locationName }} 
                 </option>
               </select> 
         </div>
         <div class="col-6 col-12-xsmall">
-              <label for="places">Select your City</label>
-              <select v-model="location"  @change="getTownName(location)"   >                   
+              <label for="places">Select your City</label >
+              <select v-model="location"  @change="getTownName(location)"  class="boxBorder" >                   
                 <option v-for="town in towns" :key="town.townId" :value="town">
                                         {{ town.townName }}                
                   </option>                   

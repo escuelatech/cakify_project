@@ -86,7 +86,8 @@ import { mapActions } from "vuex";
                 processing: false,
                 validateLogin: false,
                 email: '',
-                password:''
+                password:'',
+                logingData:""
               }
         },
     
@@ -113,9 +114,9 @@ import { mapActions } from "vuex";
           email: this.email,
           password: this.password
         });
-        this.sendingSuccessful = true;
-        this.$router.push({ name: "LandingPage" }).catch(err => console.log(err));
-      } catch (error) {
+         this.sendingSuccessful = true;
+         this.$router.push({ name: "LandingPage"}).catch(err => console.log(err));
+         } catch (error) {
         this.sendingSuccessful = false;
         this.error = true;
       } finally {

@@ -15,10 +15,11 @@
             <header class="major">
                 <h2>Menu</h2>
             </header>
-            <ul>
+            <ul><keep-alive>
                 <li v-show="isAuthenticated">
-                    <router-link @click="handleRouterLinkClick" :to="{ name: 'LandingPage' }">Dashboard</router-link>
-                </li> 
+                <router-link @click="handleRouterLinkClick" :to="{ name: 'LandingPage' }">HOME</router-link>
+                 </li> 
+                 </keep-alive>
                 <li v-show="!isAuthenticated">
                     <router-link @click="handleRouterLinkClick" :to="{ name: 'CakifyRegistrationPage' }">REGISTER</router-link>
                 </li> 
@@ -26,7 +27,9 @@
                 <li v-show="isAuthenticated">
                     <router-link @click="handleRouterLinkClick" :to="{ name: 'AddCakePage' }">ADD CAKE</router-link>
                 </li>
-
+                <li v-show="isAuthenticated">
+                    <router-link @click="handleRouterLinkClick" :to="{ name: 'CakifySearchCakePage' }">SEARCH CAKE</router-link>
+                </li>
             </ul>
         </nav>
 
