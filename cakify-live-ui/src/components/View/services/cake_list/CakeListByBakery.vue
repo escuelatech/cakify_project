@@ -59,8 +59,16 @@ import cakifyAdminService from "@/apiservices/cakifyAdminService.js";
 </script>
 
 <style lang="scss" scoped>
+@media screen and (min-width: 736px)
+{.posts article {
+    margin: 0 0 4.5em 4.5em;
+    width: calc(33% - 4.5em);
+}
+
+}
 .image {
 	cursor: pointer;
 }
+
 
 </style>
