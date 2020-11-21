@@ -9,15 +9,19 @@
 </template>
 
 <script>
-import { mapActions } from "vuex";
+import { mapActions, mapState } from "vuex";
 export default {
   name: 'login_signup_social',
   mounted () {
    
   },
+  computed:{
+    ...mapState({heroes: state => state.heroes})
+  },
   methods: {
      ...mapActions({
       login: "auth/login",
+      profileImage:"googleauth/profileImage"
     }),
     loginWithGoogle () {
       this.$gAuth
@@ -28,26 +32,31 @@ export default {
           console.log('getId', GoogleUser.getId())
           console.log('getBasicProfile', GoogleUser.getBasicProfile())
           console.log('getAuthResponse', GoogleUser.getAuthResponse())
-          var userInfo = {loginType: 'google',google: GoogleUser}
+          var userInfo = {loginType: 'google',google: GoogleUser.getBasicProfile(),email:GoogleUser.getBasicProfile().cu,
+          firstname:GoogleUser.getBasicProfile().fV,lastname:GoogleUser.getBasicProfile().iT,profileImage:GoogleUser.getBasicProfile().SJ}
           this.sendingSuccessful = true;
-         //this.$store.commit('setLoginUser', userInfo)
+        //  this.$store.commit('setLoginUser', userInfo.google);
+         localStorage.setItem('userInfo', userInfo);
+         localStorage.setItem('userImage', JSON.stringify(userInfo.profileImage));
+         this.profileImage(userInfo.profileImage);
+         console.log(JSON.stringify(userInfo));
          this.callPranamaBackendLogin(userInfo);
         }).catch(error => {
           console.log('error', error)
         })
     },
-
     async callPranamaBackendLogin(userInfo){
-      console.log("***** Google login *****");
-      console.log(JSON.stringify(userInfo.google.tt.$t));
       try {
-        await this.login({
-          email: userInfo.google.tt.$t,
+        await this.login({ email: userInfo.google.cu,
           password: "sachin123",
           socialLogin:"true"
         });
         this.sendingSuccessful = true;
+<<<<<<< Updated upstream
         this.$router.push({ name: "MainLandingPage" }).catch((err) => console.log(err));
+=======
+        // this.$router.push({ name: "Dashboard" }).catch((err) => console.log(err));
+>>>>>>> Stashed changes
       } catch (error) {
         this.sendingSuccessful = false;
         this.error = true;

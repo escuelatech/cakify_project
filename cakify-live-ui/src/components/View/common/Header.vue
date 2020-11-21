@@ -1,11 +1,9 @@
 <template>
 <header id="header">
     <a href="index.html" class="logo">
-        <!--<a href="#" class="logo"><img src="@/assets/images/pranama_log_2.jpeg" alt="" height="50" /> -->
         <h3>CAKIFY</h3>
     </a>
-    <strong v-show="isAuthenticated">{{loggedinUserName}}</strong>
-
+    <strong v-show="isAuthenticated"></strong>
     <ul class="icons">
         <li v-if="isAuthenticated">
             <button class="button small" @click="handleLogout">
@@ -13,22 +11,14 @@
             </button>
         </li>
         <li v-else>
-            <button class="button primary small" @click="$router.push({ name: 'CakifyLoginPage' })">
-                Login
-            </button>
-           
+            <SocialLogin/>
         </li>
-        <li>
-           <SocialLogin/>
-        </li>
-        <li>
-            <a href="#" class="icon brands fa-facebook-f">
-                <span class="label">Facebook</span>
-            </a>
-        </li>
-        <li>
-            <a href="#" class="icon brands fa-instagram">
-                <span class="label">Instagram</span>
+         
+         <li v-if="isAuthenticated">
+            <a href="#" class="logo">
+                <img src="https://lh3.googleusercontent.com/a-/AOh14Gjk6Ho2z5m5KgWN9EunCxjSfUap6jMp60_jxqkxmA=s96-c" 
+                alt="" height="40" />
+                <img v-bind:src='{isGoogleLoginSucessful}'>
             </a>
         </li>
     </ul>
@@ -44,6 +34,6 @@ export default {
     mixins: [logoutMixin],
      components: {
         SocialLogin
-    }
+    },
 }
 </script>

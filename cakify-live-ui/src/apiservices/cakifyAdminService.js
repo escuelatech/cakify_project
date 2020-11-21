@@ -5,6 +5,7 @@ import apimapping from "@/shared/apimapping.js";
 export default {
   addCake,
   login,
+  logout,
   getCake,
   getImage,
   getAllCakes,
@@ -46,9 +47,14 @@ function getCakeListFromSelectedBakery(email){
 }
 
 async function login (email, password) {
+<<<<<<< Updated upstream
   console.log(email);
   console.log(password);
   const response = await apiClient.post(apimapping.LOGIN, { email: email, passWord: password })
+=======
+  const response = await apiClient.post("/api/user/sociallogin", { email: email, passWord: password,socialLogin:"true" });
+  console.log(JSON.stringify(response));
+>>>>>>> Stashed changes
   if (response.data.token !== null) {
     localStorage.setItem('token', JSON.stringify(response.data.token));
     localStorage.setItem('email', JSON.stringify(email));
@@ -61,4 +67,8 @@ async function login (email, password) {
 function logout () {
   localStorage.removeItem('token');
   localStorage.removeItem('email');
+<<<<<<< Updated upstream
+=======
+  localStorage.removeItem('userInfo');
+>>>>>>> Stashed changes
 }

@@ -5,7 +5,8 @@ export default {
     computed: {
     ...mapGetters({
       isAuthenticated: "auth/isAuthenticated",
-      loggedinUserName: "auth/loggedinUserName"
+      loggedinUserName: "auth/loggedinUserName",
+      isGoogleLoginSucessful: "googleauth/isGoogleLoginSucessful"
     })
   },
   methods: {
@@ -14,7 +15,7 @@ export default {
     }),
     handleLogout() {
       this.logout();
-      this.$router.push({name: 'LogoutPage' }).catch(err => console.log(err));
+      // this.$router.push({name: 'LogoutPage' }).catch(err => console.log(err));
     }
   }
 }

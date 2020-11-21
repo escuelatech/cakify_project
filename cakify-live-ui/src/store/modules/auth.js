@@ -1,7 +1,7 @@
 import CakifyAdminService from "@/apiservices/CakifyAdminService";
 
 const token = JSON.parse(localStorage.getItem('token'));
-const loggedInUserEmail = JSON.parse(localStorage.getItem('email'));
+//const userEmail = JSON.parse(localStorage.getItem('email'));
 
 const initialState = token
   ? { status: { loggedIn: true}, token }
@@ -13,7 +13,7 @@ const mutations = {
     state.token = token;
   },
   LOGIN_SUCCESS (state, token) {
-    state.status = { loggedIn: true,userEmail: loggedInUserEmail };
+    state.status = { loggedIn: true};
     state.token = token;
   },
   LOGIN_FAILED (state) {
@@ -31,8 +31,8 @@ const actions = {
     commit('LOGIN_REQUEST', { email });
     return CakifyAdminService.login(email, password)
       .then(response => {
+        console.log('LOGIN_SUCCESS' +email);
         commit('LOGIN_SUCCESS', response.data.token);
-        // commit('LOGIN_USER', email);
       }).catch(error => {
         commit('LOGIN_FAILED', error);
         return Promise.reject(error)
