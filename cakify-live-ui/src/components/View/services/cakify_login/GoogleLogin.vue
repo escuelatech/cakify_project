@@ -47,7 +47,7 @@ export default {
           socialLogin:"true"
         });
         this.sendingSuccessful = true;
-        this.$router.push({ name: "Dashboard" }).catch((err) => console.log(err));
+        this.$router.push({ name: "MainLandingPage" }).catch((err) => console.log(err));
       } catch (error) {
         this.sendingSuccessful = false;
         this.error = true;

@@ -1,14 +1,24 @@
 <template>
-    <div class="box">
+<div>
+    <br>
+   <ul class="actions">
+        <li>
+            <input type="button" value="Back" class="primary" 
+                @click="$router.push({name: 'CakeListByBakery', params: {bakeryEmail: cake.bakeryEmail}})"
+            >
+        </li>
+   </ul>
+   <!-- :style="{ backgroundImage: `url(${cake.cakeImage})` }" -->
+    <div class="box app-background">
         <div class="row gtr-uniform">
-            <div class="col-6 col-12-xsmall">
+            <div class="col-6 col-12-xsmall cakeDetail">
                 <h6><b>Cake Name: </b>{{cake.cakeName}}</h6>
                 <h6><b>Cake Price: </b>{{cake.cakePrice}}</h6>
                 <h6><b>Description: </b>{{cake.description}}</h6>
                 <h6><b>Type of cake: </b>{{cake.cakeType}}</h6>
             </div>
             <!-- <div class="col-6 col-12-xsmall">
-                <img :src="cake.cakeImage" alt="" width="200" height="250">
+                <img :src="cake.cakeImage" alt="" width="120" height="125">
             </div> -->
             
         </div>
@@ -101,10 +111,14 @@
             </div>
         </form>
     </div>
+</div>
 </template>
 
 <script>
-import cakifyAdminService from "@/apiservices/cakifyAdminService.js";
+import PaymentService from "@/apiservices/PaymentService.js";
+import CakifyAdminService from "@/apiservices/CakifyAdminService.js";
+import BakeryService from "@/apiservices/BakeryService.js";
+
     export default {
         data(){
             return {
@@ -164,7 +178,7 @@ import cakifyAdminService from "@/apiservices/cakifyAdminService.js";
         },
         methods: {
            getSelectedCake() {
-                cakifyAdminService.getCake(this.cakeId)
+                CakifyAdminService.getCake(this.cakeId)
                     .then(response => {
                         this.cake = response.data.apiResponse;
                         console.log('Selected Cake: ', this.cake);
@@ -174,7 +188,7 @@ import cakifyAdminService from "@/apiservices/cakifyAdminService.js";
                     })
             }, 
              allowedDates(){
-                cakifyAdminService.getDates()
+                BakeryService.getDeliveryDates()
                     .then(response => {
                         this.dates = response.data;
                         console.log('Date: ', this.dates)
@@ -191,7 +205,7 @@ import cakifyAdminService from "@/apiservices/cakifyAdminService.js";
                 console.log('add to cart method');
             },
             buyNow() {
-                cakifyAdminService.buyNow({
+                PaymentService.buyNow({
                     cakeId: this.cake.cakeId,
                     buyerEmail: this.buyerEmail,
                     kilograms: this.kilograms,
@@ -265,6 +279,23 @@ import cakifyAdminService from "@/apiservices/cakifyAdminService.js";
 </script>
 
 <style lang="scss" scoped>
+.app-background {
+  /* The image used */
+  background: rgba(0,0,0,0);  
+  background-image: url("https://images.unsplash.com/photo-1559620192-032c4bc4674e?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxzZWFyY2h8OHx8Y2FrZXxlbnwwfHwwfA%3D%3D&auto=format&fit=crop&w=500&q=60");
+
+  /* Add the blur effect */
+//   filter: blur(8px);
+//   -webkit-filter: blur(8px);
+
+  /* Full height */
+  height: 100%;
+
+  /* Center and scale the image nicely */
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
 .errorNotification {
   color: red;
 }
@@ -274,4 +305,8 @@ select {
 select option {
     color: black;
 }
+// .cakeDetail h6 b{
+//     color: white;
+// }
+
 </style>
