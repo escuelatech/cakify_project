@@ -27,10 +27,9 @@ const initialState = userImage
   const actions = {
     profileImage ({commit}, { userImage }) {
       commit('PROFILE_REQUEST', { userImage });
-     
       let val=localStorage.getItem('userImage');
-      console.log("User Image , "+JSON.stringify(val));
-      commit('PROFILE_SUCCESS', JSON.stringify(val));
+      console.log("User Image",val);
+      commit('PROFILE_SUCCESS', val);
     //   return cakifyAdminService.login(email, password)
     //     .then(response => {
     //       console.log('PROFILE_SUCCESS' +email);
@@ -43,7 +42,7 @@ const initialState = userImage
   };
 
   const getters = {
-    isGoogleLoginSucessful: (state) => JSON.stringify(state.userImage)
+    isGoogleLoginSucessful: (state) => state.userImage
   };
   
   export default {

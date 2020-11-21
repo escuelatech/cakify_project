@@ -1,4 +1,4 @@
-import CakifyAdminService from "@/apiservices/CakifyAdminService";
+import CakifyAdminService from "@/apiservices/CakifyAdminService.js";
 
 const token = JSON.parse(localStorage.getItem('token'));
 //const userEmail = JSON.parse(localStorage.getItem('email'));
@@ -27,9 +27,9 @@ const mutations = {
 }
 
 const actions = {
-  login ({ commit }, { email, password }) {
+  login ({ commit }, { email, password,socialProfileImage }) {
     commit('LOGIN_REQUEST', { email });
-    return CakifyAdminService.login(email, password)
+    return CakifyAdminService.login(email, password,socialProfileImage)
       .then(response => {
         console.log('LOGIN_SUCCESS' +email);
         commit('LOGIN_SUCCESS', response.data.token);

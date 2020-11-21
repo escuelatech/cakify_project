@@ -30,33 +30,36 @@ export default {
           // on success do something
           console.log('GoogleUser', GoogleUser)
           console.log('getId', GoogleUser.getId())
-          console.log('getBasicProfile', GoogleUser.getBasicProfile())
-          console.log('getAuthResponse', GoogleUser.getAuthResponse())
-          var userInfo = {loginType: 'google',google: GoogleUser.getBasicProfile(),email:GoogleUser.getBasicProfile().cu,
-          firstname:GoogleUser.getBasicProfile().fV,lastname:GoogleUser.getBasicProfile().iT,profileImage:GoogleUser.getBasicProfile().SJ}
+          console.log('getBasicProfile', GoogleUser.getBasicProfile());
+          console.log('getAuthResponse', GoogleUser.getAuthResponse());
+          
+
+          var userInfo = {loginType: 'google',google: GoogleUser.getBasicProfile(),
+          email:GoogleUser.getBasicProfile().cu,firstname:GoogleUser.getBasicProfile().fV,
+          lastname:GoogleUser.getBasicProfile().iT,
+          profileImage:GoogleUser.getBasicProfile().SJ}
+
           this.sendingSuccessful = true;
         //  this.$store.commit('setLoginUser', userInfo.google);
          localStorage.setItem('userInfo', userInfo);
-         localStorage.setItem('userImage', JSON.stringify(userInfo.profileImage));
+         localStorage.setItem('userImage', GoogleUser.getBasicProfile().SJ);
          this.profileImage(userInfo.profileImage);
          console.log(JSON.stringify(userInfo));
-         this.callPranamaBackendLogin(userInfo);
+         this.callPranamaBackendLogin(userInfo,GoogleUser);
         }).catch(error => {
           console.log('error', error)
         })
     },
-    async callPranamaBackendLogin(userInfo){
+    async callPranamaBackendLogin(userInfo,GoogleUser){
+      console.log('user_profile_image',GoogleUser.getBasicProfile().SJ);
       try {
         await this.login({ email: userInfo.google.cu,
           password: "sachin123",
-          socialLogin:"true"
+          socialLogin:"true",
+          socialProfileImage:GoogleUser.getBasicProfile().SJ
         });
         this.sendingSuccessful = true;
-<<<<<<< Updated upstream
-        this.$router.push({ name: "MainLandingPage" }).catch((err) => console.log(err));
-=======
-        // this.$router.push({ name: "Dashboard" }).catch((err) => console.log(err));
->>>>>>> Stashed changes
+        // this.$router.push({ name: "MainLandingPage" }).catch((err) => console.log(err));
       } catch (error) {
         this.sendingSuccessful = false;
         this.error = true;

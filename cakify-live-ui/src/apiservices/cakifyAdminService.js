@@ -10,8 +10,7 @@ export default {
   getImage,
   getAllCakes,
   buyNow,
-  getCakeListFromSelectedBakery,
-  logout
+  getCakeListFromSelectedBakery
 };
 
 function getAllCakes () {
@@ -46,10 +45,14 @@ function getCakeListFromSelectedBakery(email){
   return apiClient.get(apimapping.GET_CAKELIST_FROM_SELECTED_BAKERY+email)
 }
 
-async function login (email, password) {
+async function login (email, password,profileImage) {
+  
   console.log(email);
   console.log(password);
-  const response = await apiClient.post(apimapping.LOGIN, { email: email, passWord: password })
+  console.log(profileImage);
+
+  const response = await apiClient.post(apimapping.LOGIN, { email: email, 
+    passWord: password,socialLogin:"true",socialProfileImage:profileImage})
   if (response.data.token !== null) {
     localStorage.setItem('token', JSON.stringify(response.data.token));
     localStorage.setItem('email', JSON.stringify(email));
@@ -62,4 +65,5 @@ async function login (email, password) {
 function logout () {
   localStorage.removeItem('token');
   localStorage.removeItem('email');
+  localStorage.removeItem('userInfo');
 }

@@ -10,7 +10,7 @@ const apiClient = axios.create({
              "email":"bakery@gmail.com"
     }
 });
-
+ 
 apiClient.interceptors.request.use(function (config) {
   let token = JSON.parse(localStorage.getItem('token'));
   let email = JSON.parse(localStorage.getItem('email'));

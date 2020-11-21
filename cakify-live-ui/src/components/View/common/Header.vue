@@ -16,9 +16,7 @@
          
          <li v-if="isAuthenticated">
             <a href="#" class="logo">
-                <img src="https://lh3.googleusercontent.com/a-/AOh14Gjk6Ho2z5m5KgWN9EunCxjSfUap6jMp60_jxqkxmA=s96-c" 
-                alt="" height="40" />
-                <img v-bind:src='{isGoogleLoginSucessful}'>
+                <img v-bind:src="isGoogleLoginSucessful" alt="" height="40">
             </a>
         </li>
     </ul>
