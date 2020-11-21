@@ -12,7 +12,7 @@
     
                 <section>
                     <div>
-                        <form>
+                        <!-- <form> -->
                             <div class="row gtr-uniform">
                                 <div class="col-6 col-12-xsmall">
                                     <select 
@@ -45,7 +45,7 @@
                                     </select> 
                                 </div>
                             </div>
-                        </form>
+                        <!-- </form> -->
                     </div>
                 </section>
                 <div class="box alt" v-show="!showSelectedBakeries">
@@ -102,7 +102,8 @@
 </template>
 
 <script>
-import cakifyAdminService from "@/apiservices/cakifyAdminService.js";
+import CakifyAdminService from "@/apiservices/CakifyAdminService.js";
+import BakeryService from "@/apiservices/BakeryService.js";
 import Header from "@/components/View/common/Header";
 import Sidebar from "@/components/View/common/Sidebar";
 
@@ -134,7 +135,7 @@ export default {
     },
     methods: {
         displayLocations(){
-            cakifyAdminService.getLocations()
+            BakeryService.getBakeryLocations()
                 .then(response => {
                     this.locations = response.data.data;
                     console.log('Locations: ', this.locations)
@@ -145,7 +146,7 @@ export default {
                 })
         },
         displayTowns(){
-            cakifyAdminService.getBakeryTowns(this.selectedLocation)
+            BakeryService.getBakeryTowns(this.selectedLocation)
                .then(response => {
                     this.towns = response.data.data;
                     console.log('towns: ', this.towns)
@@ -167,7 +168,7 @@ export default {
             // this.$router.push({name: 'BakeryPage', params: {name: this.townName}});
         },
         displayAllCakes() {
-            cakifyAdminService.getAllCakes()
+            CakifyAdminService.getAllCakes()
                 .then(response => {
                     console.log("all Cakes: ", response.data.apiResponse);
                     this.cakes = response.data.apiResponse;
@@ -177,7 +178,7 @@ export default {
                 })
         },
          showBakeries(){
-            cakifyAdminService.getBakeriesByLocation(this.townName)
+            BakeryService.getBakeriesByLocation(this.townName)
                 .then(response => {
                     this.bakeryList = response.data.data;
                     console.log('Bakery list: ', this.bakeryList)
@@ -187,7 +188,7 @@ export default {
                 })
         }, 
         getAllBakeries(){
-            cakifyAdminService.getAllBakeries()
+            BakeryService.getAllBakeries()
                 .then(response => {
                     this.bakeries = response.data.data;
                     console.log('Bakery list: ', this.bakeryList)

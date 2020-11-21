@@ -11,11 +11,11 @@
         </section>
 
         <!-- Menu -->
-        <nav id="menu">
+        <nav id="menu" v-show="isAuthenticated">
             <header class="major">
                 <h2>Menu</h2>
             </header>
-            <ul>
+            <ul >
                 <li>
                     <router-link @click="handleRouterLinkClick" :to="{ name: 'viewcart' }">View Cart</router-link>
                 </li> 
@@ -28,13 +28,19 @@
 
                           
         </nav>
+        <div>
+            <header class="major">
+                <h2>Best Selling Cake</h2>
+            </header>
+            <img src="@/assets/images/rascake.jpg" alt="">
+        </div>
 
-        <div v-show="isAuthenticated">
+        <!-- <div v-show="isAuthenticated">
         <header class="major">
                 <h2>Best selling cakes</h2>
             </header>
          <Favourites/>
-       </div>
+       </div> -->
 
 
         <footer id="footer">
@@ -57,11 +63,11 @@ import {
     debounce
 } from 'lodash-es';
 import logoutMixin from "@/mixins/logout.js";
-import Favourites from "@/components/View/services/sidemenu/Favourites.vue"
+// import Favourites from "@/components/View/services/sidemenu/Favourites.vue"
 
 export default {
     name: 'Sidebar',
-    components:{Favourites},
+    // components:{Favourites},
     data() {
         return {
             isSidebarInactive: false,

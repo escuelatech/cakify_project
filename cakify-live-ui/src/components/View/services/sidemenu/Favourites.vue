@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import cakifyAdminService from "@/apiservices/cakifyAdminService.js";
+import CakifyAdminService from "@/apiservices/CakifyAdminService.js";
 export default {
   data() {
     return {
@@ -31,7 +31,7 @@ export default {
   methods: {
     // 
     getBestSellingCakes() {
-      cakifyAdminService
+      CakifyAdminService
         .getAllCakes(JSON.stringify(this.cakeId))
         .then((response) => {
           this.favCakeImage = response.data.apiResponse;

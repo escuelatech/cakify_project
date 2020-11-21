@@ -5,7 +5,6 @@ import MainLandingPage from "@/components/View/services/LandingPage/MainLandingP
 import CakeDetailsPage from "@/components/View/services/cake_detail/CakeDetailsPage.vue";
 import PaymentPage from "@/components/View/services/payment/PaymentPage.vue";
 import CakeListByBakeryPage from "@/components/View/services/cake_list/CakeListbyBakeryPage.vue";
-import BakeryPage from "@/components/View/services/LandingPage/BakeryPage.vue";
 import SearchPage from "@/components/View/services/LandingPage/SearchPage.vue";
 
 
@@ -17,11 +16,6 @@ const router = new VueRouter({
       path: '/cakify',
       name: 'MainLandingPage',
       component: MainLandingPage
-    },
-    {
-      path: '/bakerypage',
-      name: 'BakeryPage',
-      component: BakeryPage
     },
     {
       path: '/searchpage',
@@ -42,11 +36,6 @@ const router = new VueRouter({
       path: '/cakelistbybakery',
       name: 'CakeListByBakery',
       component: CakeListByBakeryPage
-    },
-    {
-      path: '/bakery',
-      name: 'BakeryPage',
-      component: BakeryPage
     },
     { 
       path: '*', 

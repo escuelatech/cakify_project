@@ -1,54 +1,38 @@
 import apiClient from "@/shared/axios";
 import apiMutipartClient from "@/shared/axios";
+import apimapping from "@/shared/apimapping.js";
 
 export default {
   addCake,
-  uploadImage,
-  bakeryregister,
   login,
   getCake,
   getImage,
   getAllCakes,
   buyNow,
-  getBakeriesByLocation,
   getCakeListFromSelectedBakery,
-  getLocations,
-  getBakeryTowns,
-  getDates,
-  getAllBakeries
+  logout
 };
 
 function getAllCakes () {
-  return apiClient.get("/api/cakes/fetchall");
+  return apiClient.get(apimapping.GET_ALL_CAKES);
 }
 
 function getCake (id) {
-  return apiClient.get("/api/cakes/find/"+id);
+  return apiClient.get(apimapping.GET_CAKE+id);
 }
-
-function bakeryregister (params) {
-  console.log(JSON.stringify(params));
-  return apiClient.post("api/bakery/register", params);
-}
-
 
 function addCake (params) {
   console.log(JSON.stringify(params));
-  return apiClient.post("/api/cakes/add", params);
-}
-
-function uploadImage(params){
-  console.log(JSON.stringify(params));
-  return apiMutipartClient.post("/api/upload2", params);
+  return apiClient.post(apimapping.ADD_CAKE, params);
 }
 
 function getImage () {
-  return apiMutipartClient.get("/api/upload2");
+  return apiMutipartClient.get(apimapping.UPLOAD_IMAGE);
 }
 
 function buyNow(params) {
   console.log('buy now: ', JSON.stringify(params));
-  return apiClient.post("/api/payment/initiate", params);
+  return apiClient.post(apimapping.BUY_NOW, params);
 }
 
 //not using this api now
@@ -56,35 +40,15 @@ function buyNow(params) {
 //   return apiClient.get('/api/bakery/find?bakeryemail='+email);
 // }
 
-function getBakeriesByLocation(location){
-  return apiClient.get('/api/bakery/find/by/location?location='+location)
-}
-
 function getCakeListFromSelectedBakery(email){
   console.log('from admin service', email)
-  return apiClient.get('/api/cakes/find/by/bakery?bakeryemail='+email)
-}
-
-function getLocations(){
-  return apiClient.get('/api/utils/locations');
-}
-
-function getBakeryTowns(id){
-  return apiClient.get('/api/utils/towns/'+id);
-}
-
-function getDates(){
-  return apiClient.get('/api/utils/futuredates');
-}
-
-function getAllBakeries(){
-  return apiClient.get('/api/bakery/getall');
+  return apiClient.get(apimapping.GET_CAKELIST_FROM_SELECTED_BAKERY+email)
 }
 
 async function login (email, password) {
   console.log(email);
   console.log(password);
-  const response = await apiClient.post("/api/user/login", { email: email, passWord: password })
+  const response = await apiClient.post(apimapping.LOGIN, { email: email, passWord: password })
   if (response.data.token !== null) {
     localStorage.setItem('token', JSON.stringify(response.data.token));
     localStorage.setItem('email', JSON.stringify(email));
@@ -94,7 +58,7 @@ async function login (email, password) {
   return response;
 }
 
-// function logout () {
-//   localStorage.removeItem('token');
-//   localStorage.removeItem('email');
-// }
+function logout () {
+  localStorage.removeItem('token');
+  localStorage.removeItem('email');
+}

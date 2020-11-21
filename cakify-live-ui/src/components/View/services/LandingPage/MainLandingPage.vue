@@ -56,7 +56,7 @@
                 </div>
                
                 <div class="btn">
-                    <button class="primary" @click="$router.push({name: 'SearchPage'})">Continue to Bakery</button>
+                    <button class="button primary" @click="$router.push({name: 'SearchPage'})">Continue to Bakery</button>
                 </div>
 
                 <Quotes />

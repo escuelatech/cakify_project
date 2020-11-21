@@ -1,26 +1,36 @@
 import apiClient from "@/shared/axios";
+import apimapping from "@/shared/apimapping.js";
 
 export default {
   bakeryregister,
   getBakeriesByLocation,
-  getLocations,
-  getBakeryTowns
+  getBakeryLocations,
+  getBakeryTowns,
+  getDeliveryDates,
+  getAllBakeries,
 };
 
 function bakeryregister (params) {
   console.log(JSON.stringify(params));
-  return apiClient.post("api/bakery/register", params);
+  return apiClient.post(apimapping.BAKERY_REGISTRATION, params);
 }
 
 function getBakeriesByLocation(location){
-  return apiClient.get('/api/bakery/find/by/location?location='+location)
+  return apiClient.get(apimapping.GET_BAKERIES_BY_LOCATION+location)
 }
 
-function getLocations(){
-  return apiClient.get('/api/utils/locations');
+function getBakeryLocations(){
+  return apiClient.get(apimapping.GET_BAKERY_LOCATIONS);
 }
 
-function getBakeryTowns(locationId){
-    return apiClient.get('/api/utils/towns/'+locationId)
-  }
+function getBakeryTowns(id){
+  return apiClient.get(apimapping.GET_BAKERY_TOWNS+id);
+}
 
+function getDeliveryDates(){
+  return apiClient.get(apimapping.GET_DELIVERY_DATES);
+}
+
+function getAllBakeries(){
+  return apiClient.get(apimapping.GET_ALL_BAKERIES);
+}
