@@ -31,34 +31,26 @@ function getImage () {
 }
 
 function buyNow(params) {
-  console.log('buy now: ', JSON.stringify(params));
   return apiClient.post(apimapping.BUY_NOW, params);
 }
 
-//not using this api now
-// function getBakeries(email) {
-//   return apiClient.get('/api/bakery/find?bakeryemail='+email);
-// }
-
 function getCakeListFromSelectedBakery(email){
-  console.log('from admin service', email)
   return apiClient.get(apimapping.GET_CAKELIST_FROM_SELECTED_BAKERY+email)
 }
 
 async function login (email, password,profileImage) {
-  
-  console.log(email);
-  console.log(password);
-  console.log(profileImage);
-
-  const response = await apiClient.post(apimapping.LOGIN, { email: email, 
-    passWord: password,socialLogin:"true",socialProfileImage:profileImage})
+  console.log("-----------------------111");
+  const response = await apiClient.post(apimapping.LOGIN, {email:email, 
+    passWord: password,socialLogin:"true",socialProfileImage:profileImage});
+    console.log(JSON.stringify(response.data));
   if (response.data.token !== null) {
+    console.log(JSON.stringify(response.data));
     localStorage.setItem('token', JSON.stringify(response.data.token));
     localStorage.setItem('email', JSON.stringify(email));
   } else {
     return Promise.reject("Wrong credentials");
   }
+  console.log(JSON.stringify(response.data));
   return response;
 }
 

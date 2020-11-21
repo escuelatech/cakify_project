@@ -28,11 +28,10 @@ export default {
         .signIn()
         .then(GoogleUser => {
           // on success do something
-          console.log('GoogleUser', GoogleUser)
-          console.log('getId', GoogleUser.getId())
-          console.log('getBasicProfile', GoogleUser.getBasicProfile());
-          console.log('getAuthResponse', GoogleUser.getAuthResponse());
-          
+          // console.log('GoogleUser', GoogleUser)
+          // console.log('getId', GoogleUser.getId())
+          // console.log('getBasicProfile', GoogleUser.getBasicProfile());
+          // console.log('getAuthResponse', GoogleUser.getAuthResponse());
 
           var userInfo = {loginType: 'google',google: GoogleUser.getBasicProfile(),
           email:GoogleUser.getBasicProfile().cu,firstname:GoogleUser.getBasicProfile().fV,
@@ -44,14 +43,12 @@ export default {
          localStorage.setItem('userInfo', userInfo);
          localStorage.setItem('userImage', GoogleUser.getBasicProfile().SJ);
          this.profileImage(userInfo.profileImage);
-         console.log(JSON.stringify(userInfo));
          this.callPranamaBackendLogin(userInfo,GoogleUser);
         }).catch(error => {
           console.log('error', error)
         })
     },
     async callPranamaBackendLogin(userInfo,GoogleUser){
-      console.log('user_profile_image',GoogleUser.getBasicProfile().SJ);
       try {
         await this.login({ email: userInfo.google.cu,
           password: "sachin123",
@@ -61,6 +58,7 @@ export default {
         this.sendingSuccessful = true;
         // this.$router.push({ name: "MainLandingPage" }).catch((err) => console.log(err));
       } catch (error) {
+        console.error(" User Login failed in the back-end  ");
         this.sendingSuccessful = false;
         this.error = true;
       } finally {

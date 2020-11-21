@@ -1,7 +1,7 @@
 import CakifyAdminService from "@/apiservices/CakifyAdminService.js";
 
 const token = JSON.parse(localStorage.getItem('token'));
-//const userEmail = JSON.parse(localStorage.getItem('email'));
+// const userEmail = JSON.parse(localStorage.getItem('email'));
 
 const initialState = token
   ? { status: { loggedIn: true}, token }
