@@ -9,7 +9,6 @@ export default {
   getCake,
   getImage,
   getAllCakes,
-  buyNow,
   getCakeListFromSelectedBakery
 };
 
@@ -28,10 +27,6 @@ function addCake (params) {
 
 function getImage () {
   return apiMutipartClient.get(apimapping.UPLOAD_IMAGE);
-}
-
-function buyNow(params) {
-  return apiClient.post(apimapping.BUY_NOW, params);
 }
 
 function getCakeListFromSelectedBakery(email){
