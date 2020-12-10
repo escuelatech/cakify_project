@@ -2,8 +2,8 @@
 <div>
        
        <div> <h4 v-show="!sendingSuccessful">LOGIN</h4></div>
-      <div class="box app-background" >
-         <form @reset="reset" @submit.prevent=" submitLogin" v-show="!sendingSuccessful">
+        <div class="box loginContainer element" >
+        <form @reset="reset" @submit.prevent=" submitLogin" v-show="!sendingSuccessful">
          <div class="row gtr-uniform">
             <template v-if="!processing">
                <div class="col-6 col-12-xsmall">
@@ -69,9 +69,8 @@
       
      </form>
      </div>
-      
-      
-      
+     
+          
     </div>
 </template>
 
@@ -87,8 +86,8 @@ import { mapActions } from "vuex";
                 validateLogin: false,
                 email: '',
                 password:'',
-                logingData:""
-              }
+                logingData:"",
+                  }
         },
     
        components: {
@@ -141,9 +140,54 @@ import { mapActions } from "vuex";
     left: 20%;
   }
 }
-.app-background {
-  background: rgba(0, 0, 0, 0);
+// .app-background {
+//   background: rgba(0, 0, 0, 0);
+//   background-image: url("https://media.istockphoto.com/videos/homemade-chocolate-cake-and-coffee-video-id1058331642?s=640x640");
+//   //  background-image: url(images="images");
+//   background-size: cover;
+// }
+.loginContainer{
+  height: 100%;
+  width : 100%;
   background-image: url("https://media.istockphoto.com/videos/homemade-chocolate-cake-and-coffee-video-id1058331642?s=640x640");
   background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  transition:5s;
+  animation-name: animate;
+  animation-direction: alternate-reverse;
+  animation-duration: 20s;
+  animation-fill-mode: forwards;
+  animation-iteration-count:infinite;
+  animation-play-state: running;
+  animation-timing-function: ease-in-out;
+-webkit-backface-visibility: hidden;
+  transform: perspective(1px) scale(1) translateZ(0);
+   -webkit-font-smoothing: subpixel-antialiased;
+ -webkit-transform: perspective(1000px);
+}
+@keyframes animate {
+  0%{
+    background-image: url("https://images.pexels.com/photos/827513/pexels-photo-827513.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500");
+  }
+  20%{
+    background-image: url("https://images.pexels.com/photos/1120970/pexels-photo-1120970.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500");
+  }
+  40%{
+    background-image: url("https://images.pexels.com/photos/14107/pexels-photo-14107.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500");
+  }
+    40%{
+    background-image: url("https://images.pexels.com/photos/45202/brownie-dessert-cake-sweet-45202.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500");
+  }
+    40%{
+    background-image: url("https://images.unsplash.com/photo-1563076429-c04cbe68da3a?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60");
+  }
+    40%{
+    background-image: url("https://images.unsplash.com/photo-1546856139-46fb2b57ff21?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60");
+  }
+
+}
+.element {
+    filter: blur(0);
 }
 </style>

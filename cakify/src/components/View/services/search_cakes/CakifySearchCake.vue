@@ -2,22 +2,29 @@
     <div>
 
 <div>
-           
+         
               <header class="major">
                 <h4>Search your cake </h4>
-                {{ cake.cakeType }}
-              </header>
-             <form @submit.prevent="">
+               </header>
+             <form @submit.prevent="findSesrchedCake">
                 <div class="row gtr-uniform box">
                   <div class="col-6 col-12-xsmall">
-                   <!-- <vue-bootstrap-typeahead
+                 <vue-bootstrap-typeahead
                       class="mb-4"
                       v-model="query"
-                      :data="cakeListOfLoggedInBakery"
+                      :data="loggedInBakeryCakeList"
+                      :serializer="(cake) => cake.CakeType"
+                      @hit="selectedCakes = $event"
+                      placeholder="Search Your cakes by type"
+                    />
+                     <vue-bootstrap-typeahead
+                      class="mb-4"
+                      v-model="query"
+                      :data="loggedInBakeryCakeList"
                       :serializer="(cake) => cake.cakeName"
                       @hit="selectedCakes = $event"
                       placeholder="Search Your cakes by name"
-                    />-->
+                    />
                   </div>
                   <div class="col-6 col-12-xsmall">
                     
@@ -35,43 +42,91 @@
                 
                 </div>
               </form>
+
+              <div class="text-justify">
+            <!-- Section -->
+    
+              <section>
+                <div class="posts">
+                  <article v-for="cake in loggedInBakeryCakeList"
+                    :key="cake.cakeId"
+                    :value="cake"
+                    
+                  >
+                  
+                    <a href="#" class="image">
+                      <img
+                        height="300"
+                        width="150"
+                        :src="cake.cakeImage"
+                        alt=""
+                      />
+                    </a>
+                   <!-- <h3>{{ cake.bakeryEmail }}</h3>-->
+                   <!-- <h3>{{ cake.cakeName }}</h3>
+                    <h3>Price: {{ cake.cakePrice }}</h3>
+                    <p>{{ cake.description }}</p>-->
+                    <button
+                      class="primary"
+                      @click="
+                        $router.push({
+                          name: 'EditCake',
+                          params: { cakeId: cake.cakeId },
+                        })
+                      "
+                    >
+                      View
+                    </button>
+                 
+                 </article>
+                </div>
+              </section>
+           
+              <div>
+              </div>
             </div>
+            </div>
+
+
     </div>
 </template>
 
 <script>
 import cakifyAdminService from "@/apiservices/cakifyAdminService.js";
-// import VueBootstrapTypeahead from "vue-bootstrap-typeahead";
+import VueBootstrapTypeahead from "vue-bootstrap-typeahead";
     export default {
       data(){
           return{
          cake: "",
-         cakeListOfLoggedInBakery:"",
+        
+         loggedInBakeryCakeList:[],
          query:"",
+        //  queryName:"",
          cakes:"",
-         cakeId: '',
+         cakeId: "1337",
+         bakeryEmail:""
           }
       } ,
       components:{
-        //   VueBootstrapTypeahead
+          VueBootstrapTypeahead
       } ,
-      created(){
-         this.bakeryEmail = JSON.parse(localStorage.getItem('email'));
-         this.cakeId=this.$route.params.cakeId;
-      },
+      created() {
+       this.bakeryEmail = this.$route.params.bakeryEmail;
+        },
+
       mounted() {
-    // this.bakeryEmail = JSON.parse(localStorage.getItem('email'));
-     this.displayLoggedInBakeryCakes();
-    //  this.cakeId=this.$route.params.cakeId
-    //  this.getSelectedCake();
-  },
+      this.displayLoggedInBakeryCakes();
+       },
+
+
   methods:{
        displayLoggedInBakeryCakes() {
           cakifyAdminService
         .getCakeListForLoggedInBakery(this.bakeryEmail)
         .then((response) => {
-          this.cakeListOfLoggedInBakery = response.data.data;
-          console.log("Cakes: ", this.cakeListOfLoggedInBakery);
+          this.loggedInBakeryCakeList = response.data.data;
+          console.log("Cakes: ", this.loggedInBakeryCakeList);
+        
         })
         .catch((error) => {
           console.log("Error: ", error.response);
@@ -79,7 +134,7 @@ import cakifyAdminService from "@/apiservices/cakifyAdminService.js";
     },
     //   getSelectedCake() {
     //   cakifyAdminService
-    //     .getCake()
+    //     .getCake(this.cakeId)
     //     .then((response) => {
     //       this.cake = response.data.apiResponse;
     //       console.log("Selected Cake: ", this.cake);
@@ -89,6 +144,19 @@ import cakifyAdminService from "@/apiservices/cakifyAdminService.js";
     //       console.log("Error", error.response);
     //     });
     // },
+
+    findSesrchedCakeByType(){
+     cakifyAdminService.getCake(this.cakeId)
+        .then((response) => {
+          this.cake = response.data.apiResponse;
+          console.log("Selected Cake: ", this.cake);
+          this.dialog = true;
+        })
+        .catch((error) => {
+          console.log("Error", error.response);
+        });
+
+    }
 
   }
     }

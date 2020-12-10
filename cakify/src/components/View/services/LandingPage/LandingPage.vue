@@ -1,25 +1,27 @@
-<template>
-  <div>
-    <v-app>
+<template >
+  <div >
+ 
+    <v-app >
       <!-- Wrapper -->
-      <div id="wrapper">
+      <div id="wrapper"  >
         <!-- Main -->
-        <div id="main">
-          <div class="inner">
+        <div id="main" >
+          <div class="inner" >
             <!-- Header -->
             <Header />
             <!-- Header -->
             <!-- Form -->
-            <h4>welcome !!! {{loggedInBakeryEmail}}</h4>
-              <div align="right"> 
+       
+             <h3>DashBoard</h3>
+            <div align="right" > 
            <ul class="icons">
            <li>
-            <button class="button small" @click="$router.push({ name: 'CakifySearchCakePage', params:{bakeryEmail:cake.bakeryEmail,cakeId: cake.cakeId}})" >
+            <button  class="button small" @click="$router.push({ name: 'CakifySearchCakePage', params: { bakeryEmail:bakeryEmail }})" >
                  Search your cake
                 </button>
            </li>
            </ul>
-          </div> 
+           </div> 
          
            
             <!-- <section> -->
@@ -29,10 +31,10 @@
     
               <section>
                 <div class="posts">
-                  <article
-                    v-for="cake in cakeListOfLoggedInBakery"
+                  <article v-for="cake in cakeListOfLoggedInBakery"
                     :key="cake.cakeId"
                     :value="cake"
+                    
                   >
                   
                     <a href="#" class="image">
@@ -58,7 +60,8 @@
                     >
                       View
                     </button>
-                  </article>
+                 
+                 </article>
                 </div>
               </section>
            
@@ -96,17 +99,17 @@ export default {
     return {
       loggedInBakeryEmail: "",
       cakeListOfLoggedInBakery: [],
-      dialog: false,
+      // dialog: false,
       // selectedCakeId: null,
       cake: "",
-      egglessOption: "",
+      // egglessOption: "",
       cakeName: "",
-      price: "",
-      description: "",
-      cakeType: null,
-      formData: null,
-      items: ["Custom", "Valentines", "Birthday", "Anniversary"],
-      options: ["Yes", "No"],
+      // price: "",
+      // description: "",
+      // cakeType: null,
+      // formData: null,
+      // items: ["Custom", "Valentines", "Birthday", "Anniversary"],
+      // options: ["Yes", "No"],
       valid: "",
       query: "",
       bakeryEmail: "",
