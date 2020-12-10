@@ -12,10 +12,10 @@
     <div class="box app-background">
         <div class="row gtr-uniform">
             <div class="col-6 col-12-xsmall cakeDetail">
-                <h6><b>Cake Name: </b>{{cake.cakeName}}</h6>
-                <h6><b>Cake Price: </b>{{cake.cakePrice}}</h6>
-                <h6><b>Description: </b>{{cake.description}}</h6>
-                <h6><b>Type of cake: </b>{{cake.cakeType}}</h6>
+                <h3><b>Cake Name: </b>{{cake.cakeName}}</h3>
+                <h3><b>Cake Price: </b>{{cake.cakePrice}}</h3>
+                <h3><b>Description: </b>{{cake.description}}</h3>
+                <h3><b>Type of cake: </b>{{cake.cakeType}}</h3>
             </div>
             <!-- <div class="col-6 col-12-xsmall">
                 <img :src="cake.cakeImage" alt="" width="120" height="125">
@@ -37,12 +37,10 @@
                     <span class="errorNotification" v-if="msg.buyerEmail">{{msg.buyerEmail}}</span>
                 </div>
                 <div class="col-6 col-12-xsmall">
-                    <input 
-                        type="number"
-                        v-model="kilograms"
-                        placeholder="How many kgs?"
-                        required
-                    >
+                    <select v-model="kilograms" required>
+                        <option disabled value="null">How many kgs?</option>
+                        <option v-for="kilo in kiloArr" :key="kilo" :value="kilo">{{kilo}}</option>
+                    </select>
                      <span class="errorNotification" v-if="msg.kilograms">{{msg.kilograms}}</span>
                 </div>
                 <div class="col-6 col-12-xsmall">
@@ -122,6 +120,7 @@ import BakeryService from "@/apiservices/BakeryService.js";
     export default {
         data(){
             return {
+                kiloArr: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'],
                 msg: [],
                 cakeId: '',
                 cake: '',
@@ -211,7 +210,7 @@ import BakeryService from "@/apiservices/BakeryService.js";
                     kilograms: this.kilograms,
                     eggless: this.eggless,
                     address: this.address,
-                    dateOfDelivery: this.dateOfDelivery.date,
+                    dateOfDelivery: this.dateOfDelivery,
                     deliveryTime: this.deliveryTime,
                     messageOnCake: this.messageOnCake,
                     messageOnDelivery: this.messageOnDelivery
