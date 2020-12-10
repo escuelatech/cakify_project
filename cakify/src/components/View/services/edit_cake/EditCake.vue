@@ -7,8 +7,66 @@
     >
         <v-card
             class="mx-auto"
-            max-width="700"
+            max-width="600"
         >
+        <div class="row gtr-uniform">
+         <div class="col-6 col-12-xsmall">
+          <input type="text" name="cakename"  placeholder="Name of the cake" v-model="cake.cakeName" autocomplete="off" required />
+         </div>
+         
+            <div class="col-6 col-12-xsmall">
+          <input type="text" name="cakename" placeholder="Price" v-model="cake.cakePrice" autocomplete="off" required @blur="focusOut()" />
+         
+        </div>
+        <div class="col-6 col-12-xsmall">
+            <label for="cakeType">Specify type of the cake:</label>
+                <select v-model="cake.cakeType"  class="boxBorder">
+                <option v-for="item in items" :key="item.id">{{item.type}}</option>
+                
+                </select>
+         </div>
+          <div class="col-6 col-12-small">
+        <label for="cakeType">Eggless Option:</label><br/>
+		<input type="radio" id="checkYes" name="demo-priority" v-model="cake.egglessOption" value="Yes">
+		<label for="checkYes">Yes</label>
+        <input type="radio" id="checkNo" name="demo-priority" v-model="cake.egglessOption" value="No">
+		<label for="checkNo">No</label>
+        </div>
+        <div class="col-6 col-12-xsmall">
+          <textarea class="boxBorder" name="description" placeholder="Write a  description about your Cake" rows="2" v-model="cake.description" required></textarea>
+         
+        </div> 
+        <div class="col-6 col-12-xsmall">
+         <v-list-item>
+        <v-list-item-avatar
+                    tile
+                    size="150"
+                >
+                    <img 
+                        :src="cake.cakeImage" 
+                        alt="" 
+                    />
+                </v-list-item-avatar>
+         </v-list-item>
+         </div>
+
+         <div class="col-12">
+             <ul class="actions">
+            <li>
+              <input type="submit" value="Edit and save" class="primary" @click="$router.go(-1)" />
+            </li>
+          <!--  <li>
+              <input type="reset" value="Reset" />
+            </li>-->
+            <li>
+              <input type="reset" value="Cancel" @click="$router.push({name: 'LandingPage'})"/>
+            </li>
+          </ul>
+        </div>
+        </div>
+
+
+
             <v-list-item>
                 <v-list-item-avatar
                     tile

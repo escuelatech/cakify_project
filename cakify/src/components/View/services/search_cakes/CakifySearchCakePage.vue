@@ -9,7 +9,9 @@
           <Header />
           <!-- Header -->
           <!-- Form -->
-          <CakifySearchCake />
+
+          
+          <CakifySearchCakeForm />
 
           <!-- Form -->
         </div>
@@ -24,13 +26,13 @@
 <script>
 import Header from "@/components/View/common/Header";
 import Sidebar from "@/components/View/common/Sidebar";
-import CakifySearchCake from "@/components/View/services/search_cakes/CakifySearchCake.vue";
+import CakifySearchCakeForm from "@/components/View/services/search_cakes/CakifySearchCakeForm.vue";
 
 export default {
   components: {
     Header,
     Sidebar,
-    CakifySearchCake,
+    CakifySearchCakeForm,
   },
 };
 </script>

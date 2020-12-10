@@ -7,7 +7,6 @@ import AddCakePage from "@/components/View/services/add_item/AddCakePage.vue"
 import LandingPage from "@/components/View/services/LandingPage/LandingPage.vue"
 import EditCakePage from "@/components/View/services/edit_cake/EditCakePage.vue"
 import CakifySearchCakePage from "@/components/View/services/search_cakes/CakifySearchCakePage.vue"
-import DashboardPage from "@/components/View/services/LandingPage/DashboardPage.vue";
 // const DashboardPage = () => import(/* webpackChunkName: "dashboard" */ '@/components/View/services/dashboard_service/DashboardPage.vue')
 
 Vue.use(VueRouter);
@@ -23,11 +22,6 @@ const router = new VueRouter({
       path: '/cakifyregistration',
       name: 'CakifyRegistrationPage',
       component: CakifyRegistrationPage
-    },
-    {
-      path: '/dashboard',
-      name: 'Dashboard',
-      component: DashboardPage
     },
     {
       path: '/addcake',
