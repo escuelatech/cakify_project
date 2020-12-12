@@ -37,6 +37,16 @@
                     <span class="errorNotification" v-if="msg.buyerEmail">{{msg.buyerEmail}}</span>
                 </div>
                 <div class="col-6 col-12-xsmall">
+                    <input 
+                        type="tel"
+                        v-model="phoneNumber"
+                        placeholder="Phone Number"
+                        autocomplete="on"
+                        required
+                    >
+                    <span class="errorNotification" v-if="msg.phoneNumber">{{msg.phoneNumber}}</span>
+                </div>
+                <div class="col-6 col-12-xsmall">
                     <select v-model="kilograms" required>
                         <option disabled value="null">How many kgs?</option>
                         <option v-for="kilo in kiloArr" :key="kilo" :value="kilo">{{kilo}}</option>
@@ -132,6 +142,7 @@ import BakeryService from "@/apiservices/BakeryService.js";
                 deliveryTime: null,
                 messageOnCake: '',
                 messageOnDelivery: '',
+                phoneNumber: null,
                 valid: '',
                 paymentUrl: '',
                 cakeDetails: '',
@@ -147,6 +158,10 @@ import BakeryService from "@/apiservices/BakeryService.js";
                 this.buyerEmail = value;
                 this.validateBuyerEmail(value);
             },
+            // phoneNumber(value) {
+            //     this.phoneNumber = value;
+            //     this.validatePhoneNumber(value);
+            // },
             eggless(value) {
                 this.eggless = value;
                 this.validateEggless(value);
@@ -213,29 +228,49 @@ import BakeryService from "@/apiservices/BakeryService.js";
                     dateOfDelivery: this.dateOfDelivery,
                     deliveryTime: this.deliveryTime,
                     messageOnCake: this.messageOnCake,
-                    messageOnDelivery: this.messageOnDelivery
+                    messageOnDelivery: this.messageOnDelivery,
+                    phonenumber: this.phoneNumber
                 })
                 .then(response => {
                     console.log('Buy now cake response: ', response.data);
-                    this.cakeDetails = response.data.apiResponse.cake;
-                    this.orderDetails = response.data.apiResponse.cakeOrder;
-                    this.paymentUrl = response.data.apiResponse.paymentOrder.paymentOptions.paymentUrl
-                    console.log('payment url ', this.paymentUrl)
-                    // localStorage.setItem('orderDetails', JSON.stringify(this.orderDetails));
-                    // localStorage.setItem('cakeDetails', JSON.stringify(this.cakeDetails));
-                    this.$router.push({name: 'Payment', params: {paymentUrl: this.paymentUrl, cakeDetails: this.cakeDetails, orderDetails: this.orderDetails}})
+                    console.log("error data", JSON.stringify(response.data.errorCode));
+                    if(response.data.errorCode !== "Bad Request"){
+                         console.log("Good request")
+                        
+                            this.cakeDetails = response.data.apiResponse.cake;
+                            this.orderDetails = response.data.apiResponse.cakeOrder;
+                            this.paymentUrl = response.data.apiResponse.paymentOrder.paymentOptions.paymentUrl
+                            console.log('payment url ', this.paymentUrl)
+                            // localStorage.setItem('orderDetails', JSON.stringify(this.orderDetails));
+                            // localStorage.setItem('cakeDetails', JSON.stringify(this.cakeDetails));
+                            
+                            this.$router.push({name: 'Payment', params: {paymentUrl: this.paymentUrl, cakeDetails: this.cakeDetails, orderDetails: this.orderDetails}})
+                    }
+                    else {
+                        console.log("Bad request");
+                    }
+                   
                 })
                 .catch(error => {
-                    console.log('Error in buy now: ', error.response);
+                    console.log('Error in buy now: ', JSON.stringify(error.response));
                 })
 
             }, 
-            validateBuyerEmail(value){
+            // validateBuyerEmail(value){
+            //      // eslint-disable-next-line no-useless-escape
+            //      if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(value)) {
+            //          this.msg['buyerEmail'] = "";
+            //      } else {
+            //          this.msg['buyerEmail'] = 'Enter a valid email';
+            //      }
+            // },
+            validatePhoneNumber(value){
                  // eslint-disable-next-line no-useless-escape
-                 if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(value)) {
-                     this.msg['buyerEmail'] = "";
+                 var phoneno = /^[2-9]\d{2}-\d{3}-\d{4}$/;
+                 if (phoneno.test(value)) {
+                     this.msg['phoneNumber'] = "";
                  } else {
-                     this.msg['buyerEmail'] = 'Enter a valid email';
+                     this.msg['phoneNumber'] = 'Enter a valid phone number';
                  }
             },
              validateEggless(value){
