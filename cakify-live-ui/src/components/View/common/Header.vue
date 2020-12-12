@@ -9,10 +9,15 @@
             <button class="button small" @click="handleLogout">
                 Logout
             </button>
+
         </li>
         <li v-else>
             <SocialLogin/>
+            {{loggedinUserName}}
+            {{isAuthenticated}}
         </li>
+
+        
          
          <li v-if="isAuthenticated">
             <a href="#" class="logo">

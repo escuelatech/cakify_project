@@ -56,12 +56,29 @@
                     <div class="row gtr-50 gtr-uniform">
                         <div class="col-4" v-for="bakery in bakeries.slice(0,9)" :key="bakery.bakeryId">
                             <span class="image fit">
-                                <div class="container">
+                                <div class="container text-center ma-2">
                                     <img 
                                         :src="bakery.bakeryLogo" 
                                         alt="" 
+                                        @click="snackbar = true"
                                     >
                                     <h4><span>{{bakery.bakeryname}}</span></h4>
+                                    <v-snackbar
+                                        v-model="snackbar"
+                                    >
+                                        {{ text }}
+
+                                        <template v-slot:action="{ attrs }">
+                                            <v-btn
+                                            color="primary"
+                                            text
+                                            v-bind="attrs"
+                                            @click="snackbar = false"
+                                            >
+                                            <i class="fas fa-times"></i>
+                                            </v-btn>
+                                        </template>
+                                    </v-snackbar>
                                 </div>
                                
                                 <!--  @click="$router.push({name: 'CakeDetails', params: {cakeId: cake.cakeId}})" -->
@@ -125,7 +142,9 @@ export default {
             towns: [],
             cakes: [],
             showSelectedBakeries: false,
-            bakeries: []
+            bakeries: [],
+            snackbar: false,
+            text: `Please select your location`,
         }
     },
     mounted(){
