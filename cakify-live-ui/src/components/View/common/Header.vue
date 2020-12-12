@@ -1,6 +1,6 @@
 <template>
 <header id="header">
-    <a href="index.html" class="logo">
+    <a href="#" class="logo">
         <h3>CAKIFY</h3>
     </a>
     <strong v-show="isAuthenticated"></strong>
@@ -9,16 +9,10 @@
             <button class="button small" @click="handleLogout">
                 Logout
             </button>
-
         </li>
         <li v-else>
             <SocialLogin/>
-            {{loggedinUserName}}
-            {{isAuthenticated}}
         </li>
-
-        
-         
          <li v-if="isAuthenticated">
             <a href="#" class="logo">
                 <img v-bind:src="isGoogleLoginSucessful" alt="" height="40">
