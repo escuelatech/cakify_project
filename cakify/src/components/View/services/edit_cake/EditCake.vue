@@ -59,7 +59,7 @@
               <input type="reset" value="Reset" />
             </li>-->
             <li>
-              <input type="reset" value="Cancel" @click="$router.push({name: 'LandingPage'})"/>
+              <input type="reset" value="Cancel" @click="$router.push({name: 'DashboardPage'})"/>
             </li>
           </ul>
         </div>
@@ -127,7 +127,7 @@
                     <v-card-actions>
                         <v-btn text type="submit" @click="$router.go(-1)">Save</v-btn>
                         <v-btn text>Delete</v-btn>
-                        <v-btn text @click="$router.push({name: 'LandingPage'})">Cancel</v-btn>
+                        <v-btn text @click="$router.push({name: 'DashboardPage'})">Cancel</v-btn>
                     </v-card-actions>
                 </v-list-item-content>
             </v-list-item>
