@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { API } from "@/shared/index.js";
 
 export default {
     upload,
@@ -8,7 +9,7 @@ export default {
 function upload(formData,uuid) {
     
     axios({
-      url: 'https://escuelatech.com/api/cakes/upload',
+      url: API+'/cakes/upload',
       method: 'POST',
       data: formData,
       headers: {
@@ -26,7 +27,7 @@ function upload(formData,uuid) {
 function uploadBakeryImage(formData,email) {
  
    axios({
-    url: 'https://escuelatech.com/api/bakery/logoupload',
+    url: API+'/bakery/logoupload',
     method: 'POST',
     data: formData,
     headers: {
