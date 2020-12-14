@@ -4,7 +4,7 @@ import VueRouter from 'vue-router';
 import CakifyLoginPage from "@/components/View/services/cakify_login/CakifyLoginPage.vue"
 import CakifyRegistrationPage from "@/components/View/services/cakify_registration/CakifyRegistrationPage.vue"
 import AddCakePage from "@/components/View/services/add_item/AddCakePage.vue"
-import LandingPage from "@/components/View/services/LandingPage/LandingPage.vue"
+// import LandingPage from "@/components/View/services/LandingPage/LandingPage.vue"
 import EditCakePage from "@/components/View/services/edit_cake/EditCakePage.vue"
 import CakifySearchCakePage from "@/components/View/services/search_cakes/CakifySearchCakePage.vue"
 import DashboardPage from "@/components/View/services/LandingPage/DashboardPage.vue"
@@ -31,12 +31,19 @@ const router = new VueRouter({
       component: AddCakePage,
       meta: { requiresAuth: true }
     },
-    {
-      path: '/landingpage',
-      name: 'LandingPage',
-      component: LandingPage,
-      meta: { requiresAuth: true }
-    },
+    // {
+    //   path: '/landingpage',
+    //   name: 'LandingPage',
+    //   component: LandingPage,
+    //   meta: { requiresAuth: true }
+    // },
+    
+  {
+     path: '/DashboardPage',
+    name: 'DashboardPage',
+    component:DashboardPage,
+    meta: { requiresAuth: true }
+   },
     {
       path: '/dashboard',
       name: 'Dashboard',

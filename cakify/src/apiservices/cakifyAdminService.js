@@ -18,21 +18,21 @@ export default {
 };
 
 function getCakeListForLoggedInBakery(email){
- return apiClient.get('/api/cakes/find/by/bakery?bakeryemail='+email)
+ return apiClient.get('/cakes/find/by/bakery?bakeryemail='+email)
 }
 
 function getLocation (townId) {
   // console.log(JSON.stringify(townId));
 
-  return apiClient.get("/api/utils/towns/"+townId);
+  return apiClient.get("/utils/towns/"+townId);
 } 
 
 function getCity () {
-  return apiClient.get("/api/utils/locations");
+  return apiClient.get("/utils/locations");
 }
 
 function getAllCakes () {
-  return apiClient.get("/api/cakes/fetchall");
+  return apiClient.get("/cakes/fetchall");
 }
 
 function getAllOrderDetails () {
@@ -40,32 +40,32 @@ function getAllOrderDetails () {
 }
 
 function getCake (id) {
-  return apiClient.get("/api/cakes/find/"+id);
+  return apiClient.get("/cakes/find/"+id);
 }
 
 function updateCake(params) {
   console.log('from cakifyAdminservice ',JSON.stringify(params))
-  return apiClient.post('/api/cakes/update', params);
+  return apiClient.post('/cakes/update', params);
 }
 
 function bakeryregister (params) {
   console.log(JSON.stringify(params));
-  return apiClient.post("api/bakery/register", params);
+  return apiClient.post("/bakery/register", params);
 }
 
 
 function addCake (params) {
   console.log(JSON.stringify(params));
-  return apiClient.post("/api/cakes/add", params);
+  return apiClient.post("/cakes/add", params);
 }
 
 function uploadImage(params){
   // console.log(JSON.stringify(params));
-  return apiMutipartClient.post("/api/upload2", params);
+  return apiMutipartClient.post("/upload2", params);
 }
 
 function getImage () {
-  return apiMutipartClient.get("/api/upload2");
+  return apiMutipartClient.get("/upload2");
 }
 
 
@@ -76,7 +76,7 @@ async function login (email, password) {
  
   
   // console.log(password);
-  const response = await apiClient.post("/api/bakery/login", { email: email, passWord: password })
+  const response = await apiClient.post("/bakery/login", { email: email, passWord: password })
     if (response.data.token !== null) {
     localStorage.setItem('token', JSON.stringify(response.data.token));
     localStorage.setItem('email', JSON.stringify(email));

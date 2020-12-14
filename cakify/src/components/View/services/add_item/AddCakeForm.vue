@@ -13,7 +13,7 @@
                     "/>
                 </li>
                 <li>
-                  <input type="button" value="No" class=" button small" @click="$router.push({name: 'LandingPage'})
+                  <input type="button" value="No" class=" button small" @click="$router.push({name: 'DashboardPage'})
                     "/>
                 </li>
               </ul>
@@ -61,7 +61,7 @@
               <input type="reset" value="Reset" />
             </li>
             <li>
-              <input type="reset" value="Cancel" @click="$router.push({name: 'LandingPage'})"/>
+              <input type="reset" value="Cancel" @click="$router.push({name: 'DashboardPage'})"/>
             </li>
           </ul>
         </div>
