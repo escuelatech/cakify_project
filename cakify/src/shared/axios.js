@@ -6,8 +6,7 @@ const apiClient = axios.create({
   withCredentials: false,
   headers: {
      Accept: "application/json",
-             "Content-Type": "application/json",
-             "email":"bakery@gmail.com"
+             "Content-Type": "application/json"
     }
 });
 
@@ -21,6 +20,11 @@ apiClient.interceptors.request.use(function (config) {
   return config;
 }, function (err) {
   return Promise.reject(err);
+});
+
+apiClient.interceptors.response.use((response) => {
+  response.headers.email = JSON.parse(localStorage.getItem('email'));
+  return response;
 });
 
 export default apiClient;

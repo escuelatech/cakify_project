@@ -13,7 +13,8 @@ export default {
   getLocation,
   updateCake,
   logout,
-  getCakeListForLoggedInBakery
+  getCakeListForLoggedInBakery,
+  getAllOrderDetails
 };
 
 function getCakeListForLoggedInBakery(email){
@@ -29,8 +30,13 @@ function getLocation (townId) {
 function getCity () {
   return apiClient.get("/api/utils/locations");
 }
+
 function getAllCakes () {
   return apiClient.get("/api/cakes/fetchall");
+}
+
+function getAllOrderDetails () {
+  return apiClient.get("http://localhost:9090/payment/fetchallorderdetails");
 }
 
 function getCake (id) {

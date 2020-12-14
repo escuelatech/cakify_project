@@ -5,7 +5,7 @@
             <div class="row gtr-50 gtr-uniform">
                 <div class="col-4">
                     <span class="image fit">
-                        <div class="box icon-container box1">
+                        <div class="box icon-container box1" @click="$router.push({name: 'OrderDetails'})">
                             <h3>Your Orders</h3>
                             <div class="icon-container">
                                 <i class="fas fa-inbox fa-3x"></i>
@@ -46,6 +46,8 @@
 </template>
 
 <script>
+// import OrderDetailsPage from "@/components/View/services/order_details/OrderDetailsPage.vue";
+
     export default {
         
     }
@@ -56,6 +58,7 @@
 .icon-container{
     text-align: center;
     color: white;
+    cursor: pointer;
 }
 .box1{
     background-color: DarkCyan;
