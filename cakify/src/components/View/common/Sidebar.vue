@@ -15,11 +15,11 @@
             <header class="major">
                 <h2>Menu</h2>
             </header>
-            <ul><keep-alive>
+            <ul>
                 <li v-show="isAuthenticated">
-                <router-link @click="handleRouterLinkClick" :to="{ name: 'LandingPage' }">HOME</router-link>
+                <router-link @click="handleRouterLinkClick" :to="{ name: 'DashboardPage' }">HOME</router-link>
                  </li> 
-                 </keep-alive>
+                 
                 <li v-show="!isAuthenticated">
                     <router-link @click="handleRouterLinkClick" :to="{ name: 'CakifyRegistrationPage' }">REGISTER</router-link>
                 </li> 

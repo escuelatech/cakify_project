@@ -114,7 +114,11 @@ import { mapActions } from "vuex";
           password: this.password
         });
          this.sendingSuccessful = true;
+<<<<<<< HEAD
          this.$router.push({ name: "Dashboard"}).catch(err => console.log(err));
+=======
+         this.$router.push({ name: "DashboardPage"}).catch(err => console.log(err));
+>>>>>>> 9c5fcb5 (Dashboard routed and removed /api from all links)
          } catch (error) {
         this.sendingSuccessful = false;
         this.error = true;
@@ -161,7 +165,6 @@ import { mapActions } from "vuex";
   animation-iteration-count:infinite;
   animation-play-state: running;
   animation-timing-function: ease-in-out;
--webkit-backface-visibility: hidden;
   transform: perspective(1px) scale(1) translateZ(0);
    -webkit-font-smoothing: subpixel-antialiased;
  -webkit-transform: perspective(1000px);
