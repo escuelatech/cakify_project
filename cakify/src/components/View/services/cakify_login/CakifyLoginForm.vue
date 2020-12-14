@@ -114,11 +114,7 @@ import { mapActions } from "vuex";
           password: this.password
         });
          this.sendingSuccessful = true;
-<<<<<<< HEAD
          this.$router.push({ name: "Dashboard"}).catch(err => console.log(err));
-=======
-         this.$router.push({ name: "DashboardPage"}).catch(err => console.log(err));
->>>>>>> 9c5fcb5 (Dashboard routed and removed /api from all links)
          } catch (error) {
         this.sendingSuccessful = false;
         this.error = true;
