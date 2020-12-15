@@ -17,7 +17,7 @@
             </header>
             <ul>
                 <li v-show="isAuthenticated">
-                <router-link @click="handleRouterLinkClick" :to="{ name: 'DashboardPage' }">HOME</router-link>
+                <router-link @click="handleRouterLinkClick" :to="{ name: 'DashboardPage' }">DASHBOARD</router-link>
                  </li> 
                  
                 <li v-show="!isAuthenticated">
@@ -77,6 +77,7 @@ export default {
             }, 500);
         }
     },
+
     created() {
         this.checkWindowWidthDebounced = debounce(this.checkWindowWidth, 20);
         window.addEventListener('resize', this.checkWindowWidthDebounced);

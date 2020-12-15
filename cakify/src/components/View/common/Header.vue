@@ -4,7 +4,7 @@
         <!--<a href="#" class="logo"><img src="@/assets/images/pranama_log_2.jpeg" alt="" height="50" /> -->
         <h3>BAKER'S PORTAL</h3>
     </a>
-    <strong v-show="isAuthenticated">{{loggedinUserName}}</strong>
+    <strong v-show="isAuthenticated">{{bakeryEmail}}</strong>
 
     <ul class="icons">
         <li v-if="isAuthenticated">
@@ -26,6 +26,14 @@
 import logoutMixin from "@/mixins/logout.js";
 
 export default {
-    mixins: [logoutMixin]
+    mixins: [logoutMixin],
+    data(){
+        return{
+            bakeryEmail:"",
+        }
+    },
+    mounted(){
+        this.bakeryEmail = JSON.parse(localStorage.getItem("email"));
+    }
 }
 </script>

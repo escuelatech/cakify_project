@@ -1,138 +1,109 @@
 <template>
 <v-app>
     <h3>Edit Cake</h3>
-    <v-form ref="addCakeForm" 
-        v-model="valid" 
-        @submit.prevent="submitEditCake" 
-    >
-        <v-card
-            class="mx-auto"
-            max-width="600"
-        >
-        <div class="row gtr-uniform">
-         <div class="col-6 col-12-xsmall">
-          <input type="text" name="cakename"  placeholder="Name of the cake" v-model="cake.cakeName" autocomplete="off" required />
-         </div>
-         
-            <div class="col-6 col-12-xsmall">
-          <input type="text" name="cakename" placeholder="Price" v-model="cake.cakePrice" autocomplete="off" required @blur="focusOut()" />
-         
+  <form  @submit.prevent="submitEditCake">
+      <div class="row gtr-uniform">
+        <div class="col-6 col-12-xsmall">
+          <input
+            type="text"
+            name="cakename"
+            placeholder="Name of the cake"
+            v-model="cake.cakeName"
+            autocomplete="off"
+            required
+          />
         </div>
         <div class="col-6 col-12-xsmall">
-            <label for="cakeType">Specify type of the cake:</label>
-                <select v-model="cake.cakeType"  class="boxBorder">
-                <option v-for="item in items" :key="item.id">{{item.type}}</option>
-                
-                </select>
-         </div>
-          <div class="col-6 col-12-small">
-        <label for="cakeType">Eggless Option:</label><br/>
-		<input type="radio" id="checkYes" name="demo-priority" v-model="cake.egglessOption" value="Yes">
-		<label for="checkYes">Yes</label>
-        <input type="radio" id="checkNo" name="demo-priority" v-model="cake.egglessOption" value="No">
-		<label for="checkNo">No</label>
+          <input
+            type="text"
+            name="cakename"
+            placeholder="Price"
+            v-model="cake.cakePrice"
+            autocomplete="off"
+            required
+            @blur="focusOut()"
+          />
         </div>
         <div class="col-6 col-12-xsmall">
-          <textarea class="boxBorder" name="description" placeholder="Write a  description about your Cake" rows="2" v-model="cake.description" required></textarea>
-         
-        </div> 
+          <label for="cakeType">Specify type of the cake:</label>
+          <select v-model="cake.cakeType" class="boxBorder">
+            <option v-for="item in items" :key="item.id">
+              {{ item.type }}
+            </option>
+          </select>
+        </div>
+        <div class="col-6 col-12-small">
+          <label for="cakeType">Eggless Option:</label><br />
+          <input
+            type="radio"
+            id="checkYes"
+            name="demo-priority"
+            v-model="cake.egglessOption"
+            value="Yes"
+          />
+          <label for="checkYes">Yes</label>
+          <input
+            type="radio"
+            id="checkNo"
+            name="demo-priority"
+            v-model="cake.egglessOption"
+            value="No"
+          />
+          <label for="checkNo">No</label>
+        </div>
         <div class="col-6 col-12-xsmall">
-         <v-list-item>
-        <v-list-item-avatar
-                    tile
-                    size="150"
-                >
-                    <img 
-                        :src="cake.cakeImage" 
-                        alt="" 
-                    />
-                </v-list-item-avatar>
-         </v-list-item>
+          <textarea
+            class="boxBorder"
+            name="description"
+            placeholder="Write a  description about your Cake"
+            rows="2"
+            v-model="cake.description"
+            required
+          ></textarea>
+        </div>
+        <div class="col-6 col-12-xsmall">
+          <!-- <v-list-item>
+            <v-list-item-avatar tile size="150">
+              <img :src="cake.cakeImage" alt="" />
+            </v-list-item-avatar>
+          </v-list-item> -->
+
+          <div
+              class="base-image-input"
+               ref="uploadImage"
+               :style="{ 'background-image': `url(${imageData})` }"
+                @click="chooseImage" >
+                <span v-if="!imageData" class="placeholder">
+                <img height="100%" :src="cake.cakeImage" alt="avatar" />
+                </span>
+                <input
+                class="file-input"
+                ref="fileInput"
+                type="file"
+                @change="onSelectFile()"  />
          </div>
-
-         <div class="col-12">
-             <ul class="actions">
-            <li>
-              <input type="submit" value="Edit and save" class="primary" @click="$router.go(-1)" />
-            </li>
-          <!--  <li>
-              <input type="reset" value="Reset" />
-            </li>-->
-            <li>
-              <input type="reset" value="Cancel" @click="$router.push({name: 'DashboardPage'})"/>
-            </li>
-          </ul>
         </div>
-        </div>
-
-
-
-            <v-list-item>
-                <v-list-item-avatar
-                    tile
-                    size="300"
-                >
-                    <img 
-                        :src="cake.cakeImage" 
-                        alt="" 
-                    />
-                </v-list-item-avatar>
-                <v-list-item-content>
-                    <v-text-field 
-                        label="Name of the Cake" 
-                        v-model="cake.cakeName" 
-                        prepend-icon="fas fa-birthday-cake"
-                        :counter="20"
-                        required
-                    ></v-text-field>
-                    <v-text-field 
-                        label="Price" 
-                        v-model="cake.cakePrice" 
-                        type="number"
-                        prepend-icon="fas fa-rupee-sign"
-                        required
-                    ></v-text-field>
-                    <v-textarea 
-                        label="Describe your cake" 
-                        v-model="cake.description" 
-                        prepend-icon="fas fa-pen"
-                        :counter="500"
-                        required
-                    ></v-textarea>
-                    <v-select
-                        :items="items"
-                        label="Specify type of the cake"
-                        placeholder=" "
-                        v-model="cake.cakeType"
-                        prepend-icon="fas fa-mouse-pointer"
-                        required
-                    ></v-select>
-                    <v-radio-group 
-                        v-model="cake.egglessOption"  
-                        label="Do you provide an eggless option for this cake?"
-                        required 
-                    >
-                        <v-divider></v-divider>
-                        <v-radio
-                            :label="option"
-                            name="cake.egglessOption"
-                            v-for= "option in options"
-                            :key="option"
-                            :value="option"
-                            prepend-icon="fas fa-check"
-                            required
-                        ></v-radio>
-                    </v-radio-group>
-
-                    <v-card-actions>
-                        <v-btn text type="submit" @click="$router.go(-1)">Save</v-btn>
-                        <v-btn text>Delete</v-btn>
-                        <v-btn text @click="$router.push({name: 'DashboardPage'})">Cancel</v-btn>
-                    </v-card-actions>
-                </v-list-item-content>
-            </v-list-item>
-        </v-card>
-    </v-form>
+      </div>
+      <div class="col-12">
+        <ul class="actions">
+          <li>
+            <input
+              type="submit"
+              value="Edit and save"
+              class="primary"
+             
+            />
+          </li>
+          <li>
+            <input
+              type="reset"
+              value="Cancel"
+              @click="$router.push({ name: 'DashboardPage' })"
+            />
+          </li>
+        </ul>
+      </div>
+    </form>
   </v-app>
 
 </template>
@@ -153,12 +124,13 @@ export default {
             cakeImage: '',
             cakeType: null,
             formData: null,
+            imageData: null,
             items: [
-                'Custom',
-                'Valentines',
-                'Birthday',
-                'Anniversary'
-            ],
+           { id: 1, type: "Custom" },
+           { id: 2, type: "Valentines" },
+           { id: 3, type: "Birthday" },
+           { id: 4, type: "Anniversary" },
+      ],
             options: [
                 'Yes',
                 'No'
@@ -168,16 +140,39 @@ export default {
       },
       created() {
           this.cakeId = this.$route.params.cakeId;
-        },
+         },
       mounted() {
-            this.getSelectedCake();
+                   this.getSelectedCake();
         },
       methods: {
+     
+    onSelectFile() {
+      const input = this.$refs.fileInput;
+      const files = input.files;
+      if (files && files[0]) {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          this.imageData = e.target.result;
+        };
+        reader.readAsDataURL(files[0]);
+        this.$emit("input", files[0]);
+      }
+    },
+
+          chooseImage() {
+      this.$refs.fileInput.click();
+    },
+
+          //  adding 2decimal place to the entered integer
+                   focusOut: function() {
+                  this.price = Number(this.price).toFixed(2).replace(/(\d)(?=(\d{5})+(?:\.\d+)?$)/g, )
+                 },
+
             getSelectedCake() {
-                cakifyAdminService.getCake(this.cakeId)
+                    cakifyAdminService.getCake(this.cakeId)
                     .then(response => {
-                        this.cake = response.data.apiResponse;
-                        console.log('Selected Cake: ', this.cake);
+                    this.cake = response.data.apiResponse;
+                    console.log('Selected Cake: ', this.cake);
                     })
                     .catch(error => {
                         console.log('Error', error.response)
@@ -197,7 +192,9 @@ export default {
                 })
                 .then(response => {
                   ( response.data);
-                    //  console.log('Edited Cake: ', response.data);
+                     console.log('Edited Cake: ', response.data);
+                     this.cake=response.data;
+                     console("updated cake list",this.cake);
                 })
                 .catch(error => {
                     console.log('Error in edit cake: ', error.response)
@@ -209,5 +206,31 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+ // ***for image preview of avatar***>
+    .base-image-input {
+      display: block;
+      width: 100px;
+      height: 100px;
+      cursor: pointer;
+      background-size: cover;
+      background-position: center center;
+    }
+    .placeholder {
+      background: #F0F0F0;
+      width: 75%;
+      height: 75%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: #333;
+      font-size: 18px;
+      font-family: Helvetica;
+    }
+    .placeholder:hover {
+      background: #E0E0E0;
+    }
+    .file-input {
+      display: none;
+    }
 
 </style>

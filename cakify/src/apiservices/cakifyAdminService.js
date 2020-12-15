@@ -13,13 +13,9 @@ export default {
   getLocation,
   updateCake,
   logout,
-  getCakeListForLoggedInBakery,
-  getAllOrderDetails
+  getAllOrderDetails,
 };
 
-function getCakeListForLoggedInBakery(email){
- return apiClient.get('/cakes/find/by/bakery?bakeryemail='+email)
-}
 
 function getLocation (townId) {
   // console.log(JSON.stringify(townId));
