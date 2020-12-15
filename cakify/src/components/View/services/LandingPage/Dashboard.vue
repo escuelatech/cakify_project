@@ -5,7 +5,7 @@
             <div class="row gtr-50 gtr-uniform">
                 <div class="col-4">
                     <span class="image fit">
-                        <div class="box icon-container box1" @click="$router.push({name: 'OrderDetails'})">
+                        <div class="box icon-container box1" @click="$router.push({name: 'OrderDetailsList'})">
                             <h3>Your Orders</h3>
                             <div class="icon-container">
                                 <i class="fas fa-inbox fa-3x"></i>

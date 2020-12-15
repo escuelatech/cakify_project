@@ -13,7 +13,13 @@ export default {
   getLocation,
   updateCake,
   logout,
+<<<<<<< HEAD
   getAllOrderDetails,
+=======
+  getCakeListForLoggedInBakery,
+  getAllOrderDetails,
+  getOrderDetailsByOrderId
+>>>>>>> 39f7cf3 (Displaying a list of cake orders and displaying all the order details by orderID in another component)
 };
 
 
@@ -32,7 +38,12 @@ function getAllCakes () {
 }
 
 function getAllOrderDetails () {
-  return apiClient.get("http://localhost:9090/payment/fetchallorderdetails");
+  return apiClient.get("http://localhost:9090/bakery/fetchallorderdetails");
+  // return apiClient.get("/bakery/fetchallorderdetails");
+}
+
+function getOrderDetailsByOrderId(orderId){
+  return apiClient.get("http://localhost:9090/bakery/findcakeorderbyorderid/"+orderId);
 }
 
 function getCake (id) {

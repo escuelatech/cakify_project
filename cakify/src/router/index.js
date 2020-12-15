@@ -9,6 +9,8 @@ import EditCakePage from "@/components/View/services/edit_cake/EditCakePage.vue"
 import CakifySearchCakePage from "@/components/View/services/search_cakes/CakifySearchCakePage.vue"
 import DashboardPage from "@/components/View/services/LandingPage/DashboardPage.vue"
 import OrderDetailsPage from "@/components/View/services/order_details/OrderDetailsPage.vue"
+import IndividualOrderDetailPage from "@/components/View/services/order_details/IndividualOrderDetailPage.vue"
+
 // const DashboardPage = () => import(/* webpackChunkName: "dashboard" */ '@/components/View/services/dashboard_service/DashboardPage.vue')
 
 Vue.use(VueRouter);
@@ -51,9 +53,14 @@ const router = new VueRouter({
       // meta: { requiresAuth: true }
     },
     {
-      path: '/orderdetails',
-      name: 'OrderDetails',
+      path: '/orderdetailslist',
+      name: 'OrderDetailsList',
       component: OrderDetailsPage
+    },
+    {
+      path: '/orderdetail',
+      name: 'OrderDetail',
+      component: IndividualOrderDetailPage
     },
     {
       path: '/editcake',

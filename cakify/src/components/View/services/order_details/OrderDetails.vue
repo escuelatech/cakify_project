@@ -2,7 +2,7 @@
     <div>
         <h1>Order Details</h1>
         <div>
-            <div class="table-wrapper">
+            <!-- <div class="table-wrapper">
                 <table class="alt" v-for="order in orderDetails" :key="order.orderId">
                     <thead>
                         <tr>
@@ -80,6 +80,12 @@
                 </div>
                 </table>
                 
+            </div> -->
+            <div class="box" v-for="order in orderDetails" :key="order.orderId" @click="$router.push({name: 'OrderDetail', params: {orderId: order.orderId}})">
+                <p><b>Order Id: </b>{{order.orderId}}</p>
+                <p><b>Date of Delivery: </b>{{order.dateOfDelivery}}</p>
+                <p><b>Buyer Email: </b>{{order.buyerEmail}}</p>
+                <p><b>Total Price: </b>{{order.totalPrice.toFixed(2)}}</p>
             </div>
         </div>
 
@@ -113,5 +119,7 @@ import cakifyAdminService from "@/apiservices/cakifyAdminService.js";
 </script>
 
 <style lang="scss" scoped>
-
+.box {
+    cursor: pointer;
+}
 </style>
