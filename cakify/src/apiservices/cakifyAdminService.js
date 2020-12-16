@@ -13,19 +13,12 @@ export default {
   getLocation,
   updateCake,
   logout,
-<<<<<<< HEAD
-  getAllOrderDetails,
-=======
   getCakeListForLoggedInBakery,
   getAllOrderDetails,
   getOrderDetailsByOrderId
->>>>>>> 39f7cf3 (Displaying a list of cake orders and displaying all the order details by orderID in another component)
 };
 
-
 function getLocation (townId) {
-  // console.log(JSON.stringify(townId));
-
   return apiClient.get("/utils/towns/"+townId);
 } 
 
@@ -38,13 +31,17 @@ function getAllCakes () {
 }
 
 function getAllOrderDetails () {
-  return apiClient.get("http://localhost:9090/bakery/fetchallorderdetails");
-  // return apiClient.get("/bakery/fetchallorderdetails");
+   return apiClient.get("/bakery/fetchallorderdetails");
 }
 
 function getOrderDetailsByOrderId(orderId){
-  return apiClient.get("http://localhost:9090/bakery/findcakeorderbyorderid/"+orderId);
+  return apiClient.get("/bakery/findcakeorderbyorderid/"+orderId);
 }
+
+function getCakeListForLoggedInBakery(email){
+  return apiClient.get('/cakes/find/by/bakery?bakeryemail='+email)
+}
+ 
 
 function getCake (id) {
   return apiClient.get("/cakes/find/"+id);
@@ -67,7 +64,6 @@ function addCake (params) {
 }
 
 function uploadImage(params){
-  // console.log(JSON.stringify(params));
   return apiMutipartClient.post("/upload2", params);
 }
 
@@ -77,19 +73,10 @@ function getImage () {
 
 
 async function login (email, password) {
-  console.log(email);
-  // this.loggedInBakery=email;
-  // console.log('loggedInBakery',this.loggedInBakery)
- 
-  
-  // console.log(password);
   const response = await apiClient.post("/bakery/login", { email: email, passWord: password })
     if (response.data.token !== null) {
     localStorage.setItem('token', JSON.stringify(response.data.token));
     localStorage.setItem('email', JSON.stringify(email));
-    // this.email=localStorage.getItem('email', JSON.stringify(email));
-    // console.log(this.email)
-    
   } else {
     return Promise.reject("Wrong credentials");
   }
