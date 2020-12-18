@@ -11,6 +11,7 @@ const GET_BAKERY_TOWNS = '/utils/towns/';
 const GET_DELIVERY_DATES = '/utils/futuredates';
 const GET_ALL_BAKERIES = '/bakery/getall';
 const LOGIN = "/user/login";
+const GET_ORDER_DETAILS_BY_ORDER_ID = "/bakery/findcakeorderbyorderid/";
 
 export default {
     GET_ALL_CAKES,
@@ -25,6 +26,7 @@ export default {
     GET_BAKERY_TOWNS,
     GET_DELIVERY_DATES,
     GET_ALL_BAKERIES,
-    LOGIN
+    LOGIN,
+    GET_ORDER_DETAILS_BY_ORDER_ID
 
 }

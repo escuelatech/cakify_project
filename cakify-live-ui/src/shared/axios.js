@@ -23,4 +23,9 @@ apiClient.interceptors.request.use(function (config) {
   return Promise.reject(err);
 });
 
+apiClient.interceptors.response.use((response) => {
+  response.headers.email = JSON.parse(localStorage.getItem('email'));
+  return response;
+});
+
 export default apiClient;

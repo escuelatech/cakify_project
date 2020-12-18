@@ -3,7 +3,7 @@
         <ul class="actions">
                 <li>
                     <input type="button" value="Back" class="primary" 
-                        @click="$router.push({name: 'CakeDetails', params: {cakeId: cakeDetails.cakeId}})"
+                        @click="$router.push({name: 'CakeDetails', params: {cakeId: cakeDetails.cakeId, orderId: orderDetails.orderId}})"
                     >
                 </li>
         </ul>
@@ -12,7 +12,7 @@
        
         <div class="box">
             <p>Here is your order details. You will be redirected to our payment portal. Please be ready with your bank details to complete your transaction.</p>
-            <p>Want to change something in your order? You can do that <a href="">here</a>.</p>
+            <!-- <p>Want to change something in your order? You can do that <a href="" @click="$router.push({name: 'CakeDetails', params: {orderId: orderDetails.orderId}})">here</a>.</p> -->
             <p>Thank You for using Cakify!</p>
             <template >
             <div class="table-wrapper">
@@ -41,6 +41,21 @@
                             <td><i class="fas fa-rupee-sign"></i><b>{{(orderDetails.kilograms * 100).toFixed(2)}}</b></td>
                         </tr>
                         <tr>
+                            <td>Name</td>
+                            <td>{{orderDetails.customerName}}</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>Email</td>
+                            <td>{{orderDetails.buyerEmail}}</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>Phone Number</td>
+                            <td>{{orderDetails.phonenumber}}</td>
+                            <td></td>
+                        </tr>
+                        <tr>
                             <td>Date of delivery</td>
                             <td>{{orderDetails.dateOfDelivery}}</td>
                             <td></td>
@@ -54,11 +69,6 @@
                         <tr>
                             <td>Delivery address</td>
                             <td>{{orderDetails.address}}</td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>Email</td>
-                            <td>{{orderDetails.buyerEmail}}</td>
                             <td></td>
                         </tr>
                         <tr>
