@@ -1,92 +1,34 @@
 <template>
     <div>
-        <h1>Order Details</h1>
+        <h3>List of Orders</h3>
         <div>
-            <!-- <div class="table-wrapper">
-                <table class="alt" v-for="order in orderDetails" :key="order.orderId">
+            <div class="table-wrapper">
+                <table class="alt" >
                     <thead>
                         <tr>
-                            <th>Field Name</th>
-                            <th>Details</th>
+                            <th>OrderId</th>
+                            <th>Buyer Email</th>
+                            <th>Date of Delivery</th>
+                            <th>Total Price</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody v-for="order in orderDetails" :key="order.orderId" @click="$router.push({name: 'OrderDetail', params: {orderId: order.orderId}})" class="cursor">
                         <tr>
-                            <td>Bakery Email</td>
-                            <td>{{bakeryEmail}}</td>
-                        </tr>
-                        <tr>
-                            <td>Order Id</td>
                             <td>{{order.orderId}}</td>
-                        </tr>
-                        <tr>
-                            <td>Order Date</td>
-                            <td>{{order.orderDate}}</td>
-                        </tr>
-                        <tr>
-                            <td>Eggless Option</td>
-                            <td>{{order.eggless}}</td>
-                        </tr>
-                        <tr>
-                            <td>How many kgs</td>
-                            <td>{{order.kilograms}}</td>
-                        </tr>
-                        <tr>
-                            <td>Address</td>
-                            <td>{{order.address}}</td>
-                        </tr>
-                        <tr>
-                            <td>Date of Delivery</td>
-                            <td>{{order.dateOfDelivery}}</td>
-                        </tr>
-                        <tr>
-                            <td>Time of Delivery</td>
-                            <td>{{order.deliveryTime }}</td>
-                        </tr>
-                        <tr>
-                            <td>Customer Name</td>
-                            <td>{{order.customerName}}</td>
-                        </tr>
-                        <tr>
-                            <td>Customer Email</td>
                             <td>{{order.buyerEmail}}</td>
-                        </tr>
-                        <tr>
-                            <td>Customer Phone Number</td>
-                            <td>{{order.phonenumber}}</td>
-                        </tr>
-                        <tr>
-                            <td>Message to be written on the cake</td>
-                            <td>{{order.messageOnCake}}</td>
-                        </tr>
-                        <tr>
-                            <td>Message on Delivery</td>
-                            <td>{{order.messageOnDelivery}}</td>
-                        </tr>
-                        <tr>
-                            <td>Total Price</td>
+                            <td>{{order.dateOfDelivery}}</td>
                             <td><i class="fas fa-rupee-sign"></i><b>{{order.totalPrice.toFixed(2)}}</b></td>
                         </tr>
                     </tbody>
-                    <div class="col-12">
-                    <ul class="actions">
-                        <li>
-                            <input type="submit" value="Confirm Order" class="primary">
-                        </li>
-                         <li>
-                            <input type="submit" value="Cancel Order" class='primary'>
-                        </li>
-                    </ul>
-                </div>
                 </table>
                 
-            </div> -->
-            <div class="box" v-for="order in orderDetails" :key="order.orderId" @click="$router.push({name: 'OrderDetail', params: {orderId: order.orderId}})">
+            </div> 
+            <!-- <div class="box" v-for="order in orderDetails" :key="order.orderId" @click="$router.push({name: 'OrderDetail', params: {orderId: order.orderId}})">
                 <p><b>Order Id: </b>{{order.orderId}}</p>
                 <p><b>Date of Delivery: </b>{{order.dateOfDelivery}}</p>
                 <p><b>Buyer Email: </b>{{order.buyerEmail}}</p>
                 <p><b>Total Price: </b>{{order.totalPrice.toFixed(2)}}</p>
-            </div>
+            </div> -->
         </div>
 
     </div>
@@ -119,7 +61,7 @@ import cakifyAdminService from "@/apiservices/cakifyAdminService.js";
 </script>
 
 <style lang="scss" scoped>
-.box {
+.cursor {
     cursor: pointer;
 }
 </style>

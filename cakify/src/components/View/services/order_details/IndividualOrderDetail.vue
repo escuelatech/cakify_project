@@ -1,4 +1,13 @@
 <template>
+<div>
+<br>
+<ul class="actions">
+        <li>
+            <input type="button" value="Back" class="primary" 
+                @click="$router.push({name: 'OrderDetailsList'})"
+            >
+        </li>
+   </ul>
     <div class="box">
         <h2>Order Details</h2> 
         <div class="col-6 col-12-xsmall image">
@@ -33,6 +42,7 @@
             </ul>
         </div>
     </div>
+</div>
 </template>
 
 <script>
