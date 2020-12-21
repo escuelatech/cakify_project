@@ -34,7 +34,8 @@ export default {
           // console.log('getAuthResponse', GoogleUser.getAuthResponse());
 
           var userInfo = {loginType: 'google',google: GoogleUser.getBasicProfile(),
-          email:GoogleUser.getBasicProfile().cu,firstname:GoogleUser.getBasicProfile().fV,
+          email:GoogleUser.getBasicProfile().cu,
+          firstname:GoogleUser.getBasicProfile().fV,
           lastname:GoogleUser.getBasicProfile().iT,
           profileImage:GoogleUser.getBasicProfile().SJ}
 
@@ -42,6 +43,7 @@ export default {
         //  this.$store.commit('setLoginUser', userInfo.google);
          localStorage.setItem('userInfo', userInfo);
          localStorage.setItem('userImage', GoogleUser.getBasicProfile().SJ);
+          localStorage.setItem('email', GoogleUser.getBasicProfile().cu,);
          this.profileImage(userInfo.profileImage);
          this.callPranamaBackendLogin(userInfo,GoogleUser);
         }).catch(error => {

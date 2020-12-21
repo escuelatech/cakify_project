@@ -38,8 +38,18 @@
                 </div>
                 <div class="col-6 col-12-xsmall">
                     <input 
+                        type="text"
+                        v-model="buyerName"
+                        placeholder="Name"
+                        autocomplete="on"
+                        required
+                    >
+                    <!-- <span class="errorNotification">{{validateName}}</span> -->
+                </div>
+                <div class="col-6 col-12-xsmall">
+                    <input 
                         type="tel"
-                        v-model="phoneNumber"
+                        v-model.number="phoneNumber"
                         placeholder="Phone Number"
                         autocomplete="on"
                         required
@@ -84,7 +94,7 @@
                     </select>
                     <span class="errorNotification" v-if="msg.dateOfDelivery">{{msg.dateOfDelivery}}</span>
                  </div>
-                 <div class="col-6 col-12-xsmall">
+                <div class="col-6 col-12-xsmall">
                      <select name="deliveryTime" id="deliveryTime" v-model="deliveryTime" required>
                          <option value="null" disabled>Select a delivery time</option>
                          <option v-for="time in times" :key="time" :value="time">{{time}}</option>
@@ -126,6 +136,7 @@
 import PaymentService from "@/apiservices/PaymentService.js";
 import CakifyAdminService from "@/apiservices/CakifyAdminService.js";
 import BakeryService from "@/apiservices/BakeryService.js";
+import OrderDetailsService from "@/apiservices/OrderDetailsService.js";
 
     export default {
         data(){
@@ -135,6 +146,7 @@ import BakeryService from "@/apiservices/BakeryService.js";
                 cakeId: '',
                 cake: '',
                 buyerEmail: '',
+                buyerName: '',
                 kilograms: null,
                 eggless: '',
                 address: '',
@@ -150,13 +162,29 @@ import BakeryService from "@/apiservices/BakeryService.js";
                 times: ['10:00am', '10:30am', '11am', '11:30am', '12:00pm', '12:30pm', '1:00pm', '1:30pm', '2:00pm', '2:30pm', '3:00pm', '3:30pm','4:00pm', '4:30pm', '5:00pm'],
                 dates: [],
                 date: null,
-                cakeInfo: []
+                cakeInfo: [],
+                orderId: null
             }
         },
+        // computed: {
+        //     validateName(){
+        //         return (this.buyerName !== "" ? "" : "Enter your name"); 
+        //     }, 
+        //     validateUserEmail(){
+        //         // eslint-disable-next-line no-useless-escape
+        //         const regex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/; 
+        //         const matches = regex.test(this.buyerEmail);
+        //         return (matches ? "": "Enter valid email" ); 
+        //     }
+        // },
         watch: {
             buyerEmail(value) {
                 this.buyerEmail = value;
                 this.validateBuyerEmail(value);
+            },
+            buyerName(value) {
+                this.buyerName = value;
+                this.validateBuyerName(value);
             },
             // phoneNumber(value) {
             //     this.phoneNumber = value;
@@ -185,6 +213,7 @@ import BakeryService from "@/apiservices/BakeryService.js";
         },
         created() {
             this.cakeId = this.$route.params.cakeId;
+            this.orderId = this.$route.params.orderId;
         },
         mounted() {
             this.getSelectedCake();
@@ -194,6 +223,7 @@ import BakeryService from "@/apiservices/BakeryService.js";
            getSelectedCake() {
                 CakifyAdminService.getCake(this.cakeId)
                     .then(response => {
+                        this.buyerEmail=response.headers['email'];
                         this.cake = response.data.apiResponse;
                         console.log('Selected Cake: ', this.cake);
                     })
@@ -222,6 +252,7 @@ import BakeryService from "@/apiservices/BakeryService.js";
                 PaymentService.buyNow({
                     cakeId: this.cake.cakeId,
                     buyerEmail: this.buyerEmail,
+                    customerName: this.buyerName,
                     kilograms: this.kilograms,
                     eggless: this.eggless,
                     address: this.address,
@@ -256,23 +287,33 @@ import BakeryService from "@/apiservices/BakeryService.js";
                 })
 
             }, 
-            // validateBuyerEmail(value){
-            //      // eslint-disable-next-line no-useless-escape
-            //      if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(value)) {
-            //          this.msg['buyerEmail'] = "";
-            //      } else {
-            //          this.msg['buyerEmail'] = 'Enter a valid email';
-            //      }
-            // },
-            validatePhoneNumber(value){
+            getOrderDetailsByOrderId(){
+                OrderDetailsService.getOrderDetailsByOrderId(this.orderId) 
+                    .then(response => {
+                        this.cake = response.data.apiResponse.cake;
+                        this.cakeId = this.cake.cakeId;
+                        this.orderDetails = response.data.apiResponse.cakeOrder;
+                        console.log("Cake",this.cake);
+                        console.log("Order", this.orderDetails);
+                    })
+            },
+            validateBuyerEmail(value){
                  // eslint-disable-next-line no-useless-escape
-                 var phoneno = /^[2-9]\d{2}-\d{3}-\d{4}$/;
-                 if (phoneno.test(value)) {
-                     this.msg['phoneNumber'] = "";
+                 if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(value)) {
+                     this.msg['buyerEmail'] = "";
                  } else {
-                     this.msg['phoneNumber'] = 'Enter a valid phone number';
+                     this.msg['buyerEmail'] = 'Enter a valid email';
                  }
             },
+            // validatePhoneNumber(value){
+            //      // eslint-disable-next-line no-useless-escape
+            //      var phoneno = /^[2-9]\d{2}-\d{3}-\d{4}$/;
+            //      if (phoneno.test(value)) {
+            //          this.msg['phoneNumber'] = "";
+            //      } else {
+            //          this.msg['phoneNumber'] = 'Enter a valid phone number';
+            //      }
+            // },
              validateEggless(value){
                 if (value !== "") {
                      this.msg['eggless'] = "";
@@ -292,6 +333,13 @@ import BakeryService from "@/apiservices/BakeryService.js";
                      this.msg['address'] = "";
                  } else {
                      this.msg['address'] = 'Enter an address';
+                 }
+            },
+            validateBuyerName(value){
+                if (value !== "") {
+                     this.msg['buyerName'] = "";
+                 } else {
+                     this.msg['buyerName'] = 'Enter your name';
                  }
             },
              validateDateOfDelivery(value){
