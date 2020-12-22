@@ -1,16 +1,16 @@
 <template>
   <div>
     <v-app>
-         <div>
-            <header class="major">
-              <h2>Search</h2>
-            </header>
-         </div>
+      <div>
+        <header class="major">
+          <h2>Search</h2>
+        </header>
+      </div>
 
-         <div>
-             <form @submit.prevent="findSearchedCake">
-                 <div class="row gtr-uniform box">
-                      <div class="col-6 col-12-xsmall">
+      <div>
+        <!-- <form > -->
+        <!-- <div class="row gtr-uniform box"> -->
+        <!-- <div class="col-6 col-12-xsmall">
                         <label>Your cake type </label>
                             <vue-bootstrap-typeahead
                              class="mb-4"
@@ -19,75 +19,101 @@
                              :serializer="(cakeTypes) => cakeTypes.type"
                             @hit="selectedTypes = $event"
                             />
-                       </div>
-         
-                      <div class="col-12">
+                       </div> -->
+        <div class="col-6 col-12-xsmall">
+          <label>Your cake type </label>
+          <select
+            v-model="queryByType"
+            class="boxBorder"
+            @change="findSearchedCake"
+          >
+            <option value="null" disabled>Select your cake type</option>
+            <option v-for="type in cakeTypes" :key="type.type" :value="type">
+              {{ type.type }}
+            </option>
+          </select>
+        </div>
+
+        <!-- <div class="col-12">
                         <ul class="actions">
                            <li>
                             <input type="submit" value="FIND" class="primary" />
                            </li>
                        </ul>
-                    </div>
-                 </div>
-               </form>
-           </div>
+                    </div> -->
+        <!-- </div> -->
+        <!-- </form> -->
+      </div>
 
-        <div class="box alt" v-show="!cakeDisplay && !searchDisplay ">
-                 <header class="major">
-                      <h2>Cakes in your account</h2>
-                  </header>
-              <div class="row gtr-50 gtr-uniform">
-                  <div
-                  class="col-4"
-                  v-for="cake in cakeListOfLoggedInBakery"
-                  :key="cake.cakeId"
-                  :value="cake"
-                   >
-                       <span class="image fit">
-                           <div class="container">
-                                <img :src="cake.cakeImage" alt="" style="cursor:default" />
-                                <h4>
-                                <span>{{ cake.cakeName }}</span>
-                                </h4>
-                            </div>
-                      </span>
-               </div>
-           </div>
+      <div class="box alt" v-show="!cakeDisplay && !searchDisplay">
+        <header class="major">
+          <h2>Cakes in your account</h2>
+        </header>
+        <div class="row gtr-50 gtr-uniform">
+          <div
+            class="col-4"
+            v-for="cake in cakeListOfLoggedInBakery"
+            :key="cake.cakeId"
+            :value="cake"
+          >
+            <span class="image fit">
+              <div class="container">
+                <img :src="cake.cakeImage" alt="" style="cursor: default" />
+                <h4>
+                  <span>{{ cake.cakeName }}</span>
+                </h4>
+              </div>
+            </span>
+          </div>
+        </div>
       </div>
       <!--Listin by type-->
-         <div class="box alt" v-show="cakeDisplay && !searchDisplay">
+      <div class="box alt" v-show="cakeDisplay && !searchDisplay">
         <header class="major">
           <h2>Cakes in selected type</h2>
         </header>
         <div class="row gtr-50 gtr-uniform">
           <div
-            class="col-4" v-for="type in cakesByTypeForLoggedInBakery" :key="type.cakeId" :value="type" >
-             <span class="image fit">
+            class="col-4"
+            v-for="caketype in cakesByTypeForLoggedInBakery"
+            :key="caketype.cakeId"
+            :value="caketype"
+          >
+            <span class="image fit">
               <div class="container">
-                <img :src="type.cakeImage" alt="" @click="$router.push({name: 'EditCake', params: {cakeId:type.cakeId}})"/>
+                <img
+                  :src="caketype.cakeImage"
+                  alt=""
+                  @click="
+                    $router.push({
+                      name: 'EditCake',
+                      params: { cakeId: caketype.cakeId },
+                    })
+                  "
+                />
                 <h4>
                   <span>{{ type.cakeName }}</span>
                 </h4>
               </div>
-              </span>
+            </span>
           </div>
         </div>
       </div>
-      <div  v-show=" searchDisplay" >
-        <p class="displyMessage">  {{ searchReasult }}</p>
+
+      <div v-show="searchDisplay" class="box">
+        <p class="displyMessage">{{ searchReasult }}</p>
       </div>
     </v-app>
   </div>
 </template>
 
 <script>
-import SearchPageServices from "@/apiservices/SearchPageServices.js"
-import VueBootstrapTypeahead from "vue-bootstrap-typeahead";
+import SearchPageServices from "@/apiservices/SearchPageServices.js";
 export default {
   data() {
     return {
       cakeListOfLoggedInBakery: [],
-      cakesByTypeForLoggedInBakery:[],
+      cakesByTypeForLoggedInBakery: [],
       cakeTypes: [
         { id: 1, type: "Custom" },
         { id: 2, type: "Valentines" },
@@ -95,55 +121,68 @@ export default {
         { id: 4, type: "Anniversary" },
       ],
       cake: "",
-      type:"",
+      type: "",
       bakeryEmail: "",
       queryByType: "",
-      cakeDisplay:false,
-      searchReasult:"",
-      searchDisplay:false
+      cakeDisplay: false,
+      searchReasult: "",
+      searchDisplay: false,
     };
   },
-  components: {
-    VueBootstrapTypeahead,
-  },
+
   mounted() {
     // Getting email from local storage
     this.bakeryEmail = JSON.parse(localStorage.getItem("email"));
+
     // calling function of logged in bakeries cake list
     this.displayCakesOfLoggedInBakery();
   },
   methods: {
     // Getting logged in bakeries cake list
-        displayCakesOfLoggedInBakery() {
-        SearchPageServices 
-        .getCakeListForLoggedInBakery(this.bakeryEmail)
-        .then((response) => {this.cakeListOfLoggedInBakery = response.data.data;
-        //  console.log("Logged in Bakery CakeList",this.cakeListOfLoggedInBakery);
-        }).catch((error) => {
+    displayCakesOfLoggedInBakery() {
+      SearchPageServices.getCakeListForLoggedInBakery(this.bakeryEmail)
+        .then((response) => {
+          this.cakeListOfLoggedInBakery = response.data.data;
+          console.log(
+            "Logged in Bakery CakeList",
+            this.cakeListOfLoggedInBakery
+          );
+        })
+        .catch((error) => {
           console.log(error, "error.response");
         });
     },
     // Getting logged in bakeries cake list by type
-        findSearchedCake(){
-        SearchPageServices.getCakeListByTypeForLoggedInBakery(this.bakeryEmail,this.queryByType)
-        .then((response)=>{
-        this.cakesByTypeForLoggedInBakery = response.data.data;
-        if(this.cakesByTypeForLoggedInBakery !== null){
-           this.cakeDisplay = true;
-           this.searchDisplay = false;
-         }
-         else{
-           this.searchReasult = " You have not yet added any cakes in your searched type";
-           this.searchDisplay = true;
+
+    findSearchedCake() {
+      SearchPageServices.getCakeListByTypeForLoggedInBakery(
+        this.bakeryEmail,
+        this.queryByType.type
+      )
+        .then((response) => {
+          this.cakesByTypeForLoggedInBakery = response.data.data;
+          console.log(
+            "selected type cake list",
+            this.cakesByTypeForLoggedInBakery
+          );
+          if (this.cakesByTypeForLoggedInBakery !== null) {
+            this.cakeDisplay = true;
+            this.searchDisplay = false;
+          } else {
+            this.searchReasult =
+              " You have not yet added any cakes in your searched type";
+            this.searchDisplay = true;
           }
-          //  console.log("Logged in Bakery cake list by type",this.cakesByTypeForLoggedInBakery)
-          }).catch((error)=>{
-          console.log(error,"error.data")
-      })
-    
-     }
-    
-  }
+          console.log(
+            "Logged in Bakery cake list by type",
+            this.cakesByTypeForLoggedInBakery
+          );
+        })
+        .catch((error) => {
+          console.log(error, "error.response");
+        });
+    },
+  },
 };
 </script>
 
@@ -173,8 +212,8 @@ h4 {
   padding-left: 5px;
   padding-top: 5px;
 }
-.displyMessage{
-  color:red;
+.displyMessage {
+  color: red;
   font-size: 23px;
   font-style: italic;
 }

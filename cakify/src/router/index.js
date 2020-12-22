@@ -20,7 +20,8 @@ const router = new VueRouter({
     {
       path: '/cakify',
       name: 'CakifyLoginPage',
-      component: CakifyLoginPage
+      component: CakifyLoginPage,
+      meta: { requiresAuth: false }
     },
     {
       path: '/cakifyregistration',

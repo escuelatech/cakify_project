@@ -11,57 +11,57 @@
    <form @submit.prevent="submitRegistration();accesTimercount()" v-show="!bakeryRegSuccessMsg">
           <h3>Sign Up Your Bakery with Us</h3>
         <div class="row gtr-uniform">
-         <div class="col-6 col-12-xsmall">
-         <input type="text" name="bakeryName" value placeholder="Bakery Name" v-model="bakeryname" autocomplete="off" required />
-         <span class="errNotific" v-if="validation.bakeryname">{{validation.bakeryname}}</span>
-         </div>
-          <div class="col-6 col-12-xsmall">
-         <input type="text" name="ownerName" value placeholder="Owner's Name" v-model="ownername" autocomplete="off" required />
-         <span class="errNotific" v-if="validation.ownername">{{validation.ownername}}</span>
-         </div>
-         <div class="col-6 col-12-xsmall">
-         <input type="password" name="password" value placeholder="Password" v-model="password" autocomplete="off" required />
-         <span class="errNotific" v-if="validation.password">{{validation.password}}</span>
-         </div>
-         <div class="col-6 col-12-xsmall">
-          <input type="text" name="phoneNumber" value placeholder="Phone " v-model="phone" autocomplete="off" required />
-          <span class="errNotific" v-if="validation.phone">{{validation.phone}}</span>
-         </div>
-         <div class="col-6 col-12-xsmall">
-          <input type="email" name="email" value placeholder="Email " v-model="email" autocomplete="off" required />
-          <span class="errNotific" v-if="validation.email">{{validation.email}}</span>
-         </div>
+           <div class="col-6 col-12-xsmall">
+               <input type="text" name="bakeryName" value placeholder="Bakery Name" v-model="bakeryname" autocomplete="off" required />
+               <span class="errNotific" v-if="validation.bakeryname">{{validation.bakeryname}}</span>
+            </div>
+            <div class="col-6 col-12-xsmall">
+              <input type="text" name="ownerName" value placeholder="Owner's Name" v-model="ownername" autocomplete="off" required />
+              <span class="errNotific" v-if="validation.ownername">{{validation.ownername}}</span>
+            </div>
+            <div class="col-6 col-12-xsmall">
+              <input type="password" name="password" value placeholder="Password" v-model="password" autocomplete="off" required />
+              <span class="errNotific" v-if="validation.password">{{validation.password}}</span>
+            </div>
+            <div class="col-6 col-12-xsmall">
+              <input type="text" name="phoneNumber" value placeholder="Phone " v-model="phone" autocomplete="off" required />
+              <span class="errNotific" v-if="validation.phone">{{validation.phone}}</span>
+            </div>
+            <div class="col-6 col-12-xsmall">
+              <input type="email" name="email" value placeholder="Email " v-model="email" autocomplete="off" required />
+              <span class="errNotific" v-if="validation.email">{{validation.email}}</span>
+            </div>
      
-        <div class="col-6 col-12-xsmall">
-              <label for="cities">Select your location:</label>
-              <select  v-model="city" @change="onChange(city)" class="boxBorder">             
+            <div class="col-6 col-12-xsmall">
+                <select  v-model="city"  class=" boxBorder"  @change="onChange(city)"  > 
+                <option value="null" disabled >Select your location</option>            
                 <option v-for="locationInTown in locations" :key="locationInTown.locationId" :value="locationInTown" >
                 {{ locationInTown.locationName }} 
                 </option>
               </select> 
-        </div>
+            </div>
         <div class="col-6 col-12-xsmall">
-              <label for="places">Select your City</label >
-              <select v-model="location"  @change="getTownName(location)"  class="boxBorder" >                   
+                <select v-model="location"  @change="getTownName(location)"  class="boxBorder" >  
+                <option value="null" disabled >Select your city</option>                 
                 <option v-for="town in towns" :key="town.townId" :value="town">
                                         {{ town.townName }}                
                   </option>                   
                 </select>                 
           </div>      
       
-       <div class="col-6 col-12-xsmall">
-         <label for="location">Upload your bakery logo:</label>
-         <div class="col-6 col-12-xsmall">
-          <input type="file" ref="uploadImage" @change="onImageUpload()" required>   
+           <div class="col-6 col-12-xsmall">
+                  <label for="location">Upload your bakery logo:</label>
+             <div class="col-6 col-12-xsmall">
+                <input type="file" ref="uploadImage" @change="onImageUpload()" required>   
              </div>
           </div> 
           <div class="col-6 col-12-xsmall">
-          <textarea class="boxBorder" name="bakeryAddress" placeholder="Bakery Address" rows="3" v-model="address" required></textarea>
-          <span class="errNotific" v-if="validation.address">{{validation.address}}</span>
+             <textarea class="boxBorder" name="bakeryAddress" placeholder="Bakery Address" rows="3" v-model="address" required></textarea>
+               <span class="errNotific" v-if="validation.address">{{validation.address}}</span>
           </div>
           <div class="col-6 col-12-xsmall">
-          <textarea class="boxBorder" name="description" placeholder="Write a short description about your Bakery" rows="3" v-model="description" required></textarea>
-          <span class="errNotific" v-if="validation.description">{{validation.description}}</span>
+              <textarea class="boxBorder" name="description" placeholder="Write a short description about your Bakery" rows="3" v-model="description" required></textarea>
+              <span class="errNotific" v-if="validation.description">{{validation.description}}</span>
           </div>                      
             <div class="col-12">
              <ul class="actions">
@@ -162,7 +162,7 @@ import Timercount from "@/components/View/common/Timercount.vue";
             },
     // API call for Submitting bakery registration
     submitRegistration(){
-   cakifyAdminService
+       cakifyAdminService
         .bakeryregister({
           bakeryname: this.bakeryname,
           ownername: this.ownername,
