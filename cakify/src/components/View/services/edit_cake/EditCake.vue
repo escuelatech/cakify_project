@@ -1,5 +1,5 @@
 <template>
-  <v-app>
+  <div>
     <h3>Edit Cake</h3>
     <form @submit.prevent="submitEditCake">
       <div class="row gtr-uniform">
@@ -22,6 +22,7 @@
             autocomplete="off"
             required
             @blur="focusOut()"
+            onmouseup="(this).select(); return false;"
           />
         </div>
         <div class="col-6 col-12-xsmall">
@@ -54,10 +55,10 @@
             <input
               type="text"
               name="extra"
-              placeholder="Extra for egg option"
+              placeholder="Add extra price for egg option"
               v-model="cake.extraForEgg"
               autocomplete="off"
-              required
+              
               v-show="displayInputBox"
             />
           </div>
@@ -73,13 +74,7 @@
           ></textarea>
         </div>
         <div class="col-6 col-12-xsmall">
-          <!-- <v-list-item>
-            <v-list-item-avatar tile size="150">
-              <img :src="cake.cakeImage" alt="" />
-            </v-list-item-avatar>
-          </v-list-item> -->
-
-          <div
+           <div
             class="base-image-input"
             ref="uploadImage"
             :style="{ 'background-image': `url(${imageData})` }"
@@ -96,7 +91,7 @@
             />
           </div>
         </div>
-      </div>
+      
       <div class="col-12">
         <ul class="actions">
           <li>
@@ -111,8 +106,9 @@
           </li>
         </ul>
       </div>
+      </div>
     </form>
-  </v-app>
+  </div>
 </template>
 
 <script>
@@ -144,24 +140,23 @@ export default {
     };
   },
   updated(){
- this.extraeggInputfieldShow();
+       this.extraeggInputfieldShow();
   },
 
   created() {
-    this.cakeId = this.$route.params.cakeId;
-    // this.extraeggInputfieldShow();
-  },
+       this.cakeId = this.$route.params.cakeId;
+     },
   mounted() {
-    this.getSelectedCake();
+      this.getSelectedCake();
   },
   methods: {
-    onSelectFile() {
-      const input = this.$refs.fileInput;
-      const files = input.files;
-      if (files && files[0]) {
+        onSelectFile() {
+        const input = this.$refs.fileInput;
+        const files = input.files;
+        if (files && files[0]) {
         const reader = new FileReader();
         reader.onload = (e) => {
-          this.imageData = e.target.result;
+        this.imageData = e.target.result;
         };
         reader.readAsDataURL(files[0]);
         this.$emit("input", files[0]);
@@ -174,7 +169,7 @@ export default {
 
     //  adding 2decimal place to the entered integer
     focusOut: function () {
-      this.price = Number(this.price)
+      this.cake.cakePrice = Number(this.cake.cakePrice)
         .toFixed(2)
         .replace(/(\d)(?=(\d{5})+(?:\.\d+)?$)/g);
     },
