@@ -1,7 +1,7 @@
 <template>
-<v-app>
+  <v-app>
     <h3>Edit Cake</h3>
-  <form  @submit.prevent="submitEditCake">
+    <form @submit.prevent="submitEditCake">
       <div class="row gtr-uniform">
         <div class="col-6 col-12-xsmall">
           <input
@@ -17,7 +17,7 @@
           <input
             type="text"
             name="cakename"
-            placeholder="Price"
+            placeholder="price"
             v-model="cake.cakePrice"
             autocomplete="off"
             required
@@ -33,23 +33,34 @@
           </select>
         </div>
         <div class="col-6 col-12-small">
-          <label for="cakeType">Eggless Option:</label><br />
-          <input
-            type="radio"
-            id="checkYes"
-            name="demo-priority"
-            v-model="cake.egglessOption"
-            value="Yes"
-          />
-          <label for="checkYes">Yes</label>
-          <input
-            type="radio"
-            id="checkNo"
-            name="demo-priority"
-            v-model="cake.egglessOption"
-            value="No"
-          />
-          <label for="checkNo">No</label>
+          <div class="box">
+            <label for="cakeType">Eggless Option:</label><br />
+            <input
+              type="radio"
+              id="checkYes"
+              name="demo-priority"
+              v-model="cake.egglessOption"
+              value="Yes"
+            />
+            <label for="checkYes">Yes</label>
+            <input
+              type="radio"
+              id="checkNo"
+              name="demo-priority"
+              v-model="cake.egglessOption"
+              value="No"
+            />
+            <label for="checkNo">No</label>
+            <input
+              type="text"
+              name="extra"
+              placeholder="Extra for egg option"
+              v-model="cake.extraForEgg"
+              autocomplete="off"
+              required
+              v-show="displayInputBox"
+            />
+          </div>
         </div>
         <div class="col-6 col-12-xsmall">
           <textarea
@@ -69,30 +80,27 @@
           </v-list-item> -->
 
           <div
-              class="base-image-input"
-               ref="uploadImage"
-               :style="{ 'background-image': `url(${imageData})` }"
-                @click="chooseImage" >
-                <span v-if="!imageData" class="placeholder">
-                <img height="100%" :src="cake.cakeImage" alt="avatar" />
-                </span>
-                <input
-                class="file-input"
-                ref="fileInput"
-                type="file"
-                @change="onSelectFile()"  />
-         </div>
+            class="base-image-input"
+            ref="uploadImage"
+            :style="{ 'background-image': `url(${imageData})` }"
+            @click="chooseImage"
+          >
+            <span v-if="!imageData" class="placeholder">
+              <img height="100%" :src="cake.cakeImage" alt="avatar" />
+            </span>
+            <input
+              class="file-input"
+              ref="fileInput"
+              type="file"
+              @change="onSelectFile()"
+            />
+          </div>
         </div>
       </div>
       <div class="col-12">
         <ul class="actions">
           <li>
-            <input
-              type="submit"
-              value="Edit and save"
-              class="primary"
-             
-            />
+            <input type="submit" value="save" class="primary" />
           </li>
           <li>
             <input
@@ -105,47 +113,48 @@
       </div>
     </form>
   </v-app>
-
 </template>
 
 <script>
-
-import cakifyAdminService from "@/apiservices/cakifyAdminService.js"
+import cakifyAdminService from "@/apiservices/cakifyAdminService.js";
 
 export default {
-    data() {
-          return {
-            cakeId: null,
-            cake: '',
-            egglessOption: '',
-            cakeName: '',
-            cakePrice: '',
-            description: '',
-            cakeImage: '',
-            cakeType: null,
-            formData: null,
-            imageData: null,
-            items: [
-           { id: 1, type: "Custom" },
-           { id: 2, type: "Valentines" },
-           { id: 3, type: "Birthday" },
-           { id: 4, type: "Anniversary" },
+  data() {
+    return {
+      cakeId: null,
+      cake: "",
+      egglessOption: "",
+      cakeName: "",
+      cakePrice: "",
+      description: "",
+      cakeImage: "",
+      extraForEgg: "",
+      cakeType: null,
+      formData: null,
+      imageData: null,
+      displayInputBox: false,
+      items: [
+        { id: 1, type: "Custom" },
+        { id: 2, type: "Valentines" },
+        { id: 3, type: "Birthday" },
+        { id: 4, type: "Anniversary" },
       ],
-            options: [
-                'Yes',
-                'No'
-            ],
-            valid: ""
-          }
-      },
-      created() {
-          this.cakeId = this.$route.params.cakeId;
-         },
-      mounted() {
-                   this.getSelectedCake();
-        },
-      methods: {
-     
+      options: ["Yes", "No"],
+      valid: "",
+    };
+  },
+  updated(){
+ this.extraeggInputfieldShow();
+  },
+
+  created() {
+    this.cakeId = this.$route.params.cakeId;
+    // this.extraeggInputfieldShow();
+  },
+  mounted() {
+    this.getSelectedCake();
+  },
+  methods: {
     onSelectFile() {
       const input = this.$refs.fileInput;
       const files = input.files;
@@ -159,78 +168,87 @@ export default {
       }
     },
 
-          chooseImage() {
+    chooseImage() {
       this.$refs.fileInput.click();
     },
 
-          //  adding 2decimal place to the entered integer
-                   focusOut: function() {
-                  this.price = Number(this.price).toFixed(2).replace(/(\d)(?=(\d{5})+(?:\.\d+)?$)/g, )
-                 },
+    //  adding 2decimal place to the entered integer
+    focusOut: function () {
+      this.price = Number(this.price)
+        .toFixed(2)
+        .replace(/(\d)(?=(\d{5})+(?:\.\d+)?$)/g);
+    },
 
-            getSelectedCake() {
-                    cakifyAdminService.getCake(this.cakeId)
-                    .then(response => {
-                    this.cake = response.data.apiResponse;
-                    console.log('Selected Cake: ', this.cake);
-                    })
-                    .catch(error => {
-                        console.log('Error', error.response)
-                    })
-            },
-            submitEditCake(){
-                cakifyAdminService.updateCake({
-                    cakeId: this.cake.cakeId,
-                    cakeName: this.cake.cakeName,
-                    cakePrice: this.cake.cakePrice,
-                    description: this.cake.description,
-                    cakeImage: this.cake.cakeImage,
-                    cakeType: this.cake.cakeType,
-                    egglessOption: this.cake.egglessOption,
-                    bakeryEmail: this.cake.bakeryEmail,
-                    imageId: this.cake.imageId
-                })
-                .then(response => {
-                  ( response.data);
-                     console.log('Edited Cake: ', response.data);
-                     this.cake=response.data;
-                     console("updated cake list",this.cake);
-                })
-                .catch(error => {
-                    console.log('Error in edit cake: ', error.response)
-                })
-            } 
-         }
-    
+    getSelectedCake() {
+      cakifyAdminService
+        .getCake(this.cakeId)
+        .then((response) => {
+          this.cake = response.data.apiResponse;
+          console.log("Selected Cake: ", this.cake);
+        })
+        .catch((error) => {
+          console.log("Error", error.response);
+        });
+    },
+    submitEditCake() {
+      cakifyAdminService
+        .updateCake({
+          cakeId: this.cake.cakeId,
+          cakeName: this.cake.cakeName,
+          cakePrice: this.cake.cakePrice,
+          description: this.cake.description,
+          cakeImage: this.cake.cakeImage,
+          cakeType: this.cake.cakeType,
+          egglessOption: this.cake.egglessOption,
+          bakeryEmail: this.cake.bakeryEmail,
+          imageId: this.cake.imageId,
+          extraForEgg: this.cake.extraForEgg,
+        })
+        .then((response) => {
+          response.data;
+          console.log("Edited Cake: ", response.data);
+          this.cake = response.data;
+          console("updated cake list", this.cake);
+        })
+        .catch((error) => {
+          console.log("Error in edit cake: ", error.response);
+        });
+    },
+
+    extraeggInputfieldShow() {
+    //  shows extra for egg input field  
+    this.cake.egglessOption === 'Yes' ?  this.displayInputBox = true :   this.displayInputBox = false;
+      
+    },
+  },
 };
 </script>
 
 <style lang="scss" scoped>
- // ***for image preview of avatar***>
-    .base-image-input {
-      display: block;
-      width: 100px;
-      height: 100px;
-      cursor: pointer;
-      background-size: cover;
-      background-position: center center;
-    }
-    .placeholder {
-      background: #F0F0F0;
-      width: 75%;
-      height: 75%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      color: #333;
-      font-size: 18px;
-      font-family: Helvetica;
-    }
-    .placeholder:hover {
-      background: #E0E0E0;
-    }
-    .file-input {
-      display: none;
-    }
-
+// ***for image preview of avatar***>
+.base-image-input {
+  display: block;
+  width: 100px;
+  height: 100px;
+  cursor: pointer;
+  background-size: cover;
+  background-position: center center;
+}
+.placeholder {
+  background: #f0f0f0;
+  width: 75%;
+  height: 75%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #333;
+  font-size: 18px;
+  font-family: Helvetica;
+}
+.placeholder:hover {
+  background: #e0e0e0;
+}
+.file-input {
+  display: none;
+}
 </style>

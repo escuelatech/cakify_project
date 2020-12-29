@@ -9,12 +9,8 @@
       <div class="col-12">
         <ul class="actions">
           <li>
-            <input
-              type="button"
-              value="Yes"
-              class="button small"
-              @click="$router.go()"
-            />
+            <!-- <input type="button" value="Yes" class="button small" @click="$router.go()" /> -->
+             <input type="button" value="Yes" class="button small" @click="callYes" />
           </li>
           <li>
             <input
@@ -53,9 +49,7 @@
             required
             @blur="focusOut()"
           />
-          <span class="errNotific" v-if="validation.price">{{
-            validation.price
-          }}</span>
+          <span class="errNotific" v-if="validation.price">{{ validation.price }}</span>
         </div>
         <div class="col-6 col-12-xsmall">
           <label for="cakeType">Specify type of the cake:</label>
@@ -66,23 +60,33 @@
           </select>
         </div>
         <div class="col-6 col-12-small">
-          <label for="cakeType">Eggless Option:</label><br />
-          <input
-            type="radio"
-            id="checkYes"
-            name="demo-priority"
-            v-model="egglessOption"
-            value="Yes"
-          />
-          <label for="checkYes">Yes</label>
-          <input
-            type="radio"
-            id="checkNo"
-            name="demo-priority"
-            v-model="egglessOption"
-            value="No"
-          />
-          <label for="checkNo">No</label>
+          <div class="box">
+            <label for="cakeType">Eggless Option:</label><br />
+            <input
+              type="radio"
+              id="checkYes"
+              name="demo-priority"
+              v-model="egglessOption"
+              value="Yes" @click="displayinput()"
+            />
+            <label for="checkYes">Yes</label>
+            <input
+              type="radio"
+              id="checkNo"
+              name="demo-priority"
+              v-model="egglessOption"
+              value="No" @click="hideInputBox"
+            />
+            <label for="checkNo">No</label>
+            <input
+              type="text"
+              name="extra"
+              placeholder="Add extra money for egg option"
+              v-model="extraForEgg"
+              autocomplete="off" v-show="displayInputBox"
+              required
+            />
+          </div>
         </div>
         <div class="col-6 col-12-xsmall">
           <textarea
@@ -98,12 +102,7 @@
           }}</span>
         </div>
         <div class="col-6 col-12-xsmall">
-          <input
-            type="file"
-            ref="uploadImage"
-            @change="onImageUpload()"
-            required
-          />
+          <input type="file" ref="uploadImage" @change="onImageUpload()" required />
         </div>
         <div class="col-12">
           <ul class="actions">
@@ -140,10 +139,12 @@ export default {
       egglessOption: "",
       cakeName: "",
       price: "0.00",
+      extraForEgg: "",
       description: "",
       cakeType: null,
       formData: null,
       validation: [],
+      displayInputBox:false,
       moreCakeAddMsg: false,
       options: [
         { id: 1, option: "Yes" },
@@ -160,6 +161,14 @@ export default {
   },
 
   methods: {
+    displayinput(){
+    
+      this.displayInputBox=true;
+    },
+    hideInputBox(){
+     this.displayInputBox=false;
+      
+    },
     //  adding 2decimal place to the entered integer
     focusOut: function () {
       this.price = Number(this.price)
@@ -181,6 +190,7 @@ export default {
           cakeImage: this.file,
           egglessOption: this.egglessOption,
           cakeType: this.cakeType,
+          extraForEgg: this.extraForEgg,
         })
         .then((response) => {
           this.cakeData = response.data.data;
@@ -197,6 +207,11 @@ export default {
     },
     reset() {
       this.$refs.addCakeForm.reset();
+    },
+
+    callYes(){
+      // this.$router.push({name:'AddCakePage'}).catch((err) => {(err)});
+      this.$router.go({name:'/AddCakePage'}).catch((err)=>{(err)});
     },
     //  function call for validation
 
