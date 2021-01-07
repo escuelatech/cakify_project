@@ -8,42 +8,19 @@
       </div>
 
       <div>
-        <!-- <form > -->
-        <!-- <div class="row gtr-uniform box"> -->
-        <!-- <div class="col-6 col-12-xsmall">
-                        <label>Your cake type </label>
-                            <vue-bootstrap-typeahead
-                             class="mb-4"
-                             v-model="queryByType"
-                             :data="cakeTypes"
-                             :serializer="(cakeTypes) => cakeTypes.type"
-                            @hit="selectedTypes = $event"
-                            />
-                       </div> -->
         <div class="col-6 col-12-xsmall">
-          <label>Your cake type </label>
-          <select
+            <select
             v-model="queryByType"
             class="boxBorder"
             @change="findSearchedCake"
           >
-            <option value="null" disabled>Select your cake type</option>
+            <option disabled value="">Search your cake type</option>
             <option v-for="type in cakeTypes" :key="type.type" :value="type">
               {{ type.type }}
             </option>
           </select>
         </div>
-
-        <!-- <div class="col-12">
-                        <ul class="actions">
-                           <li>
-                            <input type="submit" value="FIND" class="primary" />
-                           </li>
-                       </ul>
-                    </div> -->
-        <!-- </div> -->
-        <!-- </form> -->
-      </div>
+        </div>
 
       <div class="box alt" v-show="!cakeDisplay && !searchDisplay">
         <header class="major">

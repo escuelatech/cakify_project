@@ -3,27 +3,7 @@
     <v-snackbar v-model="snackbar" top color="rgba(15, 116, 235)" text>
       {{ successMessage }}
     </v-snackbar>
-
-    <div class="box boxMargin" v-show="moreCakeAddMsg">
-      <h2>Do you want to add more cakes?</h2>
-      <div class="col-12">
-        <ul class="actions">
-          <li>
-            <!-- <input type="button" value="Yes" class="button small" @click="$router.go()" /> -->
-             <input type="button" value="Yes" class="button small" @click="callYes" />
-          </li>
-          <li>
-            <input
-              type="button"
-              value="No"
-              class="button small"
-              @click="$router.push({ name: 'DashboardPage' })"
-            />
-          </li>
-        </ul>
-      </div>
-    </div>
-    <form @submit.prevent="submit" ref="addCakeForm" v-show="!moreCakeAddMsg">
+     <form @submit.prevent="submit" ref="addCakeForm">
       <h3>Add cakes</h3>
       <div class="row gtr-uniform">
         <div class="col-6 col-12-xsmall">
@@ -48,16 +28,22 @@
             autocomplete="off"
             required
             @blur="focusOut()"
+            onmouseup="(this).select(); return false;"
           />
-          <span class="errNotific" v-if="validation.price">{{ validation.price }}</span>
+          <span class="errNotific" v-if="validation.price">{{
+            validation.price
+          }}</span>
         </div>
         <div class="col-6 col-12-xsmall">
-          <label for="cakeType">Specify type of the cake:</label>
-          <select v-model="cakeType" class="boxBorder">
+         <select v-model="cakeType" class="boxBorder">
+         <option disabled value=null>Specify type of the cake</option>
             <option v-for="item in items" :key="item.id">
               {{ item.type }}
             </option>
           </select>
+           <span class="errNotific" v-if="validation.cakeType">{{
+            validation.cakeType
+          }}</span>
         </div>
         <div class="col-6 col-12-small">
           <div class="box">
@@ -67,7 +53,8 @@
               id="checkYes"
               name="demo-priority"
               v-model="egglessOption"
-              value="Yes" @click="displayinput()"
+              value="Yes"
+              @click="displayinput()"
             />
             <label for="checkYes">Yes</label>
             <input
@@ -75,16 +62,17 @@
               id="checkNo"
               name="demo-priority"
               v-model="egglessOption"
-              value="No" @click="hideInputBox"
+              value="No"
+              @click="hideInputBox"
             />
             <label for="checkNo">No</label>
             <input
               type="text"
-              name="extra"
-              placeholder="Add extra money for egg option"
+              placeholder="Add extra price for egg option"
               v-model="extraForEgg"
-              autocomplete="off" v-show="displayInputBox"
-              required
+              autocomplete="off"
+              v-show="displayInputBox"
+             name="extra"
             />
           </div>
         </div>
@@ -102,7 +90,12 @@
           }}</span>
         </div>
         <div class="col-6 col-12-xsmall">
-          <input type="file" ref="uploadImage" @change="onImageUpload()" required />
+          <input
+            type="file"
+            ref="uploadImage"
+            @change="onImageUpload()"
+            required
+          />
         </div>
         <div class="col-12">
           <ul class="actions">
@@ -114,8 +107,8 @@
             </li>
             <li>
               <input
-                type="reset"
-                value="Cancel"
+                type="button"
+                value="Back"
                 @click="$router.push({ name: 'DashboardPage' })"
               />
             </li>
@@ -144,9 +137,8 @@ export default {
       cakeType: null,
       formData: null,
       validation: [],
-      displayInputBox:false,
-      moreCakeAddMsg: false,
-      options: [
+      displayInputBox: false,
+       options: [
         { id: 1, option: "Yes" },
         { id: 2, option: "No" },
       ],
@@ -161,20 +153,18 @@ export default {
   },
 
   methods: {
-    displayinput(){
-    
-      this.displayInputBox=true;
+    displayinput() {
+      this.displayInputBox = true;
     },
-    hideInputBox(){
-     this.displayInputBox=false;
-      
+    hideInputBox() {
+      this.displayInputBox = false;
     },
     //  adding 2decimal place to the entered integer
     focusOut: function () {
       this.price = Number(this.price)
         .toFixed(2)
         .replace(/(\d)(?=(\d{5})+(?:\.\d+)?$)/g);
-    },
+     },
     //  selectiong image for upload
     onImageUpload() {
       let file = this.$refs.uploadImage.files[0];
@@ -191,35 +181,39 @@ export default {
           egglessOption: this.egglessOption,
           cakeType: this.cakeType,
           extraForEgg: this.extraForEgg,
-        })
+         })
         .then((response) => {
           this.cakeData = response.data.data;
           // image uplod
           fileUploadService.upload(this.formData, this.cakeData);
-          this.cakeType - "";
+          this.cakeType = null;
+          this.cakeName="";
+           this.price="0.00";
+          this.description="";
+          // this.egglessOption="";
+          this.extraForEgg="";
           this.snackbar = true;
-          this.moreCakeAddMsg = true;
-        })
+          })
         .catch((error) => {
           console.log("There was an error : " + JSON.stringify(error));
         });
-      this.cakeImage = "";
+         this.cakeImage = "";
+     
     },
-    reset() {
-      this.$refs.addCakeForm.reset();
-    },
-
-    callYes(){
-      // this.$router.push({name:'AddCakePage'}).catch((err) => {(err)});
-      this.$router.go({name:'/AddCakePage'}).catch((err)=>{(err)});
-    },
-    //  function call for validation
-
+  
     check_cakeName(value) {
-      if (value == "") {
-        this.validation["cakeName"] = "Enter a cakeName";
-      } else {
+      if (value.length >="5" && value.length<='15') {
         this.validation["cakeName"] = "";
+      } else {
+        this.validation["cakeName"] = "Enter a valid cakeName(5-10 letters)";
+      }
+    },
+
+    check_cakeType(value) {
+      if (value == "") {
+        this.validation["cakeType"] = "Select your caketype";
+      } else {
+        this.validation["cakeType"] = "";
       }
     },
 
@@ -231,10 +225,10 @@ export default {
       }
     },
     check_description(value) {
-      if (value == "") {
-        this.validation["description"] = "please write a description";
-      } else {
+      if (value.length >="5" && value.length<='50') {
         this.validation["description"] = "";
+      } else {
+        this.validation["description"] = "please write a description(5-50 letters)";
       }
     },
   },
@@ -251,6 +245,10 @@ export default {
     cakeName(value) {
       this.cakeName = value;
       this.check_cakeName(value);
+    },
+     cakeType(value) {
+      this.cakeType = value;
+      this.check_cakeType(value);
     },
   },
 };
