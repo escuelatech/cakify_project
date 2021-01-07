@@ -8,6 +8,7 @@ export default {
   getBakeryTowns,
   getDeliveryDates,
   getAllBakeries,
+  getCakeListByTypeForRegisteredBakery
 };
 
 function bakeryregister (params) {
@@ -34,3 +35,7 @@ function getDeliveryDates(){
 function getAllBakeries(){
   return apiClient.get(apimapping.GET_ALL_BAKERIES);
 }
+function getCakeListByTypeForRegisteredBakery(email,caketype){
+  return apiClient.get('/cakes/find/by/type/'+caketype+'?bakeryemail='+email)
+ }
+
